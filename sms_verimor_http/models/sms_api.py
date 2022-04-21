@@ -26,7 +26,7 @@ class SmsApi(models.AbstractModel):
     def _send_sms_with_verimor_http(self, account, number, message):
         r = requests.post(
             VERIMOR_SEND_SMS_ENDPOINT,
-            params=self._prepare_verimor_http_params(account, number, message),
+            json=self._prepare_verimor_http_params(account, number, message),
             headers={"Content-Type": "application/json"},
         )
         response = r.text
