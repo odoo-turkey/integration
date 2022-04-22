@@ -16,7 +16,7 @@
             <attribute name="invisible">0</attribute>
         </page>
         <group name="phone-preferences" position="inside">
-            <field name="internal_number"/>
+            <field name="internal_number" readonly="0"/>
         </group>
     </field>
 </record>
@@ -30,7 +30,7 @@
             <attribute name="invisible">0</attribute>
         </group>
         <group name="phone" position="inside">
-            <field name="internal_number"/>
+            <field name="internal_number" readonly="0"/>
         </group>
     </field>
 </record>

@@ -50,8 +50,14 @@ class PhoneCommon(models.AbstractModel):
             raise UserError(_('Missing phone number'))
 
         bulutsantralim_connector = self.env.user.company_id.bulutsantralim_connector_id
+
         if bulutsantralim_connector:
+            caller = self.env.user.internal_number
             number = self._number_sanitization(erp_number)
-            bulutsantralim_connector._start_call_verimor(number)
+
+            if not caller:
+                raise UserError(_('Missing internal number'))
+
+            bulutsantralim_connector._start_call_verimor(number, caller)
 
         return res
