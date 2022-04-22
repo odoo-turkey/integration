@@ -33,10 +33,10 @@ class BulutsantralimConnector(models.Model):
     ]
 
     @api.one
-    def _start_call_verimor(self, number):
+    def _start_call_verimor(self, number, caller):
         params = {
             'key': self.api_key,
-            'extension': self.env.user.internal_number,
+            'extension': caller,
             'destination': number,
             'manual_answer': self.manual_answer,
             'timeout': self.call_timeout
@@ -45,6 +45,8 @@ class BulutsantralimConnector(models.Model):
         if r.status_code != 200:
             if r.text == 'USER_BUSY':
                 raise UserError(_('User is busy.'))
+            elif r.text == 'CALL_REJECTED':
+                raise UserError(_('Call rejected.'))
             elif r.text == 'NO_ANSWER':
                 raise UserError(_('No answer.'))
             else:
