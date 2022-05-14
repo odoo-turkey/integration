@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="0">
+        <function id="import_sendeo_codes_on_install"
+                  model="address.district"
+                  name="import_sendeo_district_codes"/>
+    </data>
+</odoo>
