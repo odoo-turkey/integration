@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_order_delivery_get_rates" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <button name="action_unlock" position="after">
+                <button name="%(action_sale_get_rates_wizard)d" type="action"
+                        Help="Get delivery rates for this order"
+                        string="Get Rates" class="ml-2 btn btn-default"
+                        attrs="{'invisible':[('state','in', ['done', 'cancel'])]}"/>
+            </button>
+        </field>
+    </record>
+</odoo>
