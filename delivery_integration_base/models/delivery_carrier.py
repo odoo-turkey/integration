@@ -13,6 +13,8 @@ class DeliveryCarrier(models.Model):
                                                 ('zpl', 'ZPL (Zebra)'),
                                             ], default='pdf', required=True)
 
+    default_printer_id = fields.Many2one('printing.printer', string='Default Printer')
+
     attach_barcode = fields.Boolean(string='Attach Barcode to Picking', default=False,
                                     help='If checked, barcode will be attached to picking as a file.')
 
