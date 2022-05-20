@@ -1,8 +1,8 @@
 # Copyright 2022 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
-    "name": "Delivery Sendeo",
-    "summary": "Delivery Carrier implementation for Sendeo Kargo API",
+    "name": "Delivery Yurtici",
+    "summary": "Delivery Carrier implementation for Yurtiçi Kargo API",
     "version": "12.0.1.1.0",
     "category": "Stock",
     "website": "https://github.com/odoo-turkey",
@@ -11,12 +11,10 @@
     "application": False,
     "installable": True,
     "depends": ["delivery_integration_base"],
-    "external_dependencies": {"python": ["phonenumbers", "openpyxl"]},
+    "external_dependencies": {"python": ["phonenumbers", "zeep"]},
     "data": [
-        "views/delivery_sendeo_view.xml",
-        "views/address_district_views.xml",
-        "data/delivery_sendeo_data.xml",
-        'report/sendeo_carrier_label.xml',
+        "views/delivery_yurtici_view.xml",
+        'report/yurtici_carrier_label.xml',
         'report/reports.xml',
     ],
 }
