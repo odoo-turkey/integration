@@ -11,6 +11,8 @@
             attrs="{'invisible': [('delivery_type', 'in', ['fixed', 'base_on_rule'])]}"/>
             <field name="attach_barcode"
             attrs="{'invisible': [('delivery_type', 'in', ['fixed', 'base_on_rule'])]}"/>
+            <field name="default_printer_id"
+            attrs="{'invisible': [('delivery_type', 'in', ['fixed', 'base_on_rule'])]}"/>
         </field>
         </field>
     </record>

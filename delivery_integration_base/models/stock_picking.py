@@ -1,6 +1,7 @@
 # Copyright 2022 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import models
+from odoo import models, _
+from odoo.exceptions import ValidationError
 
 
 class StockPicking(models.Model):
@@ -13,6 +14,43 @@ class StockPicking(models.Model):
         It can be triggered manually or by the cron."""
         for picking in self.filtered("carrier_id"):
             method = '%s_carrier_get_label' % picking.delivery_type
-            if hasattr(picking.carrier_id, method):
-                getattr(picking.carrier_id, method)(picking)
+            carrier = picking.carrier_id
+            if hasattr(carrier, method) and carrier.default_printer_id:
+                data = getattr(carrier, method)(picking)
+                if carrier.attach_barcode:
+                    self._attach_barcode(data)
+                else:
+                    self._print_barcode(data)
+            else:
+                raise ValidationError(_("No default printer defined for the carrier %s")
+                                      % carrier.name)
+
+    def _attach_barcode(self, data):
+        """
+        Attach the barcode to the picking as PDF
+        :param data:
+        :return: boolean
+        """
+        label_name = "{}_etiket_{}.{}".format(self.carrier_id.delivery_type,
+                                              self.carrier_tracking_ref,
+                                              self.carrier_id.carrier_barcode_type)
+        self.message_post(
+            body=(_("%s etiket") % self.carrier_id.display_name),
+            attachments=[(label_name, data)],
+        )
+        return True
+
+    def _print_barcode(self, data):
+        """
+        Print the barcode on the picking as ZPL format.
+        It uses the carrier's qweb template.
+        :param data:
+        :return: boolean
+        """
+        carrier = self.carrier_id
+        printer = carrier.default_printer_id
+        report_name = "delivery_{0}.{0}_carrier_label".format(carrier.delivery_type)
+        qweb_text = self.env.ref(report_name).render_qweb_text([carrier.id], data={'zpl_raw': data})[0]
+        printer.print_document(report_name, qweb_text, doc_form="txt")
+        return True
 

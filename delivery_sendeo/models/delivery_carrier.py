@@ -269,7 +269,7 @@ class DeliveryCarrier(models.Model):
 
     def sendeo_carrier_get_label(self, picking):
         """Generate label for picking
-        :returns cargo barcode label
+        :returns cargo barcode label as base64 encoded pdf or ZPL (txt)
         """
         picking.ensure_one()
         reference = picking.name
@@ -288,13 +288,6 @@ class DeliveryCarrier(models.Model):
 
         if not barcode:
             return False
-
-        if self.attach_barcode:
-            label_name = "sendeo_etiket_{}.{}".format(reference, barcode_type)
-            picking.message_post(
-                body=(_("Sendeo etiket: %s") % reference),
-                attachments=[(label_name, data)],
-            )
 
         return data
 
