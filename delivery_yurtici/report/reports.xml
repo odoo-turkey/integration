@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<data>
+		<report id="yurtici_carrier_label"
+            model="delivery.carrier"
+            string="Yurtici Carrier Label"
+            name="delivery_yurtici.yurtici_carrier_label"
+            file="delivery_yurtici.yurtici_carrier_label"
+        />
+
+</data>
+</odoo>
