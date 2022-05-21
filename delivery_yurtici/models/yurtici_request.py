@@ -130,7 +130,7 @@ class YurticiRequest:
         :returns: Yurtiçi queryShipment object
         """
         vals = self._shipping_api_credentials()
-        keys_val = picking.name if query_type == 1 else picking.client_tracking_ref
+        keys_val = picking.name if query_type == 1 else picking.carrier_tracking_ref
         vals['wsLanguage'] = vals.pop('userLanguage')  # this method requires the language field in wsLanguage
         vals.update({'keys': keys_val,
                      'keyType': query_type,  # 0 = picking_name, 1 = tracking_number
