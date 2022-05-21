@@ -17,6 +17,9 @@ class DeliveryCarrier(models.Model):
 
     attach_barcode = fields.Boolean(string='Attach Barcode to Picking', default=False,
                                     help='If checked, barcode will be attached to picking as a file.')
+    barcode_text_1 = fields.Char(string='Barcode Text 1',
+                                 help='Some static text for this carrier to package labels.')
+
 
     def _calculate_deci(self, order):
         price = deci = weight = 0.0
