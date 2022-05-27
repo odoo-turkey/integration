@@ -8,7 +8,6 @@ from zeep.plugins import HistoryPlugin
 from zeep import xsd
 from xml.etree import ElementTree as ET
 from odoo import _
-from odoo.fields import first
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
