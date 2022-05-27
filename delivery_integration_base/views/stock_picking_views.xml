@@ -21,6 +21,20 @@
                     }"
                 />
             </xpath>
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="picking_total_weight" attrs="{'readonly': [('carrier_tracking_ref', '!=', False)]}"/>
+                <field name="carrier_package_count" attrs="{'readonly': [('carrier_tracking_ref', '!=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='delivery_state']" position="after">
+                <field name="carrier_received_by" attrs="{'invisible': [('delivery_state', '!=', 'customer_delivered')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='shipping_weight']" position="after">
+                <field name="carrier_total_weight" attrs="{'readonly': [('carrier_tracking_ref', '!=', False)]}"/>
+                <field name="carrier_shipping_cost" attrs="{'readonly': 1}" widget="monetary"/>
+                <field name="carrier_shipping_vat" attrs="{'readonly': 1}" widget="monetary"/>
+                <field name="carrier_shipping_total" attrs="{'readonly': 1}" widget="monetary"/>
+                <field name="carrier_currency_id" attrs="{'readonly': 1, 'invisible': 1}"/>
+            </xpath>
         </field>
     </record>
 </odoo>

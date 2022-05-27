@@ -9,8 +9,7 @@
     'category': 'Delivery',
     'version': '12.0.1.1.0',
     'depends': [
-        "delivery", "l10n_tr_address",
-        "delivery_package_number", "delivery_state", "product_dimension",
+        "delivery", "l10n_tr_address", "delivery_state", "product_dimension",
     ],
     'data': [
         'views/stock_picking_views.xml',

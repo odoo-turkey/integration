@@ -13,14 +13,14 @@ class DeliveryPriceRule(models.Model):
                                      (3000, 'Domestic (3000)'),
                                      (5000, 'Foreign (5000)'),
                                  ], default=3000, required=True)
-    currency_id = fields.Many2one('res.currency', string='Currency', required=True)
+
     region_id = fields.Many2one('delivery.region', string='Region', required=True)
 
     @api.onchange('variable')
     def _onchange_variable(self):
         """
         Set `deci` as default value for `variable_factor`
-        This field also has {'readonly': [('variable', '=', 'deci')]}
+        This field also could have {'readonly': [('variable', '=', 'deci')]}
         """
         if self.variable == 'deci':
             self.variable_factor = 'deci'
