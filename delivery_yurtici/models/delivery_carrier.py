@@ -1,10 +1,20 @@
 # Copyright 2022 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import phonenumbers
-from odoo import _, fields, models
+from odoo import _, fields, models, api
 from odoo.exceptions import ValidationError
 from .yurtici_request import YurticiRequest
+from lxml import etree
+from datetime import datetime
 
+YURTICI_OPERATION_CODES = {
+    0: ('Kargo İşlem Görmemiş', 'shipping_recorded_in_carrier'),
+    1: ('Kargo Teslimattadır', 'in_transit'),
+    2: ('Kargo işlem görmüş, faturası henüz düzenlenmemiş', 'in_transit'),
+    3: ('Kargo Çıkışı Engellendi', 'canceled_shipment'),
+    4: ('Kargo daha önceden iptal edilmiştir.', 'canceled_shipment'),
+    5: ('Kargo Teslim edilmiştir.', 'customer_delivered'),
+}
 
 class DeliveryCarrier(models.Model):
     _inherit = "delivery.carrier"
@@ -58,11 +68,17 @@ class DeliveryCarrier(models.Model):
                                     % partner.name))
 
     def _prepare_yurtici_pack_info(self, picking):
+        """Prepare pack info for Yurtiçi, no need to send deci and kg fields.
+         They are calculated by Yurtiçi Kargo."""
+        if picking.carrier_package_count < 1:
+            raise ValidationError(_("%s\nPackage count must be greater than 0.") % picking.name)
+
         # TODO: implement stock.quant.package
+
         vals = {
             'desi': 1,
             'kg': 1,
-            'cargoCount': picking.number_of_packages,
+            'cargoCount': picking.carrier_package_count,
         }
         return vals
 
@@ -114,8 +130,12 @@ class DeliveryCarrier(models.Model):
             vals = self._prepare_yurtici_shipping(picking)
             try:
                 response = yurtici_request._send_shipping(vals)
+
             except Exception as e:
                 raise e
+
+            finally:
+                self._yurtici_log_request(yurtici_request)
 
             if not response:
                 result.append(vals)
@@ -125,6 +145,29 @@ class DeliveryCarrier(models.Model):
             result.append(vals)
         return result
 
+    @api.model
+    def _yurtici_log_request(self, yurtici_request):
+        """Helper to write raw request/response to the current picking. If debug
+        is active in the carrier, those will be logged in the ir.logging as well"""
+        yurtici_last_request = yurtici_last_response = False
+        try:
+            yurtici_last_request = etree.tostring(
+                yurtici_request.history.last_sent["envelope"],
+                encoding="UTF-8",
+                pretty_print=True,
+            )
+            yurtici_last_response = etree.tostring(
+                yurtici_request.history.last_received["envelope"],
+                encoding="UTF-8",
+                pretty_print=True,
+            )
+        # Don't fail hard on this. Sometimes zeep could not be able to keep history
+        except Exception:
+            return
+        # Debug must be active in the carrier
+        self.log_xml(yurtici_last_request, "yurtici_request")
+        self.log_xml(yurtici_last_response, "yurtici_response")
+
     def yurtici_cancel_shipment(self, pickings):
         """Cancel the expedition
         :param pickings - stock.picking recordset
@@ -132,7 +175,19 @@ class DeliveryCarrier(models.Model):
         """
         yurtici_request = YurticiRequest(**self._get_yurtici_credentials())
         for picking in pickings.filtered("carrier_tracking_ref"):
-            yurtici_request._cancel_shipment(picking.name)
+
+            if hasattr(self, '%s_tracking_state_update' % self.delivery_type):  # check state before cancel
+                getattr(self, '%s_tracking_state_update' % self.delivery_type)(pickings)
+
+            if picking.delivery_state not in ['shipping_recorded_in_carrier', 'canceled_shipment']:
+                raise ValidationError(_("You can't cancel a shipment that already has been sent to Yurtiçi"))
+
+            try:
+                yurtici_request._cancel_shipment(picking.name)
+            except Exception as e:
+                raise e
+            finally:
+                self._yurtici_log_request(yurtici_request)
             # picking.write({"carrier_tracking_ref": False,
             #                "tracking_state": False,
             #                "tracking_state_history": _('Cancelled')})
@@ -152,24 +207,62 @@ class DeliveryCarrier(models.Model):
         if not picking.carrier_tracking_ref:
             return
         yurtici_request = YurticiRequest(**self._get_yurtici_credentials())
-        response = yurtici_request._query_shipment(picking, self.yurtici_query_type)
-        status = response.operationMessage
-        picking.write(
-            {
-                "tracking_state_history": "{} - [{}]".format(fields.Date.today().strftime('%d.%m.%Y'), status),
-                "tracking_state": status,
+
+        try:
+            response = yurtici_request._query_shipment(picking, self.yurtici_query_type)
+        except Exception as e:
+            raise e
+        finally:
+            self._yurtici_log_request(yurtici_request)
+
+        vals = {
+                "tracking_state": response.operationMessage,
+                "delivery_state": YURTICI_OPERATION_CODES[response.operationCode][1],
             }
-        )
+
+        if response.operationCode != 0:
+            vals.update(self._yurtici_update_picking_fields(picking, response))
+
+        picking.write(vals)
         return True
 
-    def sendeo_carrier_get_label(self, picking):
+    def _yurtici_update_picking_fields(self, picking, response):
+
+        vals = {
+            'carrier_tracking_ref': response.shippingDeliveryItemDetailVO.docId,
+        }
+
+        if len(response.shippingDeliveryItemDetailVO.invDocCargoVOArray) > 0:
+            text = ""
+            for line in response.shippingDeliveryItemDetailVO.invDocCargoVOArray:
+                text += "[%s] [%s] %s\n" % (line.eventDate, line.unitName, line.eventName)
+            vals.update({"tracking_state_history": text})
+
+        if response.shippingDeliveryItemDetailVO:
+            vals.update({
+                'carrier_total_weight': float(response.shippingDeliveryItemDetailVO.totalDesiKg),
+                'carrier_shipping_cost': float(response.shippingDeliveryItemDetailVO.totalPrice),
+                'carrier_shipping_vat': float(response.shippingDeliveryItemDetailVO.totalVat),
+                'carrier_shipping_total': float(response.shippingDeliveryItemDetailVO.totalAmount),
+            })
+
+        if response.operationCode == 5:  # Delivered
+            vals.update({'carrier_received_by': response.shippingDeliveryItemDetailVO.receiverInfo,
+                         'date_delivered': datetime.strptime(response.shippingDeliveryItemDetailVO.deliveryDate,
+                                                             '%Y%m%d')})
+
+        picking.write(vals)
+
+        return vals
+
+    def yurtici_carrier_get_label(self, picking):
         """
         Yurtiçi Kargo doesn't provide label for shipments.
         They are not implemented common label on their systems.
         """
         raise NotImplementedError(
             _(
-                "Sendeo API doesn't provide methods to print label."
+                "Yurtiçi API doesn't provide methods to print label."
             )
         )
 
@@ -177,7 +270,7 @@ class DeliveryCarrier(models.Model):
         """There's no public API so another price method should be used."""
         raise NotImplementedError(
             _(
-                "Sendeo API doesn't provide methods to compute delivery "
+                "Yurtiçi API doesn't provide methods to compute delivery "
                 "rates, so you should relay on another price method instead or "
                 "override this one in your custom code."
             )
