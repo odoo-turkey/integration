@@ -8,7 +8,6 @@ from zeep.plugins import HistoryPlugin
 from zeep import xsd
 from xml.etree import ElementTree as ET
 from odoo import _
-from odoo.fields import first
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -127,17 +126,15 @@ class YurticiRequest:
         response = self._process_reply(self.client.service.cancelShipment, vals, send_as_kw=True)
         return response
 
-    def _query_shipment(self, picking, query_type=False):
+    def _query_shipment(self, picking):
         """Get tracking status of the given ref
-        :param str picking_name -- reference (picking name)
-        :param int query_type -- yurtici_query_type field
+        :param stock.picking object
         :returns: Yurtiçi queryShipment object
         """
         vals = self._shipping_api_credentials()
-        keys_val = picking.name if query_type == 1 else picking.carrier_tracking_ref
         vals['wsLanguage'] = vals.pop('userLanguage')  # this method requires the language field in wsLanguage
-        vals.update({'keys': keys_val,
-                     'keyType': query_type,  # 0 = picking_name, 1 = tracking_number
+        vals.update({'keys': picking.carrier_tracking_ref,
+                     'keyType': 0,  # 0 = ref_number, 1 = tracking_number
                      'addHistoricalData': True,
                      'onlyTracking': False})
         response = self._process_reply(self.client.service.queryShipment, vals, send_as_kw=True)

@@ -11,6 +11,7 @@ class StockPicking(models.Model):
     carrier_total_weight = fields.Float('Carrier Total Weight', help='Decimal of packages')
     picking_total_weight = fields.Float('Picking Total Weight', help='Decimal of packages')
     carrier_received_by = fields.Char('Received By', help='Received by')
+    shipping_number = fields.Char('Shipping Number', help='Shipping Tracking Number')
 
     # Accounting fields
     carrier_shipping_cost = fields.Monetary('Shipping Cost', help='Shipping cost', default=0.0,
