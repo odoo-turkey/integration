@@ -19,7 +19,6 @@
                             <field name="yurtici_user_lang" />
                         </group>
                         <group string="Logistics">
-                            <field name="yurtici_query_type" />
                             <field name="price_rule_ids"/>
                         </group>
                     </group>
