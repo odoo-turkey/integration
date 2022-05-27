@@ -1,8 +1,8 @@
 # Copyright 2022 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import models, fields, _
+from odoo import models, fields, api, _
 from odoo.tools.safe_eval import safe_eval
-
+from odoo.exceptions import ValidationError
 
 class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
@@ -23,6 +23,8 @@ class DeliveryCarrier(models.Model):
                                     help='If checked, barcode will be attached to picking as a file.')
 
     currency_id = fields.Many2one('res.currency', string='Currency', required=True)
+
+    ref_sequence_id = fields.Many2one('ir.sequence', string='Reference Sequence')
 
     def _calculate_deci(self, order):
         price = deci = weight = 0.0
@@ -62,3 +64,16 @@ class DeliveryCarrier(models.Model):
                                              or
                                              order.partner_shipping_id.country_id in r.region_id.country_ids)
         return rules
+
+    def get_ref_number(self):
+        """
+        Generate reference number based on sequence, if sequence is not defined,
+        throw a ValidationError
+        :return:
+        """
+        self.ensure_one()
+        if self.ref_sequence_id:
+            ref_no = self.ref_sequence_id.next_by_id()
+            return ref_no
+        else:
+            raise ValidationError(_('No Reference Sequence defined for this carrier'))

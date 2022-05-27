@@ -24,10 +24,6 @@ class DeliveryCarrier(models.Model):
     yurtici_username = fields.Char(string="Username", help="Yurtiçi Username")
     yurtici_password = fields.Char(string="Password", help="Yurtiçi Password")
     yurtici_user_lang = fields.Char('UserLanguage', help="UserLanguage field for Yurtiçi")
-    yurtici_query_type = fields.Selection(
-        selection=[(1, "Query by Order Number"), (2, "Query by Shipment Number")],
-        string="Query Type", default=1, help="Yurtiçi Kargo has two query types. You can only query"
-                                             "with shipment number when the order is delivered to Yurtiçi.")
 
     def _get_yurtici_credentials(self):
         """Access key is mandatory for every request while group and user are
@@ -82,13 +78,6 @@ class DeliveryCarrier(models.Model):
         }
         return vals
 
-    def _sendeo_district_code(self, partner):
-        code = partner.district_id.sendeo_code
-        if code:
-            return int(code)
-        else:
-            raise ValidationError(_("%s\nPartner's district code is missing."))
-
     def _prepare_yurtici_shipping(self, picking):
         """Convert picking values for Yurtiçi Kargo api
         :param picking record with picking to send
@@ -101,7 +90,7 @@ class DeliveryCarrier(models.Model):
         vals = {}
         vals.update(
             {
-                "cargoKey": picking.name,
+                "cargoKey": self.get_ref_number(),
                 "invoiceKey": picking.name,  # TODO: implement invoice key
                 "receiverCustName": picking.partner_id.display_name,
                 "receiverAddress": self._yurtici_address(picking.partner_id),
@@ -183,7 +172,7 @@ class DeliveryCarrier(models.Model):
                 raise ValidationError(_("You can't cancel a shipment that already has been sent to Yurtiçi"))
 
             try:
-                yurtici_request._cancel_shipment(picking.name)
+                yurtici_request._cancel_shipment(picking.carrier_tracking_ref)
             except Exception as e:
                 raise e
             finally:
@@ -198,7 +187,7 @@ class DeliveryCarrier(models.Model):
         return (
                 "http://selfservis.yurticikargo.com/reports/"
                 "SSWDocumentDetail.aspx?DocId=%s"
-                % picking.carrier_tracking_ref
+                % picking.shipping_number
         )
 
     def yurtici_tracking_state_update(self, picking):
@@ -209,7 +198,7 @@ class DeliveryCarrier(models.Model):
         yurtici_request = YurticiRequest(**self._get_yurtici_credentials())
 
         try:
-            response = yurtici_request._query_shipment(picking, self.yurtici_query_type)
+            response = yurtici_request._query_shipment(picking)
         except Exception as e:
             raise e
         finally:
@@ -220,7 +209,7 @@ class DeliveryCarrier(models.Model):
                 "delivery_state": YURTICI_OPERATION_CODES[response.operationCode][1],
             }
 
-        if response.operationCode != 0:
+        if response.operationCode != 0 and response.shippingDeliveryItemDetailVO:
             vals.update(self._yurtici_update_picking_fields(picking, response))
 
         picking.write(vals)
@@ -229,7 +218,7 @@ class DeliveryCarrier(models.Model):
     def _yurtici_update_picking_fields(self, picking, response):
 
         vals = {
-            'carrier_tracking_ref': response.shippingDeliveryItemDetailVO.docId,
+            'shipping_number': response.shippingDeliveryItemDetailVO.docId,
         }
 
         if len(response.shippingDeliveryItemDetailVO.invDocCargoVOArray) > 0:
