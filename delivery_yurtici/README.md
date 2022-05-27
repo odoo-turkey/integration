@@ -1,6 +1,4 @@
-=================
-Delivery Yurtiçi Kargo
-=================
+# Delivery Yurtiçi Kargo
 
 Odoo için Yurtiçi Kargo entegrasyonu.
 
@@ -23,9 +21,9 @@ Yurtiçi Kargo'nun API teknik dokümanı `api/` klasörünün içinde bulabilirs
 ### Gerekli Modüller:
 
 - 	delivery_integration_base ([odoo-turkey/integration](https://github.com/odoo-turkey/integration))
--	Python bağımlılıkları:
-	* zeep
-	* phonenumbers
+### Python bağımlılıkları:
+- zeep
+- phonenumbers
 
 ### Notlar:
 
