@@ -9,6 +9,7 @@
         <field name="integration_level" position="after">
             <field name="carrier_barcode_type"
             attrs="{'invisible': [('delivery_type', 'in', ['fixed', 'base_on_rule'])]}"/>
+            <field name="barcode_text_1" />
             <field name="attach_barcode"
             attrs="{'invisible': [('delivery_type', 'in', ['fixed', 'base_on_rule'])]}"/>
             <field name="default_printer_id"
