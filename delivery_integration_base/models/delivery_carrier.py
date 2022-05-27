@@ -13,10 +13,16 @@ class DeliveryCarrier(models.Model):
                                                 ('zpl', 'ZPL (Zebra)'),
                                             ], default='pdf', required=True)
 
+    payment_type = fields.Selection(string='Payment Type',
+                                    selection=[('customer_pays', 'Customer Pays'), ('sender_pays', 'Sender Pays')],
+                                    default='sender_pays', required=True)
+
     default_printer_id = fields.Many2one('printing.printer', string='Default Printer')
 
     attach_barcode = fields.Boolean(string='Attach Barcode to Picking', default=False,
                                     help='If checked, barcode will be attached to picking as a file.')
+
+    currency_id = fields.Many2one('res.currency', string='Currency', required=True)
 
     def _calculate_deci(self, order):
         price = deci = weight = 0.0
@@ -39,11 +45,11 @@ class DeliveryCarrier(models.Model):
         if not criteria_found:
             return _("No matching price found.")
 
-        if order.currency_id.id != suitable_rule.currency_id.id:
-            price = suitable_rule.currency_id._convert(price, order.currency_id,
-                                                       order.company_id, fields.Date.today())
+        if order.currency_id.id != self.currency_id.id:
+            price = self.currency_id._convert(price, order.currency_id,
+                                              order.company_id, fields.Date.today())
 
-        return "%s%.2f" % (order.currency_id.symbol,price)
+        return "%s%.2f" % (order.currency_id.symbol, price)
 
     def _filter_rules_by_region(self, order):
         """

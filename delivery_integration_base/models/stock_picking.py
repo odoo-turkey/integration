@@ -1,11 +1,26 @@
 # Copyright 2022 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import models, _
+from odoo import models, _, fields
 from odoo.exceptions import ValidationError
 
 
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
+
+    carrier_package_count = fields.Integer('Package Count', help='Number of packages', default=1)
+    carrier_total_weight = fields.Float('Carrier Total Weight', help='Decimal of packages')
+    picking_total_weight = fields.Float('Picking Total Weight', help='Decimal of packages')
+    carrier_received_by = fields.Char('Received By', help='Received by')
+
+    # Accounting fields
+    carrier_shipping_cost = fields.Monetary('Shipping Cost', help='Shipping cost', default=0.0,
+                                            currency_field='carrier_currency_id')
+    carrier_shipping_vat = fields.Monetary('Shipping VAT', help='Shipping VAT', default=0.0,
+                                           currency_field='carrier_currency_id')
+    carrier_shipping_total = fields.Monetary('Shipping Total', help='Shipping total', default=0.0,
+                                             currency_field='carrier_currency_id')
+    carrier_currency_id = fields.Many2one('res.currency', 'Carrier Currency', help='Carrier Currency',
+                                          related='carrier_id.currency_id', readonly=True)
 
     def carrier_get_label(self):
         """Call to the service provider API which should have the method

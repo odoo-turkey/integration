@@ -85,6 +85,10 @@ class YurticiRequest:
                 # exception error traceback
                 except Exception:
                     raise Fault(e)
+
+        if response.outFlag != '0':
+            raise ValidationError("%s %s" % (response.errCode, response.outResult))
+
         return response
 
     def _fill_empty_fields(self, vals, method):
@@ -107,7 +111,7 @@ class YurticiRequest:
         :returns dict with Yurtici response containing the shipping code and label
         """
         vals = self._shipping_api_credentials()
-        filled_fields = self._fill_empty_fields(picking_vals, 'ns1:ShippingOrderVO')
+        filled_fields = self._fill_empty_fields(picking_vals, 'ns0:ShippingOrderVO')
         vals.update({'ShippingOrderVO': filled_fields})
         response = self._process_reply(self.client.service.createShipment, vals, send_as_kw=True)
         return response.shippingOrderDetailVO[0]

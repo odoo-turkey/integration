@@ -9,7 +9,6 @@
             <xpath expr="/form" position="inside">
                 <group>
                     <field name="deci_type" attrs="{'invisible': [('variable', '!=', 'deci')]}"/>
-                    <field name="currency_id"/>
                     <field name="region_id"/>
                 </group>
             </xpath>
