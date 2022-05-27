@@ -36,7 +36,7 @@ Bu modül henüz geliştirilme aşamasındadır. Odoo 12.0 temel alınarak tasar
 
 ### Odoo Türkiye yerelleştirme projemize katkılarınızı bekliyoruz.
 
-* Proje LGPL lisansı ile lisanslanmıştır. Katkılarınız da bu lisans koşullarını kabul etmiş sayılırsınız.
+* Proje LGPL lisansı ile lisanslanmıştır. Katkılarınızda bu lisans koşullarını kabul etmiş sayılırsınız.
 * Projemizdeki modüllerin ve içeriğin **OCA kalite standartları**nı sağlamasını amaçlıyoruz.
 * [Contribute to OCA](https://odoo-community.org/page/Contribute) sayfasında genel bilgiler mevcut.
 * Eklenecek modüller için genel kurallara https://github.com/OCA/maintainer-tools/blob/master/CONTRIBUTING.md adresinden erişebilirsiniz.
