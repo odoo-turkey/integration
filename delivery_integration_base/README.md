@@ -1,6 +1,4 @@
-==============
-Delivery Integration Base
-==============
+# Delivery Integration Base
 
 Bu modül ne işe yarar?
 
