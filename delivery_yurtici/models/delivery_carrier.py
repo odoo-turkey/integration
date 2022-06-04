@@ -90,7 +90,7 @@ class DeliveryCarrier(models.Model):
         vals = {}
         vals.update(
             {
-                "cargoKey": self.get_ref_number(),
+                "cargoKey": self._get_ref_number(),
                 "invoiceKey": picking.name,  # TODO: implement invoice key
                 "receiverCustName": picking.partner_id.display_name,
                 "receiverAddress": self._yurtici_address(picking.partner_id),
@@ -210,12 +210,12 @@ class DeliveryCarrier(models.Model):
             }
 
         if response.operationCode != 0 and response.shippingDeliveryItemDetailVO:
-            vals.update(self._yurtici_update_picking_fields(picking, response))
+            vals.update(self._yurtici_update_picking_fields(response))
 
         picking.write(vals)
         return True
 
-    def _yurtici_update_picking_fields(self, picking, response):
+    def _yurtici_update_picking_fields(self, response):
 
         vals = {
             'shipping_number': response.shippingDeliveryItemDetailVO.docId,
@@ -239,8 +239,6 @@ class DeliveryCarrier(models.Model):
             vals.update({'carrier_received_by': response.shippingDeliveryItemDetailVO.receiverInfo,
                          'date_delivered': datetime.strptime(response.shippingDeliveryItemDetailVO.deliveryDate,
                                                              '%Y%m%d')})
-
-        picking.write(vals)
 
         return vals
 
