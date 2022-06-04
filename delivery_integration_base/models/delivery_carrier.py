@@ -25,6 +25,9 @@ class DeliveryCarrier(models.Model):
     url_shortener_id = fields.Many2one('short.url.yourls', string='URL Shortener')
     sms_service_id = fields.Many2one('iap.account', string='SMS Service')
 
+    barcode_text_1 = fields.Char(string='Barcode Text 1',
+                                 help='Some static text for this carrier to package labels.')
+
     def _calculate_deci(self, order):
         price = deci = weight = 0.0
         for line in order.order_line:
