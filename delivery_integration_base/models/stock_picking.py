@@ -1,6 +1,6 @@
 # Copyright 2022 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import models, _, fields
+from odoo import models, _, fields, api
 from odoo.exceptions import ValidationError
 
 
@@ -22,6 +22,18 @@ class StockPicking(models.Model):
                                              currency_field='carrier_currency_id')
     carrier_currency_id = fields.Many2one('res.currency', 'Carrier Currency', help='Carrier Currency',
                                           related='carrier_id.currency_id', readonly=True)
+
+    def _tracking_status_notification(self):
+        if (self.carrier_id.delivery_type not in [False, 'base_on_rule', 'fixed'] and
+                self.carrier_id.send_sms_customer and
+                self.carrier_id.sms_service_id):
+            self.carrier_id.with_delay()._sms_notificaton_send(self)
+
+    def write(self, vals):
+        if "delivery_state" in vals:
+            if vals["delivery_state"] == "in_transit" and vals["delivery_state"] != self.delivery_state:
+                self._tracking_status_notification()
+        return super().write(vals)
 
     def carrier_get_label(self):
         """Call to the service provider API which should have the method
