@@ -15,6 +15,8 @@
     "data": [
         "views/delivery_yurtici_view.xml",
         'report/yurtici_carrier_label.xml',
+        'report/yurtici_sms_template.xml',
         'report/reports.xml',
+
     ],
 }
