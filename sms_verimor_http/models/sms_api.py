@@ -33,7 +33,7 @@ class SmsApi(models.AbstractModel):
         if r.status_code != 200:
             raise ValidationError(response)
 
-        return "Balance: {}".format(response)
+        return response
 
 
     def _get_balance_verimor_sms_api(self, account):

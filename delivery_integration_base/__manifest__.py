@@ -10,6 +10,7 @@
     'version': '12.0.1.1.0',
     'depends': [
         "delivery", "l10n_tr_address", "delivery_state", "product_dimension",
+        "queue_job", "sms_verimor_http", "short_url_yourls"
     ],
     'data': [
         'views/stock_picking_views.xml',

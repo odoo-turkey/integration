@@ -11,13 +11,17 @@ Bu modül ne işe yarar?
   - Türkiye içinde yaygın kullanılan fiyat kuralı unsurlarını `delivey_price_rule` modeline ekler.
   - Teslimat içerisinden direkt barkod bastırma özelliği.
   - Satış siparişinde, kargo firmalarından toplu şekilde fiyat alma sihirbazı.
-
+  - Teslimat transfer sürecinde müşteriye SMS ile bilgi verir.
 
 ### Gerekli Modüller:
 
-- 	l10n_tr_address ([odoo-turkey/l10n-turkey](https://github.com/odoo-turkey/l10n-turkey)) 
-- 	delivery_state ([oca/delivery-carrier](https://github.com/OCA/delivery-carrier))
-- 	product_dimension ([oca/product-attribute](https://github.com/OCA/product-attribute))
+- l10n_tr_address ([odoo-turkey/l10n-turkey](https://github.com/odoo-turkey/l10n-turkey)) 
+- delivery_state ([oca/delivery-carrier](https://github.com/OCA/delivery-carrier))
+- product_dimension ([oca/product-attribute](https://github.com/OCA/product-attribute))
+- queue_job ([oca/queue](https://github.com/oca/queue)) 
+- sms_verimor_http ([odoo-turkey/integration](https://github.com/odoo-turkey/integration))
+- short_url_yourls ([aaltinisik/customaddons](https://github.com/aaltinisik/customaddons))
+
 
 ### Notlar:
 
