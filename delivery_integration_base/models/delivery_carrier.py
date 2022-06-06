@@ -27,18 +27,31 @@ class DeliveryCarrier(models.Model):
 
     barcode_text_1 = fields.Char(string='Barcode Text 1',
                                  help='Some static text for this carrier to package labels.')
+    deci_type = fields.Selection(string='Deci Type',
+                                 selection=[
+                                     (3000, '(3000)'),
+                                     (4000, '(4000)'),
+                                     (5000, '(5000)'),
+                                 ], default=3000, required=True)
+
 
     def _calculate_deci(self, order):
-        price = deci = weight = 0.0
+        deci = 0.0
+        uom_kg = self.env.ref("uom.product_uom_kgm")
+
         for line in order.order_line:
             product_id = line.product_id
-            weight += line.product_id.weight * line.product_uom_qty
-            deci += product_id.volume * line.product_uom_qty
+            line_qty = line.product_uom._compute_quantity(qty=line.product_uom_qty, to_unit=product_id.uom_id,
+                                                          round=False)
+            line_kg = uom_kg._compute_quantity(qty=line_qty * product_id.weight, to_unit=product_id.weight_uom_id,
+                                               round=False)
+            line_litre = (line_qty * product_id.product_length * product_id.product_height * product_id.product_width * 1000.0) / (product_id.dimensional_uom_id.factor ** 3)
+            deci += max(line_kg, (line_litre * 1000.0 / self.deci_type))
 
         criteria_found = False
         for line in self._filter_rules_by_region(order):
             price_dict = {
-                'deci': max((deci / line.deci_type), weight),
+                'deci': deci,
             }
             test = safe_eval(line.variable + line.operator + str(line.max_value), price_dict)
             if test:
