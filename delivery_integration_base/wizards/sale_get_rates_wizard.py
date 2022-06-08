@@ -24,19 +24,16 @@ class SaleGetRatesWizard(models.TransientModel):
         if sale_order:
             carrier_prices = self.get_delivery_prices(sale_order)
             create_list = []
-            for carrier, price in carrier_prices.items():
-                create_list.append({
-                    'carrier_id': carrier.id,
-                    'price': price,
-                    'order_id': sale_order.id,
-                })
+            for carrier, result in carrier_prices.items():
+                if result['success']:
+                    create_list.append(
+                        {'carrier_id': carrier.id,
+                         'price': result['price'],
+                         'order_id': sale_order.id,
+                         })
             created_items = self.env['delivery.carrier.lines'].create(create_list)
             result['carrier_prices'] = [(6, 0, created_items.ids)]
-        #
-        # result.update({
-        #     'invoice_date': fields.Date.today(),
-        #     'partner_id': partner_id.id,
-        # })
+
         return result
 
     @api.multi
