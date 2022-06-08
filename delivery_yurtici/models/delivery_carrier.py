@@ -254,15 +254,9 @@ class DeliveryCarrier(models.Model):
         )
 
     def yurtici_rate_shipment(self, order):
-        """There's no public API so another price method should be used."""
-        raise NotImplementedError(
-            _(
-                "Yurtiçi API doesn't provide methods to compute delivery "
-                "rates, so you should relay on another price method instead or "
-                "override this one in your custom code."
-            )
-        )
+        """There's no public API so use rules for calculation."""
+        return self.base_on_rule_rate_shipment(order)
 
     def yurtici_get_rate(self, order):
         """Get delivery price for Yurtiçi"""
-        return self._calculate_deci(order)
+        return self.base_on_rule_get_rate(order)

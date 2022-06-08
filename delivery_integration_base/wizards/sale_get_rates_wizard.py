@@ -10,48 +10,6 @@ class SaleGetRatesWizard(models.TransientModel):
     _description = "Sale Get Rates Wizard"
 
     carrier_prices = fields.Many2many('delivery.carrier.lines', string='Prices')
-    #
-    #
-    # journal_type = fields.Selection(
-    #     selection=[
-    #         ('purchase', 'Create Supplier Invoice'),
-    #         ('sale', 'Create Customer Invoice')
-    #     ],
-    #     default=_get_journal_type,
-    #     readonly=True,
-    # )
-    # group = fields.Selection(
-    #     selection=[
-    #         ('picking', 'Picking'),
-    #         ('partner', 'Partner'),
-    #         ('partner_product', 'Partner/Product'),
-    #     ],
-    #     default="partner",
-    #     help="Group pickings/moves to create invoice(s):\n"
-    #          "Picking: One invoice per picking;\n"
-    #          "Partner: One invoice for each picking's partner;\n"
-    #          "Partner/Product: One invoice per picking's partner and group "
-    #          "product into a single invoice line.",
-    #     required=True,
-    # )
-    # invoice_date = fields.Date()
-    # sale_journal = fields.Many2one(
-    #     comodel_name='account.journal',
-    #     domain="[('type', '=', 'sale')]",
-    #     default=lambda self: self._default_journal('sale'),
-    #     ondelete="cascade",
-    # )
-    # purchase_journal = fields.Many2one(
-    #     comodel_name='account.journal',
-    #     domain="[('type', '=', 'purchase')]",
-    #     default=lambda self: self._default_journal('purchase'),
-    #     ondelete="cascade",
-    # )
-    # show_sale_journal = fields.Boolean()
-    # show_purchase_journal = fields.Boolean()
-    # connect_to_einvoice = fields.Boolean(string='Connect to e-invoice')
-    # partner_id = fields.Many2one('res.partner', string='Partner', readonly=True)
-    # supplier_invoice_id = fields.Many2one('account.invoice', string='Supplier Invoice')
 
     @api.model
     def default_get(self, fields_list):
@@ -99,12 +57,10 @@ class SaleGetRatesWizard(models.TransientModel):
         sale_order.ensure_one()
         carrier_dict = {}
         carrier_obj = self.env['delivery.carrier']
-        carrier_ids = carrier_obj.search([('delivery_type', 'not in', ['base_on_rule', 'fixed'])])
+        carrier_ids = carrier_obj.search([('show_in_price_table', '=', True)])
         for order in sale_order.filtered(lambda o: o.state in ('draft', 'sent') and len(o.order_line) > 0):
             for carrier in carrier_ids:
-                if hasattr(carrier, '%s_get_rate' % carrier.delivery_type):
-                    carrier_dict[carrier] = getattr(carrier, '%s_get_rate' % carrier.delivery_type)(order)
-
+                carrier_dict[carrier] = carrier.rate_shipment(order)
         return carrier_dict
 
 

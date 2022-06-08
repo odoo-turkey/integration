@@ -3,7 +3,7 @@
 from odoo import models, fields, api, _
 from odoo.tools.safe_eval import safe_eval
 from odoo.exceptions import ValidationError
-
+import math
 
 class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
@@ -33,39 +33,48 @@ class DeliveryCarrier(models.Model):
                                      (4000, '(4000)'),
                                      (5000, '(5000)'),
                                  ], default=3000, required=True)
+    weight_calc_percentage = fields.Float(string="additional percentage for weight calculation")
+    show_in_price_table = fields.Boolean(string="Show in Price Table",help="Show this carrier in Sale Order Shipment "
+                                                                           "Price table")
+    fuel_surcharge_percentage = fields.Float(string="Fuel Surcharge Percentage",help="Additional Price to add after calculation of tables")
+    environment_fee_per_kg = fields.Float(string="Environment Charge per Kg",help="Environment fee per KG added after fuel surcharge")
+    postal_charge_percentage = fields.Float(string="Postal Charge Percentage",help="For shipments below 30kg or Deci additional percentage to add")
+    Emergency_fee_per_kg = fields.Float(string="Emergency Charge Per Kg",help="Emergency fee added after postal chargee percentage")
 
 
-    def _calculate_deci(self, order):
-        deci = 0.0
-        uom_kg = self.env.ref("uom.product_uom_kgm")
-
-        for line in order.order_line:
-            product_id = line.product_id
-            line_qty = line.product_uom._compute_quantity(qty=line.product_uom_qty, to_unit=product_id.uom_id,
-                                                          round=False)
-            line_kg = uom_kg._compute_quantity(qty=line_qty * product_id.weight, to_unit=product_id.weight_uom_id,
-                                               round=False)
-            line_litre = (line_qty * product_id.product_length * product_id.product_height * product_id.product_width * 1000.0) / (product_id.dimensional_uom_id.factor ** 3)
-            deci += max(line_kg, (line_litre * 1000.0 / self.deci_type))
-
-        criteria_found = False
-        for line in self._filter_rules_by_region(order):
-            price_dict = {
-                'deci': deci,
-            }
-            test = safe_eval(line.variable + line.operator + str(line.max_value), price_dict)
-            if test:
-                price = line.list_base_price + line.list_price * price_dict[line.variable_factor]
-                criteria_found = True
-                break
-        if not criteria_found:
-            return _("No matching price found.")
-
-        if order.currency_id.id != self.currency_id.id:
-            price = self.currency_id._convert(price, order.currency_id,
-                                              order.company_id, fields.Date.today())
-
-        return "%s%.2f" % (order.currency_id.symbol, price)
+    # def _calculate_deci(self, order):
+    #     deci = 0.0
+    #     uom_kg = self.env.ref("uom.product_uom_kgm")
+    #
+    #     for line in order.order_line:
+    #         product_id = line.product_id
+    #         line_qty = line.product_uom._compute_quantity(qty=line.product_uom_qty, to_unit=product_id.uom_id,
+    #                                                       round=False)
+    #         line_kg = uom_kg._compute_quantity(qty=line_qty * product_id.weight, to_unit=product_id.weight_uom_id,
+    #                                            round=False)
+    #         line_litre = (line_qty * product_id.product_length * product_id.product_height * product_id.product_width * 1000.0) / (product_id.dimensional_uom_id.factor ** 3)
+    #         deci += max(line_kg, (line_litre * 1000.0 / self.deci_type))
+    #
+    #     deci = deci * (100.0 + self.weight_calc_percentage) / 100.0
+    #
+    #     criteria_found = False
+    #     for line in self._filter_rules_by_region(order):
+    #         price_dict = {
+    #             'deci': deci,
+    #         }
+    #         test = safe_eval(line.variable + line.operator + str(line.max_value), price_dict)
+    #         if test:
+    #             price = line.list_base_price + line.list_price * price_dict[line.variable_factor]
+    #             criteria_found = True
+    #             break
+    #     if not criteria_found:
+    #         return _("No matching price found.")
+    #
+    #     if order.currency_id.id != self.currency_id.id:
+    #         price = self.currency_id._convert(price, order.currency_id,
+    #                                           order.company_id, fields.Date.today())
+    #
+    #     return "%s%.2f" % (order.currency_id.symbol, price)
 
     def _filter_rules_by_region(self, order):
         """
@@ -138,3 +147,68 @@ class DeliveryCarrier(models.Model):
                 url = shortener.shorten_url(res)
             return url
         return res
+
+    def _get_price_available(self, order):
+        self.ensure_one()
+        total = weight = volume = quantity = deci = 0
+        uom_kg = self.env.ref("uom.product_uom_kgm")
+        # volume in litre, weight in Kg
+        total_delivery = 0.0
+        for line in order.order_line:
+            if line.state == 'cancel':
+                continue
+            if line.is_delivery:
+                total_delivery += line.price_total
+            if not line.product_id or line.is_delivery:
+                continue
+            if line.product_id.type == 'product' and (line.product_id.weight < 0.0001 or line.product_id.volume < 0.0001):
+                raise UserError(_("Cannot calculate Shipping, Weight and Volume for product %s missing.") %(line.product_id.display_name))
+            
+            line_qty = line.product_uom._compute_quantity(qty=line.product_uom_qty, to_unit=line.product_id.uom_id, round=False)
+            line_kg = uom_kg._compute_quantity(qty=line_qty * line.product_id.weight, to_unit=line.product_id.weight_uom_id,round=False)
+            line_litre = (line_qty * line.product_id.product_length * line.product_id.product_height * line.product_id.product_width * 1000.0) / (line.product_id.dimensional_uom_id.factor ** 3)
+            deci += max(line_kg, (line_litre * 1000.0 / self.deci_type))
+            weight += line_kg
+            volume += line_litre
+            quantity += line_qty
+
+        factor = (100.0 + self.weight_calc_percentage) / 100.0
+        deci = math.ceil(deci * factor)
+        weight = math.ceil(weight * factor)
+        volume = volume * factor
+
+
+        total = (order.amount_total or 0.0) - total_delivery
+        total = order.currency_id._convert(
+            total, self.currency_id, order.company_id, order.date_order or fields.Date.today())
+
+        price = self._get_price_from_picking(total, weight, volume, quantity, deci, order)
+        if self.fuel_surcharge_percentage > 0.001:
+            price = price * (self.fuel_surcharge_percentage + 100.0) / 100.0
+        if self.environment_fee_per_kg > 0.001:
+            price = price + deci * self.environment_fee_per_kg
+        if self.postal_charge_percentage > 0.001 and deci < 30.0:
+            price = price * (self.postal_charge_percentage + 100.0) / 100.0
+        if self.Emergency_fee_per_kg > 0.001:
+            price = price + deci * self.Emergency_fee_per_kg
+
+        if order.company_id.currency_id.id != self.currency_id.id:
+            price = self.currency_id._convert(price, order.company_id.currency_id,
+                                              order.company_id, order.date_order or fields.Date.today())
+        return price
+
+
+    def _get_price_from_picking(self, total, weight, volume, quantity, deci, order):
+        price = 0.0
+        criteria_found = False
+        price_dict = {'price': total, 'volume': volume, 'weight': weight, 'wv': volume * weight, 'quantity': quantity, 'deci': deci}
+        for line in self._filter_rules_by_region(order):
+            test = safe_eval(line.variable + line.operator + str(line.max_value), price_dict)
+            if test:
+                price = line.list_base_price + line.list_price * price_dict[line.variable_factor]
+                criteria_found = True
+                break
+        if not criteria_found:
+            raise UserError(_("No price rule matching this order; delivery cost cannot be computed."))
+
+        return price

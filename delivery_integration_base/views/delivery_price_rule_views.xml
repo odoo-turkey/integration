@@ -8,7 +8,6 @@
         <field name="arch" type="xml">
             <xpath expr="/form" position="inside">
                 <group>
-                    <field name="deci_type" attrs="{'invisible': [('variable', '!=', 'deci')]}"/>
                     <field name="region_id"/>
                 </group>
             </xpath>
