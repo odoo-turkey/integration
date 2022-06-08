@@ -3,6 +3,7 @@
 from odoo import models, fields, api, _
 from odoo.tools.safe_eval import safe_eval
 from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 import math
 
 
@@ -133,8 +134,7 @@ class DeliveryCarrier(models.Model):
                 continue
             if line.product_id.type == 'product' and (
                     line.product_id.weight < 0.0001 or line.product_id.volume < 0.0001):
-                raise UserError(_("Cannot calculate Shipping, Weight and Volume for product %s missing.") % (
-                    line.product_id.display_name))
+                raise UserError(_("Cannot calculate Shipping, Weight and Volume for product %s missing.") % (line.product_id.display_name))
 
             line_qty = line.product_uom._compute_quantity(qty=line.product_uom_qty, to_unit=line.product_id.uom_id,
                                                           round=False)
