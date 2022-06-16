@@ -8,13 +8,10 @@ class DeliveryPriceRule(models.Model):
 
     variable = fields.Selection(selection_add=[("deci", "Deci")])
     variable_factor = fields.Selection(selection_add=[("deci", "Deci")])
-    deci_type = fields.Selection(string='Deci Type',
-                                 selection=[
-                                     (3000, 'Domestic (3000)'),
-                                     (5000, 'Foreign (5000)'),
-                                 ], default=3000, required=True)
-
     region_id = fields.Many2one('delivery.region', string='Region', required=True)
+    _order = 'region_id, sequence, list_price, id'
+
+
 
     @api.onchange('variable')
     def _onchange_variable(self):

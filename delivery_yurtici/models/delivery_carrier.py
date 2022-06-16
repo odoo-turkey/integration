@@ -43,7 +43,7 @@ class DeliveryCarrier(models.Model):
 
     def _yurtici_phone_number(self, partner, priority='mobile'):
         """
-        Sendeo requires phone number without spaces and country code.
+        Yurtici requires phone number without spaces and country code.
         We use priority selector to handle two different phone numbers.
         :param partner: recordset res.partner
         :param priority: string
@@ -53,11 +53,11 @@ class DeliveryCarrier(models.Model):
         if priority_field:
             return phonenumbers.format_number(
                 phonenumbers.parse(priority_field, partner.country_id.code or "TR"),
-                phonenumbers.PhoneNumberFormat.E164).lstrip('+90')
+                phonenumbers.PhoneNumberFormat.E164).lstrip('+9')
         elif partner.phone or partner.mobile:
             return phonenumbers.format_number(
                 phonenumbers.parse(partner.phone or partner.mobile, partner.country_id.code or "TR"),
-                phonenumbers.PhoneNumberFormat.E164).lstrip('+90')
+                phonenumbers.PhoneNumberFormat.E164).lstrip('+9')
         else:
             raise ValidationError(_("%s\nPartner's phone number is missing."
                                     " It's a required field for dispatch."
@@ -94,8 +94,8 @@ class DeliveryCarrier(models.Model):
                 "invoiceKey": picking.name,  # TODO: implement invoice key
                 "receiverCustName": picking.partner_id.display_name,
                 "receiverAddress": self._yurtici_address(picking.partner_id),
-                "receiverPhone1": self._sendeo_phone_number(picking.company_id.partner_id, priority='mobile'),
-                "receiverPhone2": self._sendeo_phone_number(picking.company_id.partner_id, priority='phone'),
+                "receiverPhone1": self._yurtici_phone_number(picking.partner_id, priority='mobile'),
+                "receiverPhone2": self._yurtici_phone_number(picking.partner_id, priority='phone'),
                 "cityName": picking.partner_id.state_id.name,
                 "townName": picking.partner_id.district_id.name,
                 "waybillNo": picking.name,  # TODO: implement waybill number
@@ -254,15 +254,9 @@ class DeliveryCarrier(models.Model):
         )
 
     def yurtici_rate_shipment(self, order):
-        """There's no public API so another price method should be used."""
-        raise NotImplementedError(
-            _(
-                "Yurtiçi API doesn't provide methods to compute delivery "
-                "rates, so you should relay on another price method instead or "
-                "override this one in your custom code."
-            )
-        )
+        """There's no public API so use rules for calculation."""
+        return self.base_on_rule_rate_shipment(order)
 
     def yurtici_get_rate(self, order):
         """Get delivery price for Yurtiçi"""
-        return self._calculate_deci(order)
+        return self.base_on_rule_get_rate(order)
