@@ -5,6 +5,7 @@ from odoo.tools.safe_eval import safe_eval
 from odoo.exceptions import ValidationError
 from odoo.exceptions import UserError
 import math
+from datetime import timedelta
 
 
 class DeliveryCarrier(models.Model):
@@ -80,6 +81,7 @@ class DeliveryCarrier(models.Model):
         pickings = self.env['stock.picking'].search(
             [('carrier_id.delivery_type', 'not in', [False, 'fixed', 'base_on_rule']),
              ('carrier_tracking_ref', '!=', False),
+             ('date_done', '>', fields.Date.today() - timedelta(days=5)),
              ('delivery_state', 'in', ['shipping_recorded_in_carrier', 'in_transit'])])
 
         pickings.tracking_state_update()
