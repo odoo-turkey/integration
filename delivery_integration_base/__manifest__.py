@@ -13,6 +13,7 @@
         "queue_job", "sms_verimor_http", "short_url_yourls"
     ],
     'data': [
+        'data/cron.xml',
         'views/stock_picking_views.xml',
         'views/delivery_carrier_views.xml',
         'views/delivery_price_rule_views.xml',
