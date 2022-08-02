@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_form_vomsis">
+        <field name="name">online.bank.statement.provider.form.vomsis</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field name="inherit_id" ref="account_bank_statement_import_online.online_bank_statement_provider_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='configuration']" position="inside">
+                <group name="vomsis" attrs="{'invisible':[('service','!=','vomsis')]}">
+                    <field name="vomsis_app_key"/>
+                    <field name="vomsis_app_secret"/>
+                    <field name="vomsis_jwt_token"/>
+                    <field name="vomsis_token_interval"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
