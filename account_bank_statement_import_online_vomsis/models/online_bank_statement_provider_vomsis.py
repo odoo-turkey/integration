@@ -3,6 +3,7 @@
 
 import requests
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
@@ -80,7 +81,7 @@ class OnlineBankStatementProviderVomsis(models.Model):
                 resp = requests.post("%s/authenticate" % VOMSIS_ENDPOINT, json=vals).json()
                 if resp.get('status') == 'success':
                     self.write({'vomsis_jwt_token': resp.get('token'),
-                                'vomsis_token_interval': datetime.now()})
+                                'vomsis_token_interval': datetime.now()+relativedelta(months=+6)})
         else:
             raise UserError(_('Please fill login and key.'))
 
@@ -115,9 +116,7 @@ class OnlineBankStatementProviderVomsis(models.Model):
         transaction_lines = self._vomsis_get_transaction(
             account_id, date_since, date_until)
         new_transactions = []
-        # transcation yoksa boş döndür
         # transcationun currency si, unique import idsi, amount'u
-        # aynı gün içerisinde tekrar tekrar çekince noluo?
         sequence = 0
         for transaction in transaction_lines:
             sequence += 1

@@ -12,7 +12,9 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "external_dependencies": {"python": [], "bin": []}, # todo: add NN dependencies
+    "external_dependencies": {"python": [
+        "tensorflow", "keras", "numpy", "pandas", "matplotlib"
+    ], "bin": []},
     "depends": ["delivery_integration_base"],
     "data": ["views/delivery_nn_view.xml"],
 }
