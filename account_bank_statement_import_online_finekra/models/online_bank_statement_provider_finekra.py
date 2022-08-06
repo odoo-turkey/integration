@@ -105,7 +105,7 @@ class OnlineBankStatementProviderFinekra(models.Model):
     def _finekra_date_from_string(self, date_str):
         """Finekra dates are GMT+3, so we don't need to convert them to UTC
         """
-        dt = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%f%z')
+        dt = datetime.strptime(date_str, '%d.%m.%Y %H:%M')
         return dt
 
     def _finekra_obtain_statement_data(self, date_since, date_until):
@@ -125,7 +125,7 @@ class OnlineBankStatementProviderFinekra(models.Model):
         sequence = 0
         for transaction in transaction_lines:
             sequence += 1
-            date = self._finekra_date_from_string(transaction.get('transactionDateValue'))
+            date = self._finekra_date_from_string(transaction.get('transactionDate'))
             vals_line = {
                 'sequence': sequence,
                 'date': date,
