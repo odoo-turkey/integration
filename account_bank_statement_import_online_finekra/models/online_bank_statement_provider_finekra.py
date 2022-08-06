@@ -91,10 +91,10 @@ class OnlineBankStatementProviderFinekra(models.Model):
         page_url = "%s/api/AccountTransaction" % FINEKRA_ENDPOINT
 
         vals = {'$filter': 'TenantAccountId eq %s and'
-                           ' date(TransactionDateValue) lt %s and'
-                           ' date(TransactionDateValue) gt %s' % (account_id,
-                                                                  (date_until - timedelta(days=1)).strftime('%Y-%m-%d'),
-                                                                  (date_since - timedelta(days=1)).strftime('%Y-%m-%d'))}
+                           ' date(TransactionDateValue) le %s and'
+                           ' date(TransactionDateValue) ge %s' % (account_id,
+                                                                  date_until.strftime('%Y-%m-%d'),
+                                                                  date_since.strftime('%Y-%m-%d'))}
 
         data = self._finekra_get_request(endpoint=page_url, data=vals)
         if data.get('value'):
@@ -105,7 +105,7 @@ class OnlineBankStatementProviderFinekra(models.Model):
     def _finekra_date_from_string(self, date_str):
         """Finekra dates are GMT+3, so we don't need to convert them to UTC
         """
-        dt = datetime.strptime(date_str, '%Y.%m.%d %H:%M')
+        dt = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%f%z')
         return dt
 
     def _finekra_obtain_statement_data(self, date_since, date_until):
