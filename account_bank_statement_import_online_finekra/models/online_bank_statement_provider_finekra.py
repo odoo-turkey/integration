@@ -109,6 +109,7 @@ class OnlineBankStatementProviderFinekra(models.Model):
         return dt
 
     def _finekra_obtain_statement_data(self, date_since, date_until):
+        # currency_dict = {x.name: x.id for x in self.env['res.currency'].search([('active', '=', True)])}
         self.ensure_one()
         self._finekra_get_auth()
         journal = self.journal_id
@@ -124,6 +125,7 @@ class OnlineBankStatementProviderFinekra(models.Model):
         # transcationun currency si, unique import idsi, amount'u
         sequence = 0
         for transaction in transaction_lines:
+            # currency = transaction.get('currency')
             sequence += 1
             date = self._finekra_date_from_string(transaction.get('transactionDate'))
             vals_line = {
@@ -131,8 +133,13 @@ class OnlineBankStatementProviderFinekra(models.Model):
                 'date': date,
                 'name': transaction.get('description', journal.name),
                 'unique_import_id': transaction['id'],
-                'amount': transaction['amount'],
+                'amount': transaction['amountForExcel'],
             }
+            # if currency != 'TRY':
+            #     vals_line.update({
+            #         'currency_id': currency_dict.get(currency),
+            #     })
+
             new_transactions.append(vals_line)
         if new_transactions:
             return new_transactions, {}
