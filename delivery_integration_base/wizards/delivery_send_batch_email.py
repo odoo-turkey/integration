@@ -12,7 +12,8 @@ class DeliverySendBatchEmail(models.TransientModel):
         context = dict(self._context or {})
         active_ids = context.get('active_ids', []) or []
         pickings = self.env['stock.picking'].browse(active_ids)
-        for record in self.web_progress_iter(pickings.filtered(lambda p: not p.mail_sent), msg="Sending emails..."):
+        for record in self.web_progress_iter(pickings.filtered(lambda p: not p.mail_sent and p.shipping_number),
+                                             msg="Sending emails..."):
             record.button_mail_send()
             self.env.cr.commit()
         return {'type': 'ir.actions.act_window_close'}
