@@ -18,8 +18,10 @@
         'views/delivery_carrier_views.xml',
         'views/delivery_price_rule_views.xml',
         'wizards/sale_get_rates_wizard_views.xml',
+        'wizards/delivery_send_batch_email_views.xml',
         'views/sale_order_views.xml',
         'views/delivery_region_views.xml',
+        'report/delivery_mail_template.xml',
     ],
     'installable': True,
 }

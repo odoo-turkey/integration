@@ -12,6 +12,7 @@ class StockPicking(models.Model):
     picking_total_weight = fields.Float('Picking Total Weight', help='Decimal of packages')
     carrier_received_by = fields.Char('Received By', help='Received by')
     shipping_number = fields.Char('Shipping Number', help='Shipping Tracking Number')
+    mail_sent = fields.Boolean('Mail Sent To Customer', default=False, copy=False)
 
     # Accounting fields
     carrier_shipping_cost = fields.Monetary('Shipping Cost', help='Shipping cost', default=0.0,
@@ -82,3 +83,17 @@ class StockPicking(models.Model):
         printer.print_document(report_name, qweb_text, doc_form="txt")
         return True
 
+    def button_mail_send(self):
+        """
+        Send the shipment status by email
+        :return: boolean
+        """
+        mail_template = self.env.ref('delivery_integration_base.delivery_mail_template')
+        if self.partner_id.email and not self.mail_sent:
+            mail_template.with_delay().send_mail(res_id=self.id, force_send=True, raise_exception=False,
+                                                 email_values={'email_to': self.partner_id.email})
+            self.write({
+                'mail_sent': True,
+            })
+
+        return True
