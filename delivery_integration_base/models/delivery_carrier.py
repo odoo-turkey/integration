@@ -48,6 +48,9 @@ class DeliveryCarrier(models.Model):
     Emergency_fee_per_kg = fields.Float(string="Emergency Charge Per Kg",
                                         help="Emergency fee added after postal chargee percentage")
 
+    tracking_url_prefix_no_integration = fields.Char(string='Tracking URL Prefix',
+                                                     help='Tracking URL prefix for carrier that has no integration.')
+
     def _filter_rules_by_region(self, order):
         """
         Filter rules by defined region
@@ -112,6 +115,10 @@ class DeliveryCarrier(models.Model):
         '''
         res = super(DeliveryCarrier, self).get_tracking_link(picking)
         shortener = self.url_shortener_id
+
+        if not res and picking.carrier_id.tracking_url_prefix_no_integration:
+            res = picking.carrier_id.tracking_url_prefix_no_integration + picking.carrier_tracking_ref
+
         if res and shortener:
             url = shortener.shortened_urls.search([('long_url', '=', res),
                                                    ('id', 'in', shortener.shortened_urls.ids)],
