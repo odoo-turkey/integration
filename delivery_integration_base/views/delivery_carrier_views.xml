@@ -28,7 +28,7 @@
             <field name="environment_fee_per_kg" />
             <field name="postal_charge_percentage" />
             <field name="Emergency_fee_per_kg" />
-
+            <field name="tracking_url_prefix_no_integration" />
 
 
         </field>
