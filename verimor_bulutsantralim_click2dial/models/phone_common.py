@@ -59,5 +59,6 @@ class PhoneCommon(models.AbstractModel):
                 raise UserError(_('Missing internal number'))
 
             bulutsantralim_connector._start_call_verimor(number, caller)
+            res['dialed_number'] = number
 
         return res
