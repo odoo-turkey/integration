@@ -5,7 +5,7 @@ from odoo.tools.safe_eval import safe_eval
 from odoo.exceptions import ValidationError
 from odoo.exceptions import UserError
 import math
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 
 class DeliveryCarrier(models.Model):
@@ -50,6 +50,9 @@ class DeliveryCarrier(models.Model):
 
     tracking_url_prefix_no_integration = fields.Char(string='Tracking URL Prefix',
                                                      help='Tracking URL prefix for carrier that has no integration.')
+
+    delivery_deadline_no_integration = fields.Integer(string='Delivery Deadline (In Days)', default=3, required=True,
+                                                      help='Delivery deadline for carrier that has no integration.')
 
     def _filter_rules_by_region(self, order):
         """
@@ -196,3 +199,21 @@ class DeliveryCarrier(models.Model):
             raise UserError(_("No price rule matching this order; delivery cost cannot be computed."))
 
         return price
+
+    def _cron_update_delivery_state_no_integration(self):
+        """
+        Cron to update delivery state for all pickings that have no integration
+        :return:
+        """
+        today = datetime.now()
+        pickings = self.env['stock.picking'].search([('carrier_id.delivery_type', 'in', ['fixed', 'base_on_rule']),
+                                                     ('state', '=', 'done'),
+                                                     ('date_done', '!=', False),
+                                                     ('picking_type_code', '=', 'outgoing'),
+                                                     ('delivery_state', '!=', 'customer_delivered')])
+        for picking in pickings:
+            deadline = picking.date_done + timedelta(days=picking.carrier_id.delivery_deadline_no_integration)
+            if today > deadline:
+                picking.delivery_state = 'customer_delivered'
+
+        return True
