@@ -166,7 +166,7 @@ class DeliveryCarrier(models.Model):
         for picking in pickings.filtered("carrier_tracking_ref"):
 
             if hasattr(self, '%s_tracking_state_update' % self.delivery_type):  # check state before cancel
-                getattr(self, '%s_tracking_state_update' % self.delivery_type)(pickings)
+                getattr(self, '%s_tracking_state_update' % self.delivery_type)(picking)
 
             if picking.delivery_state not in ['shipping_recorded_in_carrier', 'canceled_shipment']:
                 raise ValidationError(_("You can't cancel a shipment that already has been sent to Yurtiçi"))
