@@ -117,7 +117,7 @@ class DeliveryCarrier(models.Model):
         shortener = self.url_shortener_id
 
         if not res and picking.carrier_id.tracking_url_prefix_no_integration:
-            res = picking.carrier_id.tracking_url_prefix_no_integration + picking.carrier_tracking_ref
+            res = picking.carrier_id.tracking_url_prefix_no_integration + picking.shipping_number
 
         if res and shortener:
             url = shortener.shortened_urls.search([('long_url', '=', res),
