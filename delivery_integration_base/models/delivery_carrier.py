@@ -206,7 +206,7 @@ class DeliveryCarrier(models.Model):
         :return:
         """
         today = datetime.now()
-        pickings = self.env['stock.picking'].search([('carrier_id.delivery_type', 'in', ['fixed', 'base_on_rule']),
+        pickings = self.env['stock.picking'].search([('invoice_state', '=', 'invoiced'),
                                                      ('state', '=', 'done'),
                                                      ('date_done', '!=', False),
                                                      ('picking_type_code', '=', 'outgoing'),
