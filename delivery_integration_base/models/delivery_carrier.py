@@ -90,7 +90,6 @@ class DeliveryCarrier(models.Model):
              ('date_done', '>', fields.Date.today() - timedelta(days=5)),
              ('delivery_state', 'in', ['shipping_recorded_in_carrier', 'in_transit'])])
 
-        pickings.tracking_state_update()
         for picking in pickings:
             method = '%s_tracking_state_update' % picking.delivery_type
             if hasattr(picking.carrier_id, method):
