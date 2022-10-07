@@ -1,0 +1,21 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+
+<!--<odoo>-->
+
+<!--    <record id="view_product_attribute_woocommerce_form" model="ir.ui.view">-->
+<!--        <field name="model">product.attribute</field>-->
+<!--        <field name="inherit_id" ref="product.product_attribute_view_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <group name="values_ids" position="after">-->
+<!--                <group string="WooCommerce" name="woocommerce">-->
+<!--                    <field name="woocommerce_backend_id"/>-->
+<!--                    <field name="sync_to_woocommerce"/>-->
+<!--                    <field name="woocommerce_id" attrs="{'invisible': [('woocommerce_id', '=', 0)]}"/>-->
+<!--                    <button string="Check Connection" class="oe_highlight"-->
+<!--                            type="object" name="action_sync_to_woocommerce" />-->
+<!--                </group>-->
+<!--            </group>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--</odoo>-->

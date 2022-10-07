@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="view_product_product_form_woocommerce" model="ir.ui.view">
+        <field name="name">WooCommerce Product Form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="WooCommerce" name="woocommerce_page">
+                    <group string="WooCommerce" name="woocommerce">
+                        <field name="sync_to_woocommerce" readonly="1"/>
+                        <field name="woocommerce_id" attrs="{'invisible': [('woocommerce_id', '=', 0)]}"/>
+                        <field name="woo_stock_rel" />
+                        <field name="woo_stock_qty" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

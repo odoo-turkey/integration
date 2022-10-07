@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="view_sale_order_form_woocommerce" model="ir.ui.view">
+        <field name="name">WooCommerce Sale Order Form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="WooCommerce" name="woocommerce_page"
+                      attrs="{'invisible': [('sync_to_woocommerce', '=', False)]}">
+                    <group string="WooCommerce" name="woocommerce">
+                        <field name="sync_to_woocommerce"/>
+                        <field name="woocommerce_id" attrs="{'invisible': [('sync_to_woocommerce', '=', False)]}"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

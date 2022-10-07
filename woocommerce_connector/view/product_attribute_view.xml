@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="view_product_attribute_woocommerce_form" model="ir.ui.view">
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form"/>
+        <field name="arch" type="xml">
+            <group name="values_ids" position="before">
+                <group string="WooCommerce" name="woocommerce">
+                    <field name="sync_to_woocommerce"/>
+                    <field name="woocommerce_id"
+                           attrs="{'invisible': [('sync_to_woocommerce', '=', False)]}"/>
+                    <button string="Sync to WooCommerce" class="oe_highlight"
+                            type="object" name="action_single_sync_to_woocommerce"
+                            attrs="{'invisible': [('woocommerce_id', '!=', False), ('sync_to_woocommerce', '=', False)]}"/>
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>

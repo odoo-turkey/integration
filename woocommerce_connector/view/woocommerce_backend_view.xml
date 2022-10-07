@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_woocommerce_backend_tree" model="ir.ui.view">
+            <field name="name">view.woocommerce.backend.tree</field>
+            <field name="model">woocommerce.backend</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="version"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_woocommerce_backend_form" model="ir.ui.view">
+            <field name="name">view.woocommerce.backend.form</field>
+            <field name="model">woocommerce.backend</field>
+            <field name="arch" type="xml">
+                <form>
+                <header>
+                    <button string="Check Connection" class="oe_highlight"
+                            type="object" name="test_woo_connection" />
+                </header>
+                    <sheet>
+                        <group string="Connector Configuration">
+                            <p>1- Set WooCommerce connection parameters.</p>
+                            <field name="hostname"/>
+                            <field name="consumer_key"/>
+                            <field name="consumer_secret"/>
+                            <field name="wp_app_user" />
+                            <field name="wp_app_key" />
+                            <field name="version"/>
+                            <field name="request_timeout"/>
+                        </group>
+                        <group string="Product Configuration">
+                            <p>2- Set the stock locations and product price field.</p>
+                            <field name="product_price_type_id"/>
+                            <field name="location_ids"/>
+                        </group>
+                        <group name="sale" string="Sale Configuration">
+                            <p>3- Set sale related fields.</p>
+                            <field name="sale_pricelist_id"/>
+                            <field name="sale_warehouse_id"/>
+                            <field name="sale_utm_source_id"/>
+                            <field name="sale_mail_sending"/>
+                            <field name="last_sale_import_date" />
+                        </group>
+                        <group>
+                        <p>4 - Match shipping and payment methods.</p>
+                        <button string="Match Payment and Shipment Methods" class="oe_highlight"
+                            type="action" name="%(action_woo_match_payment_shipment_methods)d" />
+                        </group>
+                        <group>
+                            <p>5 - Don't forget to set company default connection.</p>
+                        </group>
+                        <group name="sync_buttons" string="Sync Section" col="1">
+                            <button string="Sync Categories" class="oe_highlight"
+                            type="object" name="sync_all_categories" />
+                            <button string="Sync Attributes" class="oe_highlight"
+                            type="object" name="sync_all_attributes" />
+                            <button string="Sync Attribute Values" class="oe_highlight"
+                            type="object" name="sync_all_attribute_values" />
+                            <button string="Sync Products" class="oe_highlight"
+                            type="object" name="sync_all_products" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_woocommerce_backend" model="ir.actions.act_window">
+            <field name="name">WooCommerce Connections</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">woocommerce.backend</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new WooCommerce service.
+              </p>
+            </field>
+        </record>
+        <menuitem id="woocommerce_backend_menu" action="action_woocommerce_backend"
+                  parent="iap.iap_root_menu" sequence="1"/>
+
+   </data>
+</odoo>
