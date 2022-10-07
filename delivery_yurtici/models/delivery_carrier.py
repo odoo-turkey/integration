@@ -204,6 +204,9 @@ class DeliveryCarrier(models.Model):
         finally:
             self._yurtici_log_request(yurtici_request)
 
+        if response.errCode:
+            return False
+
         vals = {
                 "tracking_state": response.operationMessage,
                 "delivery_state": YURTICI_OPERATION_CODES[response.operationCode][1],
