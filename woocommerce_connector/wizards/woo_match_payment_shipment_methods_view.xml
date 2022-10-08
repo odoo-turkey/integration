@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_woo_match_payment_shipment_methods" model="ir.ui.view">
+        <field name="name">Woo match Payment Shipment Methods</field>
+        <field name="model">woo.match.payment.shipment.methods</field>
+        <field name="arch" type="xml">
+            <form string="Match Payment and Shipment Methods">
+                <field name="woo_payment_method_ids" widget="many2many">
+                   <tree editable="top">
+                      <field name="woo_payment_name"/>
+                      <field name="payment_id"/>
+                   </tree>
+                </field>
+                <field name="woo_delivery_carriers_ids" widget="many2many">
+                   <tree editable="top">
+                      <field name="woo_carrier_name"/>
+                      <field name="carrier_id"/>
+                   </tree>
+                </field>
+                <footer>
+                    <button name="write" string="Match" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window
+            name="Woo match Payment Shipment Methods"
+            res_model="woo.match.payment.shipment.methods"
+            src_model="woocommerce.backend"
+            key2="client_action_multi"
+            multi="True"
+            view_mode="form"
+            view_type="form"
+            target="new"
+            id="action_woo_match_payment_shipment_methods"
+    />
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="view_company_form_woocommerce" model="ir.ui.view">
+        <field name="name">res.company.form.woocommerce</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="WooCommerce">
+                    <group string="Configuration">
+                        <field name="default_woocommerce_backend_id" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
