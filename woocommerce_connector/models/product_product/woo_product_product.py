@@ -29,7 +29,7 @@ class WooProductProduct:
         # price_field = self.connector.product_price_type_id.field
         # price = getattr(model, price_field)
         # return str(price) if not float_is_zero(price, 6) else ''
-        price_field = getattr(model, self.connector.product_price_type_id.field)
+        price_field = getattr(model, 'attr_price')  # self.connector.product_price_type_id.field
         if not float_is_zero(price_field, 6):
             currency = self.connector.product_price_type_id.currency
             to_currency = model.company_id.currency_id
@@ -77,7 +77,7 @@ class WooProductProduct:
         if response.status_code == 201:
             return response.json()
         else:
-            raise UserError(_("Error while creating product modelory. %s" % response.text))
+            raise UserError(_("Error while creating product. %s" % response.text))
 
     # WRITE
 

@@ -44,3 +44,12 @@ class WooProductAttribute:
             return response.json()
         else:
             raise UserError(_("Error while updating product attribute. %s" % response.text))
+
+    def delete(self, model):
+        vals = {'force': True}
+        wcapi = self.connector._build_api()
+        response = wcapi.delete("products/attributes/%s" % model.woocommerce_id, params=vals)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise UserError(_("Error while deleting product attribute. %s" % response.text))

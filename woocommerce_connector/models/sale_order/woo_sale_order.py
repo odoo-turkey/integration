@@ -72,7 +72,7 @@ class WooSaleOrder:
     #     if response.status_code == 201:
     #         return response.json()
     #     else:
-    #         raise UserError(_("Error while creating product modelory. %s" % response.text))
+    #         raise UserError(_("Error while creating sale order. %s" % response.text))
     #
     # # WRITE
     #

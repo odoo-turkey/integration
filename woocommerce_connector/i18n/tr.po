@@ -1,0 +1,671 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* woocommerce_connector
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-10 12:18+0000\n"
+"PO-Revision-Date: 2022-10-10 12:18+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_base_multi_image_image
+msgid " image model for multiple image functionality "
+msgstr "çoklu resim özelliği için model"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "1- Set WooCommerce connection parameters."
+msgstr "1- WooCommerce bağlantı parametrelerini ayarlayın."
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "2- Set the stock locations and product price field."
+msgstr "2- Stok konumlarını ve ürün fiyat alanını ayarlayın."
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "3- Set sale related fields."
+msgstr "3- Satışla ilgili alanları ayarlayın."
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "4 - Match shipping and payment methods."
+msgstr "4 - Teslimat ve ödeme yöntemlerini eşleştirin."
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "5 - Don't forget to set company default connection."
+msgstr "5 - Geçerli şirket için varsayılan bağlantıyı ayarlamayı unutmayın."
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_res_partner__woo_address_unique_hash
+#: model:ir.model.fields,field_description:woocommerce_connector.field_res_users__woo_address_unique_hash
+msgid "Address Unique Hash"
+msgstr "Adres benzersiz hash"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__wp_app_key
+msgid "App Key"
+msgstr "Uygulama anahtaır"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__wp_app_user
+msgid "App User"
+msgstr "Uygulama kullanıcısı"
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_product_attribute_value
+msgid "Attribute Value"
+msgstr "Nitelik Değerleri"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_attribute/product_attribute.py:45
+#, python-format
+msgid "Attribute is already synced: %s"
+msgstr "Nitelik zaten senkronize edildi: %s"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_attribute_value/product_attribute_value.py:49
+#, python-format
+msgid "Attribute value is already synced: %s"
+msgstr "Nitelik değeri zaten senkronize edildi: %s"
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_woocommerce_mapping
+msgid "Base model for WooCommerce - Odoo integration"
+msgstr "Woocommerce - Odoo entegrasyonu için temel model"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_delivery_carriers__batch_unique_hash
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_payment_methods__batch_unique_hash
+msgid "Batch Unique Hash"
+msgstr "Toplu Unique Hash"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woo_match_payment_shipment_methods
+msgid "Cancel"
+msgstr "İptal"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_delivery_carriers__carrier_id
+msgid "Carrier"
+msgstr "Nakliyeci"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/sale_order/sale_order.py:56
+#, python-format
+msgid "Carrier not found in Odoo. Please sync carriers first."
+msgstr "Teslim yöntemi Odoo'a bulunmadı. Lütfen önce teslimat yöntemlerini senkronize edin."
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_template/woo_product_template.py:54
+#, python-format
+msgid "Category %s is not synced to WooCommerce"
+msgstr "Kateogri %s WooCommerce'a senkronize edilmedi"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_category/product_category.py:54
+#, python-format
+msgid "Category is already synced: %s"
+msgstr "Kateogri zaten senkronize edildi: %s"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "Check Connection"
+msgstr "Bağlantıyı Test Et"
+
+#. module: woocommerce_connector
+#: model_terms:ir.actions.act_window,help:woocommerce_connector.action_woocommerce_backend
+msgid "Click to add a new WooCommerce service."
+msgstr "Yeni bir WooCommerce servisi eklemek için tıklayın."
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_res_company
+msgid "Companies"
+msgstr "Şirketler"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_company_form_woocommerce
+msgid "Configuration"
+msgstr "Yapılandırma"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "Connector Configuration"
+msgstr "Bağlantı Yapılandırması"
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_woocommerce_backend
+msgid "Connector model for WooCommerce"
+msgstr "WooCommerce için bağlantı modeli"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__consumer_key
+msgid "Consumer Key"
+msgstr "Kullanıcı Anahtarı"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__consumer_secret
+msgid "Consumer Secret"
+msgstr "Kullanıcı Gizli Anahtarı"
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_res_partner
+msgid "Contact"
+msgstr "Cari"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_delivery_carriers__create_uid
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_match_payment_shipment_methods__create_uid
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_payment_methods__create_uid
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__create_uid
+msgid "Created by"
+msgstr "Oluşturan"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_delivery_carriers__create_date
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_match_payment_shipment_methods__create_date
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_payment_methods__create_date
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__create_date
+msgid "Created on"
+msgstr "Oluşturulma"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_res_company__default_woocommerce_backend_id
+msgid "Default WooCommerce Connector"
+msgstr "Varsayılan WooCommerce Bağlantısı"
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_delivery_carrier
+msgid "Delivery Methods"
+msgstr "Teslimat Yöntemleri"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_delivery_carriers__display_name
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_match_payment_shipment_methods__display_name
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_payment_methods__display_name
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__display_name
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_mapping__display_name
+msgid "Display Name"
+msgstr "Görünüm Adı"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/woocommerce_backend.py:71
+#, python-format
+msgid "Enter Valid url"
+msgstr "Geçerli bir url girin"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_attribute_value/woo_product_attribute_value.py:25
+#, python-format
+msgid "Error while creating product attribute value. %s"
+msgstr "Ürün nitelik değeri oluşturulurken hata. %s"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_attribute/woo_product_attribute.py:27
+#, python-format
+msgid "Error while creating product attribute. %s"
+msgstr "Ürün niteliği oluşturulurken hata. %s"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_category/woo_product_category.py:61
+#, python-format
+msgid "Error while deleting product category. %s"
+msgstr "Ürün kategorisi silinirken hata. %s"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_attribute_value/woo_product_attribute_value.py:45
+#, python-format
+msgid "Error while updating product attribute value. %s"
+msgstr "Ürün nitelik değeri güncellenirken hata. %s"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_attribute/woo_product_attribute.py:46
+#, python-format
+msgid "Error while updating product attribute. %s"
+msgstr "Ürün niteliği güncellenirken hata. %s"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_category/woo_product_category.py:53
+#: code:addons/woocommerce_connector/models/product_template/woo_product_template.py:127
+#: code:addons/woocommerce_connector/models/res_partner/woo_res_partner.py:20
+#: code:addons/woocommerce_connector/models/sale_order/woo_sale_order.py:21
+#, python-format
+msgid "Error while updating product category. %s"
+msgstr "Ürün kategorisi güncellenirken hata. %s"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_product/woo_product_product.py:118
+#, python-format
+msgid "Error while updating product. %s"
+msgstr "Ürün güncellenirken hata. %s"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/woocommerce_backend.py:92
+#: code:addons/woocommerce_connector/models/woocommerce_backend.py:104
+#: code:addons/woocommerce_connector/wizards/woo_match_payment_shipment_methods.py:21
+#: code:addons/woocommerce_connector/wizards/woo_match_payment_shipment_methods.py:38
+#, python-format
+msgid "Error: %s"
+msgstr "Hata: %s"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,help:woocommerce_connector.field_woocommerce_backend__hostname
+msgid "Example: https://www.altinkaya.com.tr"
+msgstr "Örnek: https://www.altinkaya.com.tr"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__hostname
+msgid "Hostname"
+msgstr "Alan Adı"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/woocommerce_backend.py:62
+#, python-format
+msgid "Hostname must be a valid URL. Example: https://www.altinkaya.com.tr"
+msgstr "Alan Adı geçerli bir URL olmalıdır. Örnek: https://www.altinkaya.com.tr"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_delivery_carriers__id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_match_payment_shipment_methods__id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_payment_methods__id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_mapping__id
+msgid "ID"
+msgstr "ID"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_delivery_carriers____last_update
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_match_payment_shipment_methods____last_update
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_payment_methods____last_update
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend____last_update
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_mapping____last_update
+msgid "Last Modified on"
+msgstr "Son Güncelleme"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__last_sale_import_date
+msgid "Last Sale Import Date"
+msgstr "Son Satış İçe Aktarım Tarihi"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_delivery_carriers__write_uid
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_match_payment_shipment_methods__write_uid
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_payment_methods__write_uid
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__write_uid
+msgid "Last Updated by"
+msgstr "Son Güncelleyen"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_delivery_carriers__write_date
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_match_payment_shipment_methods__write_date
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_payment_methods__write_date
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__write_date
+msgid "Last Updated on"
+msgstr "Son Güncelleme"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_product_product__woo_stock_rel
+msgid "Manage Stock"
+msgstr "Stok Yönetimi"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_product_product__manage_woo_stock
+#: model:ir.model.fields,field_description:woocommerce_connector.field_product_template__manage_woo_stock
+msgid "Manage WooCommerce Stock"
+msgstr "WooCommerce Stok Yönetimi"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woo_match_payment_shipment_methods
+msgid "Match"
+msgstr "Eşleştir"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woo_match_payment_shipment_methods
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "Match Payment and Shipment Methods"
+msgstr "Ödeme ve teslim yöntemlerini eşleştir"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__name
+msgid "Name"
+msgstr "Adı"
+
+#. module: woocommerce_connector
+#: sql_constraint:base_multi_image.image:0
+#: sql_constraint:product.attribute:0
+#: sql_constraint:product.attribute.value:0
+#: sql_constraint:product.category:0
+#: sql_constraint:product.product:0
+#: sql_constraint:product.template:0
+#: sql_constraint:res.partner:0
+#: sql_constraint:sale.order:0
+#: sql_constraint:woocommerce.mapping:0
+msgid "Only one WooCommerce ID for a record!"
+msgstr "Her kayıt için WooCommerce ID'si özel olmalıdır."
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_attribute_value/product_attribute_value.py:46
+#, python-format
+msgid "Parent attribute must be synced first: %s"
+msgstr "Önce üst nitelik senkronize edilmelidir: %s"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_category/product_category.py:51
+#, python-format
+msgid "Parent category must be synced first: %s"
+msgstr "Önce üst kategori senkronize edilmelidir: %s"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/sale_order/sale_order.py:86
+#, python-format
+msgid "Partner not found in Odoo. Please sync customers first."
+msgstr "Müşteri Odoo'da bulunamadı. Lütfen önce müşterileri senkronize edin."
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_payment_acquirer
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_payment_methods__payment_id
+msgid "Payment Acquirer"
+msgstr "Ödeme Alıcısı"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/sale_order/sale_order.py:62
+#, python-format
+msgid "Payment method not found in Odoo. Please sync payment methods first."
+msgstr "Ödeme yöntemi Odoo'da bulunamadı. Lütfen önce ödeme yöntemlerini senkronize edin."
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_template/product_template.py:58
+#, python-format
+msgid "Please sync all attributes to WooCommerce before syncing this product template."
+msgstr "Lütfen bu ürün şablonunu senkronize etmeden önce tüm nitelikleri ve kategorileri WooCommerce'a senkronize edin."
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,help:woocommerce_connector.field_woocommerce_backend__sale_pricelist_id
+msgid "Pricelist to be used for WooCommerce sales."
+msgstr "WooCommerce satışları için kullanılacak fiyat listesi."
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_product_product
+msgid "Product"
+msgstr "Ürün"
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_product_attribute
+msgid "Product Attribute"
+msgstr "Ürün Niteliği"
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_product_category
+msgid "Product Category"
+msgstr "Ürün Kategorisi"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "Product Configuration"
+msgstr "Ürün Yapılandırması"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__product_price_type_id
+msgid "Product Price Type"
+msgstr "Ürün Fiyat Tipi"
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_product_template
+msgid "Product Template"
+msgstr "Ürün Şablonu"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/sale_order/sale_order.py:71
+#, python-format
+msgid "Product not found in Odoo. Please sync products first."
+msgstr "Ürün Odoo'da bulunamadı. Lütfen önce ürünleri senkronize edin."
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,help:woocommerce_connector.field_woocommerce_backend__product_price_type_id
+msgid "Product price field."
+msgstr "Ürün fiyat alanı."
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/product_template/product_template.py:61
+#, python-format
+msgid "Product template is already synced: %s"
+msgstr "Ürün şablonu zaten senkronize edildi: %s"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__request_timeout
+msgid "Request Timeout"
+msgstr "İstek Zaman Aşımı"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "Sale Configuration"
+msgstr "Satış Yapılandırması"
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_sale_order
+msgid "Sale Order"
+msgstr "Satış Siparişi"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__sale_pricelist_id
+msgid "Sale Pricelist"
+msgstr "Satış Fiyat Listesi"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__sale_utm_source_id
+msgid "Sale UTM Source"
+msgstr "Satış UTM Kaynağı"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__sale_warehouse_id
+msgid "Sale Warehouse"
+msgstr "Satış Deposu"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__sale_mail_sending
+msgid "Send Sale Mail"
+msgstr "Satış mailini Odoo'dan gönder"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,help:woocommerce_connector.field_woocommerce_backend__sale_mail_sending
+msgid "Send sale mail to customer."
+msgstr "Müşteriye satış maili gönder."
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__location_ids
+msgid "Stock Locations"
+msgstr "Stok Konumları"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,help:woocommerce_connector.field_woocommerce_backend__location_ids
+msgid "Stock locations to be used for WooCommerce stock managing."
+msgstr "WooCommerce stok yönetimi için kullanılacak stok konumları."
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "Sync Attribute Values"
+msgstr "Nitelik Değerlerini Eşle"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "Sync Attributes"
+msgstr "Nitelikleri Eşle"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "Sync Categories"
+msgstr "Kategorileri Eşle"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "Sync Products"
+msgstr "Ürünleri Eşle"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woocommerce_backend_form
+msgid "Sync Section"
+msgstr "Eşitleme Bölümü"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_product_attribute_woocommerce_form
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_product_category_woocommerce_form
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_product_template_form_woocommerce
+msgid "Sync to WooCommerce"
+msgstr "WooCommerce ile Eşitle"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_base_multi_image_image__sync_to_woocommerce
+#: model:ir.model.fields,field_description:woocommerce_connector.field_product_attribute__sync_to_woocommerce
+#: model:ir.model.fields,field_description:woocommerce_connector.field_product_attribute_value__sync_to_woocommerce
+#: model:ir.model.fields,field_description:woocommerce_connector.field_product_category__sync_to_woocommerce
+#: model:ir.model.fields,field_description:woocommerce_connector.field_product_product__sync_to_woocommerce
+#: model:ir.model.fields,field_description:woocommerce_connector.field_product_template__sync_to_woocommerce
+#: model:ir.model.fields,field_description:woocommerce_connector.field_res_partner__sync_to_woocommerce
+#: model:ir.model.fields,field_description:woocommerce_connector.field_res_users__sync_to_woocommerce
+#: model:ir.model.fields,field_description:woocommerce_connector.field_sale_order__sync_to_woocommerce
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_mapping__sync_to_woocommerce
+msgid "Sync to Woocommerce"
+msgstr "WooCommerce ile Eşitle"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/woocommerce_backend.py:77
+#, python-format
+msgid "Test Success"
+msgstr "Bağlantı Başarılı."
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,help:woocommerce_connector.field_woocommerce_backend__request_timeout
+msgid "Timeout in seconds for requests to WooCommerce."
+msgstr "WooCommerce'e yapılan istekler için zaman aşımı (saniye cinsinden)."
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,help:woocommerce_connector.field_woocommerce_backend__sale_utm_source_id
+msgid "UTM Source to be used for WooCommerce sales."
+msgstr "WooCommerce satışları için kullanılacak UTM Kaynağı."
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_backend__version
+msgid "Version"
+msgstr "Versiyon"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,help:woocommerce_connector.field_woocommerce_backend__sale_warehouse_id
+msgid "Warehouse to be used for WooCommerce sales."
+msgstr "WooCommerce satışları için kullanılacak depo"
+
+#. module: woocommerce_connector
+#: model:ir.actions.act_window,name:woocommerce_connector.action_woo_match_payment_shipment_methods
+#: model:ir.model,name:woocommerce_connector.model_woo_match_payment_shipment_methods
+msgid "Woo match Payment Shipment Methods"
+msgstr "Woo ödeme ve kargo yöntemlerini eşle"
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_company_form_woocommerce
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_product_attribute_woocommerce_form
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_product_category_woocommerce_form
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_product_product_form_woocommerce
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_product_template_form_woocommerce
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_res_partner_form_woocommerce
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_sale_order_form_woocommerce
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_delivery_carriers__woo_carrier_id
+msgid "WooCommerce Carrier ID"
+msgstr "WooCommerce Teslimat Yöntemi ID"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_delivery_carriers__woo_carrier_name
+msgid "WooCommerce Carrier Name"
+msgstr "WooCommerce Teslimat Yöntemi"
+
+#. module: woocommerce_connector
+#: model:ir.actions.act_window,name:woocommerce_connector.action_woocommerce_backend
+#: model:ir.ui.menu,name:woocommerce_connector.woocommerce_backend_menu
+msgid "WooCommerce Connections"
+msgstr "WooCommerce Bağlantıları"
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_woo_delivery_carriers
+msgid "WooCommerce Delivery Carriers"
+msgstr "WooCommerce Teslim Yöntemleri"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_base_multi_image_image__woocommerce_id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_delivery_carrier__woocommerce_id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_product_attribute__woocommerce_id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_product_attribute_value__woocommerce_id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_product_category__woocommerce_id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_product_product__woocommerce_id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_product_template__woocommerce_id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_res_partner__woocommerce_id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_res_users__woocommerce_id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_sale_order__woocommerce_id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woocommerce_mapping__woocommerce_id
+msgid "WooCommerce ID"
+msgstr "WooCommerce ID"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_payment_acquirer__woocommerce_id
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_payment_methods__woo_payment_id
+msgid "WooCommerce Payment Method ID"
+msgstr "WooCommerce Ödeme Yöntemi ID"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_payment_methods__woo_payment_name
+msgid "WooCommerce Payment Method Name"
+msgstr "WooCommerce Ödeme Yöntemi"
+
+#. module: woocommerce_connector
+#: model:ir.model,name:woocommerce_connector.model_woo_payment_methods
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_match_payment_shipment_methods__woo_payment_method_ids
+msgid "WooCommerce Payment Methods"
+msgstr "WooCommerce Ödeme Yöntemleri"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_woo_match_payment_shipment_methods__woo_delivery_carriers_ids
+msgid "WooCommerce Shipping Methods"
+msgstr "WooCommerce Teslim Yöntemleri"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,field_description:woocommerce_connector.field_product_product__woo_stock_qty
+msgid "WooCommerce Stock Quantity"
+msgstr "WooCommerce Stok Miktarı"
+
+#. module: woocommerce_connector
+#: model:ir.model.fields,help:woocommerce_connector.field_woocommerce_backend__wp_app_key
+msgid "Wordpress application password"
+msgstr "Wordpress uygulama parolası"
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/woocommerce_mapping.py:28
+#, python-format
+msgid "You can't delete a record which is synced to WooCommerce."
+msgstr "WooCommerce ile senkronize edilen bir kaydı silemezsiniz."
+
+#. module: woocommerce_connector
+#: code:addons/woocommerce_connector/models/base_multi_image/base_multi_image.py:33
+#, python-format
+msgid "You can't update image for synced products! Instead, you can delete and create new one."
+msgstr "Senkronize edilmiş ürünler için resim güncelleyemezsiniz! Bunun yerine yeni bir resim oluşturabilirsiniz."
+
+#. module: woocommerce_connector
+#: model_terms:ir.ui.view,arch_db:woocommerce_connector.view_woo_match_payment_shipment_methods
+msgid "or"
+msgstr "yada"
+
+#. module: woocommerce_connector
+#: selection:woocommerce.backend,version:0
+msgid "wc/v3"
+msgstr "wc/v3"
+

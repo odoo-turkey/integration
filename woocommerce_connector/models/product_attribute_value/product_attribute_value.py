@@ -50,5 +50,6 @@ class ProductAttributeValue(models.Model):
 
         connector = WooProductAttributeValue(self.env.user.company_id.default_woocommerce_backend_id)
         resp = connector.create(self)
-        self.write({'woocommerce_id': resp['id']})
+        self.write({'woocommerce_id': resp['id'],
+                    'sync_to_woocommerce': True})
         self.env.cr.commit()
