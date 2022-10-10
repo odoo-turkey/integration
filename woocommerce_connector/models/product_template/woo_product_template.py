@@ -49,6 +49,11 @@ class WooProductTemplate:
 
         return images
 
+    def _get_product_categ(self, model):
+        if not model.categ_id.woocommerce_id:
+            raise UserError(_('Category %s is not synced to WooCommerce' % model.categ_id.name))
+        return model.categ_id.woocommerce_id
+
     # CREATE
 
     def _prepare_data_for_create(self, model):
@@ -63,7 +68,7 @@ class WooProductTemplate:
                 'tax_status': 'taxable',
                 'manage_stock': model.manage_woo_stock,
                 'stock_quantity': model.qty_available_not_res or 0,
-                'categories': [{'id': model.categ_id.woocommerce_id}],
+                'categories': [{'id': self._get_product_categ(model)}],
                 'attributes': self._get_attributes(model),
                 'default_attributes': self._get_default_attributes(model),
                 'images': self._get_images(model)

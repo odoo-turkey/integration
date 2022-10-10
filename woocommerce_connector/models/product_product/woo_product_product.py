@@ -1,7 +1,6 @@
-from unicode_tr.extras import slugify
 from odoo.exceptions import UserError
 from odoo.tools import float_is_zero
-from odoo import _
+from odoo import fields, _
 
 
 class WooProductProduct:
@@ -30,7 +29,14 @@ class WooProductProduct:
         # price_field = self.connector.product_price_type_id.field
         # price = getattr(model, price_field)
         # return str(price) if not float_is_zero(price, 6) else ''
-        return str(model.attr_price) if not float_is_zero(model.attr_price, 6) else ''
+        price_field = getattr(model, self.connector.product_price_type_id.field)
+        if not float_is_zero(price_field, 6):
+            currency = self.connector.product_price_type_id.currency
+            to_currency = model.company_id.currency_id
+            price = currency._convert(price_field, to_currency, model.company_id, fields.Date.today(),
+                                      round=False)
+            return str(price)
+        return ''
 
     def _get_product_weight(self, model):
         return str(model.weight) if not float_is_zero(model.weight, 6) else ''
