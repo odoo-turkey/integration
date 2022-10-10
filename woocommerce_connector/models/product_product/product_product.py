@@ -31,7 +31,7 @@ class ProductProduct(models.Model):
     @api.multi
     def _compute_quantities(self):
         res = super(ProductProduct, self)._compute_quantities()
-        backend = self.env['res.company'].browse(1).default_woocommerce_backend_id # Todo: fix this
+        backend = self.env['res.company'].browse(1).default_woocommerce_backend_id  # Todo: fix this
         for rec in self:
             if rec.sync_to_woocommerce and rec.woo_stock_rel:
                 loc_ids = backend.location_ids.ids
@@ -89,3 +89,12 @@ class ProductProduct(models.Model):
                 product.write({'woocommerce_id': resp['id'],
                                'sync_to_woocommerce': bool(resp['id'])})
                 self.env.cr.commit()
+
+    def update_woo_product_price(self):
+        backend = self.env.user.company_id.default_woocommerce_backend_id
+        connector = WooProductProduct(backend)
+        products = self.search([('sync_to_woocommerce', '=', True),
+                                ('woocommerce_id', '!=', False)])
+        price_field = backend.product_price_type_id.field
+        for product in self.web_progress_iter(products):
+            connector.write(product, {price_field: 'update'})  # Not a real value. Just to trigger the update.
