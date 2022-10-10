@@ -33,18 +33,33 @@ class ProductAttribute(models.Model):
         return res
 
     def action_sync_to_woocommerce(self):
-
         unsynced_attrs = self.search([('sync_to_woocommerce', '=', True),
                                       ('woocommerce_id', '=', False)])
         for attr in self.web_progress_iter(unsynced_attrs, msg='Nitelikler eşleştiriliyor.'):
             attr.action_single_sync_to_woocommerce()
 
     def action_single_sync_to_woocommerce(self):
-
         if self.woocommerce_id:
             raise UserError(_("Attribute is already synced: %s") % self.name)
 
         connector = WooProductAttribute(self.env.user.company_id.default_woocommerce_backend_id)
         resp = connector.create(self)
         self.write({'woocommerce_id': resp['id']})
+        self.env.cr.commit()
+
+    def _check_before_woo_unlink(self):
+        exception_msg = ''
+        for product in self.attribute_line_ids.mapped('product_tmpl_id'):
+            if product.sync_to_woocommerce:
+                exception_msg += '%s\n' % product.name
+        if exception_msg:
+            raise UserError(_("You cannot delete synced attributes."
+                              " Following products are synced:\n%s") % exception_msg)
+
+    def woocommerce_unlink(self):
+        self._check_before_woo_unlink()
+        backend = self.env.user.company_id.default_woocommerce_backend_id
+        connector = WooProductAttribute(backend)
+        connector.delete(self)
+        self.write({'woocommerce_id': False})
         self.env.cr.commit()

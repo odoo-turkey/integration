@@ -57,3 +57,27 @@ class ProductCategory(models.Model):
         resp = connector.create(self)
         self.write({'woocommerce_id': resp['id']})
         self.env.cr.commit()
+
+    def _check_before_woo_unlink(self):
+        exception_msg = ''
+        for child_categ in self.child_id:
+            if child_categ.sync_to_woocommerce:
+                exception_msg += "%s\n" % child_categ.name
+        if exception_msg:
+            raise UserError(_("You can't delete a category which has synced child categories:\n%s") % exception_msg)
+
+        product_tmpls = self.env['product.template'].search([('categ_id', '=', self.id),
+                                                             ('sync_to_woocommerce', '=', True)])
+        for product_tmpl in product_tmpls:
+            exception_msg += "%s\n" % product_tmpl.name
+
+        if exception_msg:
+            raise UserError(_("You can't delete a category which has synced products:\n%s") % exception_msg)
+
+    def woocommerce_unlink(self):
+        self._check_before_woo_unlink()
+        backend = self.env.user.company_id.default_woocommerce_backend_id
+        connector = WooProductCategory(backend)
+        connector.delete(self)
+        self.write({'woocommerce_id': False})
+        self.env.cr.commit()

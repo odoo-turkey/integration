@@ -12,18 +12,42 @@ class WooCommerceMapping(models.AbstractModel):
     sync_to_woocommerce = fields.Boolean('Sync to Woocommerce', default=False)
     woocommerce_id = fields.Integer('WooCommerce ID', readonly=True)
 
-    _sql_constraints = [
-        (
-            'woocommerce_id_uniq',
-            'UNIQUE(woocommerce_id)',
-            'Only one WooCommerce ID for a record!'
-        )
-    ]
+    # TODO CONSTRAINTS
 
-    # TODO UNLINK ????
+    # _sql_constraints = [
+    #     (
+    #         'woocommerce_id_uniq',
+    #         'Check(1=1)',
+    #         'Only one WooCommerce ID for a record!'
+    #     )
+    # ]
+    #
+    # @api.multi
+    # @api.constrains('woocommerce_id')
+    # def _check_woocommerce_id(self):
+    #     for rec in self:
+    #         pass
+    #     # if not self._check_recursion():
+    #     #     raise ValidationError(_('You cannot create recursive categories.'))
+    #     return True
+
     @api.multi
     def unlink(self):
         for rec in self:
-            if rec.woocommerce_id:
+            if rec.woocommerce_id and rec.sync_to_woocommerce:
                 raise UserError(_("You can't delete a record which is synced to WooCommerce."))
         return super(WooCommerceMapping, self).unlink()
+
+    @api.multi
+    def write(self, vals):
+        """
+        This method is used to delete WooCommerce record when Odoo
+        record is unchecked from sync_to_woocommerce field.
+        Universal method for all models.
+        :param vals:
+        :return:
+        """
+        for rec in self:
+            if 'sync_to_woocommerce' in vals and not vals['sync_to_woocommerce'] and rec.woocommerce_id:
+                rec.woocommerce_unlink()
+        return super(WooCommerceMapping, self).write(vals)

@@ -28,7 +28,7 @@ class WooProductCategory:
         if response.status_code == 201:
             return response.json()
         else:
-            raise UserError(_("Error while creating product modelory. %s" % response.text))
+            raise UserError(_("Error while creating product category. %s" % response.text))
 
     # WRITE
 
@@ -52,9 +52,10 @@ class WooProductCategory:
         else:
             raise UserError(_("Error while updating product category. %s" % response.text))
 
-    def disable(self, model):
+    def delete(self, model):
+        vals = {'force': True}  # Required to be true, as resource does not support trashing.
         wcapi = self.connector._build_api()
-        response = wcapi.delete("products/categories/%s" % model.woocommerce_id)
+        response = wcapi.delete("products/categories/%s" % model.woocommerce_id, params=vals)
         if response.status_code == 200:
             return response.json()
         else:
