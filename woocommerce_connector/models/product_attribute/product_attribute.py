@@ -10,7 +10,7 @@ class ProductAttribute(models.Model):
     _name = "product.attribute"
     _inherit = ["product.attribute", "woocommerce.mapping"]
 
-    @api.multi
+    @api.model
     def create(self, vals):
         res = super(ProductAttribute, self).create(vals)
         backend = self.env.user.company_id.default_woocommerce_backend_id

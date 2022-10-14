@@ -13,7 +13,7 @@ class ProductCategory(models.Model):
     _name = "product.category"
     _inherit = ["product.category", "woocommerce.mapping"]
 
-    @api.multi
+    @api.model
     def create(self, vals):
         res = super(ProductCategory, self).create(vals)
         backend = self.env.user.company_id.default_woocommerce_backend_id

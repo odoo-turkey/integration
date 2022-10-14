@@ -10,7 +10,7 @@ class ProductAttributeValue(models.Model):
     _name = "product.attribute.value"
     _inherit = ["product.attribute.value", "woocommerce.mapping"]
 
-    @api.multi
+    @api.model  # TODO: This should be api.multi but it is not working
     def create(self, vals):
         res = super(ProductAttributeValue, self).create(vals)
         backend = self.env.user.company_id.default_woocommerce_backend_id
