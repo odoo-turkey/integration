@@ -9,7 +9,7 @@ class WooCommerceMapping(models.AbstractModel):
     _name = "woocommerce.mapping"
     _description = 'Base model for WooCommerce - Odoo integration'
 
-    sync_to_woocommerce = fields.Boolean('Sync to Woocommerce', default=False)
+    sync_to_woocommerce = fields.Boolean('Sync to Woocommerce', default=False, copy=False)
     woocommerce_id = fields.Integer('WooCommerce ID', readonly=True, copy=False)
 
     @api.multi
