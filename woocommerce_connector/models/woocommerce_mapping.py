@@ -10,26 +10,17 @@ class WooCommerceMapping(models.AbstractModel):
     _description = 'Base model for WooCommerce - Odoo integration'
 
     sync_to_woocommerce = fields.Boolean('Sync to Woocommerce', default=False)
-    woocommerce_id = fields.Integer('WooCommerce ID', readonly=True)
+    woocommerce_id = fields.Integer('WooCommerce ID', readonly=True, copy=False)
 
-    # TODO CONSTRAINTS
-
-    # _sql_constraints = [
-    #     (
-    #         'woocommerce_id_uniq',
-    #         'Check(1=1)',
-    #         'Only one WooCommerce ID for a record!'
-    #     )
-    # ]
-    #
-    # @api.multi
-    # @api.constrains('woocommerce_id')
-    # def _check_woocommerce_id(self):
-    #     for rec in self:
-    #         pass
-    #     # if not self._check_recursion():
-    #     #     raise ValidationError(_('You cannot create recursive categories.'))
-    #     return True
+    @api.multi
+    @api.constrains('woocommerce_id')
+    def _check_woocommerce_id(self):
+        for rec in self:
+            model = self.env[rec._name].search([('woocommerce_id', '=', rec.woocommerce_id),
+                                                ('id', '!=', rec.id)])
+            if model:
+                raise UserError(_("Only one WooCommerce ID for a record!"))
+        return True
 
     @api.multi
     def unlink(self):
