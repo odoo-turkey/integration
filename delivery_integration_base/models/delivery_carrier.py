@@ -87,7 +87,7 @@ class DeliveryCarrier(models.Model):
         pickings = self.env['stock.picking'].search(
             [('carrier_id.delivery_type', 'not in', [False, 'fixed', 'base_on_rule']),
              ('carrier_tracking_ref', '!=', False),
-             ('date_done', '>', fields.Date.today() - timedelta(days=25)),
+             ('date_done', '>', fields.Date.today() - timedelta(days=5)),
              ('delivery_state', 'in', ['shipping_recorded_in_carrier', 'in_transit'])])
 
         for picking in pickings:
