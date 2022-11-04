@@ -209,6 +209,8 @@ class DeliveryCarrier(models.Model):
                                                      ('state', '=', 'done'),
                                                      ('date_done', '!=', False),
                                                      ('picking_type_code', '=', 'outgoing'),
+                                                     '|',
+                                                     ('delivery_state', '=', False),
                                                      ('delivery_state', '!=', 'customer_delivered')])
         for picking in pickings:
             deadline = picking.date_done + timedelta(days=picking.carrier_id.delivery_deadline_no_integration)
