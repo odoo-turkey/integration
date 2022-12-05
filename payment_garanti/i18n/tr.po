@@ -1,0 +1,245 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* payment_moka
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-30 08:45+0000\n"
+"PO-Revision-Date: 2022-11-30 08:45+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: payment_moka
+#: model:ir.model.fields,help:payment_moka.field_payment_provider__moka_password
+msgid "Api password given by Moka system"
+msgstr "Moka tarafından verilen API şifresi"
+
+#. module: payment_moka
+#: model:ir.model.fields,help:payment_moka.field_payment_provider__moka_username
+msgid "Api username given by Moka system"
+msgstr "Moka tarafından gerilen API kullanıcı adı"
+
+#. module: payment_moka
+#: model_terms:ir.ui.view,arch_db:payment_moka.inline_form
+msgid ""
+"CVV\n"
+"                                        <i class=\"fa fa-question-circle d-inline\"/>"
+msgstr ""
+"CVV\n"
+"                                        <i class=\"fa fa-question-circle d-inline\"/>"
+
+#. module: payment_moka
+#: code:addons/payment_moka/models/payment_provider.py:0
+#, python-format
+msgid "Card CVV is not valid.\n"
+msgstr "Kart CVV geçerli değil.\n"
+
+#. module: payment_moka
+#: model_terms:ir.ui.view,arch_db:payment_moka.inline_form
+msgid "Card Owner"
+msgstr "Kart Sahibi"
+
+#. module: payment_moka
+#: model_terms:ir.ui.view,arch_db:payment_moka.inline_form
+msgid "Card Owner Name"
+msgstr "Kart Sahibi Adı"
+
+#. module: payment_moka
+#: code:addons/payment_moka/models/payment_provider.py:0
+#, python-format
+msgid "Card expiration date is not valid.\n"
+msgstr "Kart son kullanma tarihi geçerli değil.\n"
+
+#. module: payment_moka
+#: code:addons/payment_moka/models/payment_provider.py:0
+#, python-format
+msgid "Card name is not valid.\n"
+msgstr "Kart adı geçerli değil.\n"
+
+#. module: payment_moka
+#: model_terms:ir.ui.view,arch_db:payment_moka.inline_form
+msgid "Card number"
+msgstr "Kart Numarası"
+
+#. module: payment_moka
+#: code:addons/payment_moka/models/payment_provider.py:0
+#, python-format
+msgid "Card number is not valid."
+msgstr "Kart numarası geçerli değil."
+
+#. module: payment_moka
+#: code:addons/payment_moka/models/payment_provider.py:0
+#, python-format
+msgid "Card number is not valid.\n"
+msgstr "Kart numarası geçerli değil.\n"
+
+#. module: payment_moka
+#: model:ir.model.fields,field_description:payment_moka.field_payment_provider__code
+msgid "Code"
+msgstr "Kod"
+
+#. module: payment_moka
+#: model:ir.model.fields,help:payment_moka.field_payment_provider__moka_dealer_code
+msgid "Dealer code issued by the Moka system"
+msgstr "Moka tarafından verilen bayi kodu"
+
+#. module: payment_moka
+#: model_terms:ir.ui.view,arch_db:payment_moka.inline_form
+msgid "Expiration Date"
+msgstr "Son Kullanma Tarihi"
+
+#. module: payment_moka
+#: model:ir.model.fields.selection,name:payment_moka.selection__payment_provider__code__moka
+msgid "MOKA"
+msgstr "MOKA"
+
+#. module: payment_moka
+#: model:payment.provider,name:payment_moka.payment_provider_moka
+msgid "Moka"
+msgstr "Moka"
+
+#. module: payment_moka
+#: model:ir.model.fields,field_description:payment_moka.field_payment_provider__moka_dealer_code
+msgid "Moka Dealer Code"
+msgstr "Moka Bayi Kodu"
+
+#. module: payment_moka
+#: model:ir.model.fields,field_description:payment_moka.field_payment_transaction__moka_fail_hash
+msgid "Moka Failure Hash"
+msgstr "Moka Başarısız Hash"
+
+#. module: payment_moka
+#: model:ir.model.fields,field_description:payment_moka.field_payment_provider__moka_password
+msgid "Moka Password"
+msgstr "Moka Şifresi"
+
+#. module: payment_moka
+#: model:ir.model.fields,field_description:payment_moka.field_payment_transaction__moka_success_hash
+msgid "Moka Success Hash"
+msgstr "Moka Başarılı Hash"
+
+#. module: payment_moka
+#: model:ir.model.fields,field_description:payment_moka.field_payment_transaction__moka_tx_code
+msgid "Moka Transaction Code"
+msgstr "Moka İşlem Kodu"
+
+#. module: payment_moka
+#: model:ir.model.fields,field_description:payment_moka.field_payment_provider__moka_username
+msgid "Moka Username"
+msgstr "Moka Kullanıcı Adı"
+
+#. module: payment_moka
+#: code:addons/payment_moka/models/payment_provider.py:0
+#, python-format
+msgid "Moka: Timeout. Please try again."
+msgstr "Moka: Zaman Aşımı. Lütfen tekrar deneyin."
+
+#. module: payment_moka
+#: model_terms:ir.ui.view,arch_db:payment_moka.inline_form
+msgid "Month"
+msgstr "Ay"
+
+#. module: payment_moka
+#: code:addons/payment_moka/models/payment_transaction.py:0
+#, python-format
+msgid "No transaction found matching reference %s."
+msgstr "Bu referansla eşleşen bir işlem bulunamadı %s."
+
+#. module: payment_moka
+#: model:payment.provider,display_as:payment_moka.payment_provider_moka
+msgid "POS (powered by Moka)"
+msgstr "Sanal Pos (Moka tarafından desteklenmektedir)"
+
+#. module: payment_moka
+#: model:ir.model,name:payment_moka.model_payment_provider
+msgid "Payment Provider"
+msgstr "Ödeme Sağlayıcı"
+
+#. module: payment_moka
+#: model:ir.model,name:payment_moka.model_payment_transaction
+msgid "Payment Transaction"
+msgstr "Ödeme İşlemi"
+
+#. module: payment_moka
+#: code:addons/payment_moka/models/payment_provider.py:0
+#, python-format
+msgid "Payment request failed."
+msgstr "Ödeme isteği başarısız oldu."
+
+#. module: payment_moka
+#: code:addons/payment_moka/models/payment_transaction.py:0
+#, python-format
+msgid "Received data with missing hash."
+msgstr "Hash olmayan veri alındı."
+
+#. module: payment_moka
+#: code:addons/payment_moka/models/payment_transaction.py:0
+#, python-format
+msgid "Received data with missing transaction code."
+msgstr "İşlem kodu olmayan veri alındı."
+
+#. module: payment_moka
+#: code:addons/payment_moka/controllers/main.py:0
+#, python-format
+msgid "Received tampered payment request data."
+msgstr "Bozulmuş ödeme isteği verisi alındı."
+
+#. module: payment_moka
+#. openerp-web
+#: code:addons/payment_moka/static/src/js/payment_form.js:0
+#, python-format
+msgid "Server Error"
+msgstr "Sunucu Hatası"
+
+#. module: payment_moka
+#: model:ir.model.fields,help:payment_moka.field_payment_provider__code
+msgid "The technical code of this payment provider."
+msgstr "Bu ödeme sağlayıcının teknik adı"
+
+#. module: payment_moka
+#: model_terms:ir.ui.view,arch_db:payment_moka.inline_form
+msgid "Three digit CV code on the back of your card"
+msgstr "Kartınızın arkasındaki üç haneli CV kodu"
+
+#. module: payment_moka
+#. openerp-web
+#: code:addons/payment_moka/static/src/js/payment_form.js:0
+#, python-format
+msgid "We are not able to process your payment."
+msgstr "Şu anda ödemenizi işleyemiyoruz."
+
+#. module: payment_moka
+#: model_terms:ir.ui.view,arch_db:payment_moka.inline_form
+msgid "XXXX XXXX XXXX XXXX"
+msgstr "XXXX XXXX XXXX XXXX"
+
+#. module: payment_moka
+#: model_terms:ir.ui.view,arch_db:payment_moka.inline_form
+msgid "Year"
+msgstr "Yıl"
+
+#. module: payment_moka
+#: model_terms:payment.provider,done_msg:payment_moka.payment_provider_moka
+msgid "Ödemeniz başarıyla işleme alındı. Teşekkür ederiz!"
+msgstr "Ödemeniz başarıyla işleme alındı. Teşekkür ederiz!"
+
+#. module: payment_moka
+#: model_terms:payment.provider,pending_msg:payment_moka.payment_provider_moka
+msgid "Ödemeniz başarıyla işleme koyuldu, ancak onay bekliyor."
+msgstr "Ödemeniz başarıyla işleme koyuldu, ancak onay bekliyor."
+
+#. module: payment_moka
+#: model_terms:payment.provider,cancel_msg:payment_moka.payment_provider_moka
+msgid "Ödemeniz iptal edildi."
+msgstr "Ödemeniz iptal edildi."
+
+#. module: payment_moka
+#: model_terms:payment.provider,auth_msg:payment_moka.payment_provider_moka
+msgid "Ödemeniz onaylandı."
+msgstr "Ödemeniz onaylandı."
