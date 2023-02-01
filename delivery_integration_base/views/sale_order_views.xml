@@ -5,12 +5,26 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <button name="action_unlock" position="after">
-                <button name="%(action_sale_get_rates_wizard)d" type="action"
+            <button name="action_confirm" position="before">
+                <button name="action_sale_get_rates_wizard"
+                        type="object"
                         Help="Get delivery rates for this order"
-                        string="Get Rates" class="ml-2 btn btn-default"
-                        attrs="{'invisible':[('state','in', ['done', 'cancel'])]}"/>
+                        string="Get Rates" class="oe_highlight"
+                        attrs="{'invisible':[
+                        '|',
+                         ('carrier_payment_type', '=', 'customer_pays'),
+                         ('state','in', ['done', 'cancel'])
+                         ]}"/>
             </button>
+            <xpath expr="//button[@name='get_delivery_price']" position="replace">
+                <field name="carrier_payment_type" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='set_delivery_line']" position="replace">
+                <span attrs="{'invisible': [('sale_deci', '&lt;=', 0.001)]}">
+                    <span class="ml-3">Deci: </span>
+                    <field name="sale_deci" readonly="1"/>
+                </span>
+            </xpath>
         </field>
     </record>
 </odoo>

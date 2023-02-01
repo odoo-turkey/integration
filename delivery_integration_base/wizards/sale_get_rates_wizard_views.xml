@@ -5,50 +5,25 @@
         <field name="model">sale.get.rates.wizard</field>
         <field name="arch" type="xml">
             <form string="Carrier Rates">
+                <field name="sale_id" invisible="1"/>
                 <field name="carrier_prices" widget="many2many">
-                   <tree>
-                      <field name="carrier_id"/>
-                      <field name="price"/>
-                      <field name="selected"/>
-                   </tree>
+                    <tree editable="top" delete="0" create="0">
+                        <field name="carrier_id" readonly="1"/>
+                        <field name="price" readonly="1" currency_field="currency_id"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="selected"/>
+                    </tree>
                 </field>
-<!--                <group attrs="{'invisible': [('journal_type', '!=', 'purchase')]}">-->
-<!--                    <field name="connect_to_einvoice"/>-->
-<!--                </group>-->
-<!--                <group attrs="{'invisible': [('connect_to_einvoice', '!=', False)]}">-->
-<!--                    <field name="show_sale_journal" invisible="1"/>-->
-<!--                    <field name="show_purchase_journal" invisible="1"/>-->
-<!--                    <field name="sale_journal" attrs="{'invisible':[('show_sale_journal', '=', False)], 'required':[('show_sale_journal', '=', True)]}"/>-->
-<!--                    <field name="purchase_journal" attrs="{'invisible':[('show_purchase_journal', '=', False)], 'required':[('show_purchase_journal', '=', True)]}"/>-->
-<!--                    <field name="group" invisible="1"/>-->
-<!--                    <field name="invoice_date" />-->
-
-<!--                </group>-->
-<!--                <group attrs="{'invisible': [('connect_to_einvoice', '!=', True)]}">-->
-<!--                    <field name="partner_id"/>-->
-<!--                    <field name="supplier_invoice_id" domain="[('partner_id', '=', partner_id),-->
-<!--                                                               ('type','=','in_invoice'),-->
-<!--                                                               ('state', '=', 'draft'),-->
-<!--                                                               ('is_einvoice', '!=', False)]"/>-->
-<!--                </group>-->
+                <div>
+                    <p class="text-muted">Select preferred delivery carrier. Shipment price will be added on order lines as product.</p>
+                </div>
                 <footer>
-<!--                    <button name="action_confirm" string="Select" type="object" class="oe_highlight"/>-->
+                    <button name="action_confirm" string="Select" type="object"
+                            class="oe_highlight"/>
                     or
                     <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>
             </form>
         </field>
     </record>
-
-    <act_window
-            name="Get Delivery Carrier Rates"
-            res_model="sale.get.rates.wizard"
-            src_model="sale.order"
-            key2="client_action_multi"
-            multi="True"
-            view_mode="form"
-            view_type="form"
-            target="new"
-            id="action_sale_get_rates_wizard"
-    />
 </odoo>

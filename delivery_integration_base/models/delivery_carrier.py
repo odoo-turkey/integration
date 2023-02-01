@@ -192,47 +192,46 @@ class DeliveryCarrier(models.Model):
         # volume in litre, weight in Kg
         total_delivery = 0.0
         for line in order.order_line:
+            product = line.product_id
             if line.state == "cancel":
                 continue
             if line.is_delivery:
                 total_delivery += line.price_total
-            if not line.product_id or line.is_delivery:
+            if not product or line.is_delivery:
                 continue
-            if line.product_id.type == "product" and (
-                line.product_id.weight < 0.0001 or line.product_id.volume < 0.0001
+            if product.type == "product" and (
+                product.weight < 0.0001 or product.volume < 0.0001
             ):
                 raise UserError(
                     _(
                         "Cannot calculate Shipping, Weight and Volume for product %s missing."
                     )
-                    % (line.product_id.display_name)
+                    % (product.display_name)
                 )
 
             line_qty = line.product_uom._compute_quantity(
-                qty=line.product_uom_qty, to_unit=line.product_id.uom_id, round=False
+                qty=line.product_uom_qty, to_unit=product.uom_id, round=False
             )
-            line_kg = uom_kg._compute_quantity(
-                qty=line_qty * line.product_id.weight,
-                to_unit=line.product_id.weight_uom_id,
+            line_kg = product.weight_uom_id._compute_quantity(
+                qty=line_qty * product.weight,
+                to_unit=uom_kg,
                 round=False,
             )
-            line_litre = (
-                line_qty
-                * line.product_id.product_length
-                * line.product_id.product_height
-                * line.product_id.product_width
-                * 1000.0
-            ) / (line.product_id.dimensional_uom_id.factor**3)
-            deci += max(line_kg, (line_litre * 1000.0 / self.deci_type))
+            line_litre = (line_qty * line.product_id.volume * 1000.0) / (
+                line.product_id.dimensional_uom_id.factor**3
+            )
+            calculated_deci = max(line_kg, (line_litre * 1000.0 / self.deci_type))
+            line.deci = calculated_deci  # save deci in sale order line
+            deci += calculated_deci
             weight += line_kg
             volume += line_litre
             quantity += line_qty
 
         factor = (100.0 + self.weight_calc_percentage) / 100.0
-        deci = math.ceil(deci * factor)
-        weight = math.ceil(weight * factor)
+        deci = deci * factor
+        weight = weight * factor
         volume = volume * factor
-
+        order.sale_deci = deci  # save deci in sale order
         total = (order.amount_total or 0.0) - total_delivery
         total = order.currency_id._convert(
             total,
