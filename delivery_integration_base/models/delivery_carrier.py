@@ -220,8 +220,8 @@ class DeliveryCarrier(models.Model):
             line_litre = (line_qty * line.product_id.volume * 1000.0) / (
                 line.product_id.dimensional_uom_id.factor**3
             )
-            calculated_deci = max(line_kg, (line_litre * 1000.0 / self.deci_type))
-            line.deci = calculated_deci  # save deci in sale order line
+            line.deci = (line_litre * 1000.0) / self.deci_type # save deci in sale order line
+            calculated_deci = max(line_kg, line.deci)
             deci += calculated_deci
             weight += line_kg
             volume += line_litre
@@ -231,7 +231,7 @@ class DeliveryCarrier(models.Model):
         deci = deci * factor
         weight = weight * factor
         volume = volume * factor
-        order.sale_deci = deci  # save deci in sale order
+        order.sale_deci = sum(order.mapped('order_line.deci'))  # save deci in sale order
         total = (order.amount_total or 0.0) - total_delivery
         total = order.currency_id._convert(
             total,
