@@ -1,10 +1,10 @@
 # Copyright 2022 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import models, fields, api, _
+from odoo import models, fields, _
 from odoo.tools.safe_eval import safe_eval
 from odoo.exceptions import ValidationError
 from odoo.exceptions import UserError
-import math
+from odoo.tools import float_is_zero
 from datetime import timedelta, datetime
 
 
@@ -187,52 +187,15 @@ class DeliveryCarrier(models.Model):
 
     def _get_price_available(self, order):
         self.ensure_one()
-        total = weight = volume = quantity = deci = 0
-        uom_kg = self.env.ref("uom.product_uom_kgm")
-        # volume in litre, weight in Kg
-        total_delivery = 0.0
-        for line in order.order_line:
-            product = line.product_id
-            if line.state == "cancel":
-                continue
-            if line.is_delivery:
-                total_delivery += line.price_total
-            if not product or line.is_delivery:
-                continue
-            if product.type == "product" and (
-                product.weight < 0.0001 or product.volume < 0.0001
-            ):
-                raise UserError(
-                    _(
-                        "Cannot calculate Shipping, Weight and Volume for product %s missing."
-                    )
-                    % (product.display_name)
-                )
-
-            line_qty = line.product_uom._compute_quantity(
-                qty=line.product_uom_qty, to_unit=product.uom_id, round=False
-            )
-            line_kg = product.weight_uom_id._compute_quantity(
-                qty=line_qty * product.weight,
-                to_unit=uom_kg,
-                round=False,
-            )
-            line_litre = (line_qty * line.product_id.volume * 1000.0) / (
-                line.product_id.dimensional_uom_id.factor**3
-            )
-            line.deci = (line_litre * 1000.0) / self.deci_type # save deci in sale order line
-            calculated_deci = max(line_kg, line.deci)
-            deci += calculated_deci
-            weight += line_kg
-            volume += line_litre
-            quantity += line_qty
-
+        dp = 4  # decimal precision
+        res = order.order_line._compute_line_deci(self.deci_type)
         factor = (100.0 + self.weight_calc_percentage) / 100.0
-        deci = deci * factor
-        weight = weight * factor
-        volume = volume * factor
-        order.sale_deci = sum(order.mapped('order_line.deci'))  # save deci in sale order
-        total = (order.amount_total or 0.0) - total_delivery
+        deci = res["deci"] * factor
+        weight = res["weight"] * factor
+        volume = res["volume"] * factor
+        # save deci in sale order
+        order.sale_deci = sum(order.mapped("order_line.deci"))
+        total = (order.amount_total or 0.0) - res["total_delivery"]
         total = order.currency_id._convert(
             total,
             self.currency_id,
@@ -241,15 +204,18 @@ class DeliveryCarrier(models.Model):
         )
 
         price = self._get_price_from_picking(
-            total, weight, volume, quantity, deci, order
+            total, weight, volume, res["quantity"], deci, order
         )
-        if self.fuel_surcharge_percentage > 0.001:
+        if not float_is_zero(self.fuel_surcharge_percentage, dp):
             price = price * (self.fuel_surcharge_percentage + 100.0) / 100.0
-        if self.environment_fee_per_kg > 0.001:
+
+        if not float_is_zero(self.environment_fee_per_kg, dp):
             price = price + deci * self.environment_fee_per_kg
-        if self.postal_charge_percentage > 0.001 and deci < 30.0:
+
+        if not float_is_zero(self.postal_charge_percentage, dp) and deci < 30.0:
             price = price * (self.postal_charge_percentage + 100.0) / 100.0
-        if self.Emergency_fee_per_kg > 0.001:
+
+        if not float_is_zero(self.Emergency_fee_per_kg, dp):
             price = price + deci * self.Emergency_fee_per_kg
 
         if order.company_id.currency_id.id != self.currency_id.id:
