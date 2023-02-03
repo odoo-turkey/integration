@@ -13,7 +13,7 @@
                         attrs="{'invisible':[
                         '|',
                          ('carrier_payment_type', '=', 'customer_pays'),
-                         ('state','in', ['done', 'cancel'])
+                         ('state','in', ['done', 'cancel', 'sale'])
                          ]}"/>
             </button>
             <xpath expr="//button[@name='get_delivery_price']" position="replace">
