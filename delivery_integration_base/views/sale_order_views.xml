@@ -21,9 +21,17 @@
             </xpath>
             <xpath expr="//button[@name='set_delivery_line']" position="replace">
                 <span attrs="{'invisible': [('sale_deci', '&lt;=', 0.001)]}">
-                    <span class="ml-3">Deci: </span>
+                    <span class="ml-3">Deci:</span>
                     <field name="sale_deci" readonly="1"/>
                 </span>
+            </xpath>
+
+            <xpath expr="//label[@for='analytic_tag_ids']" position="before">
+                <label for="deci"/>
+                <div>
+                    <field name="deci" class="oe_inline"/>
+                    Deci
+                </div>
             </xpath>
         </field>
     </record>
