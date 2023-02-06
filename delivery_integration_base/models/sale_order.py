@@ -19,21 +19,20 @@ class SaleOrder(models.Model):
         digits=dp.get_precision("Product Unit of Measure"),
     )
 
-    # TODO: enable this when product dimensions are added
-    # @api.multi
-    # def action_confirm(self):
-    #     """Inherit to check if sender_pays carrier line added to order lines."""
-    #     for order in self.filtered(lambda so: so.carrier_payment_type == "sender_pays"):
-    #         if not order.order_line.filtered(
-    #                 lambda ol: ol.product_id == order.carrier_id.product_id
-    #         ):
-    #             raise UserError(
-    #                 _(
-    #                     "Carrier line is not added to order lines. "
-    #                     "Please add carrier line to order lines."
-    #                 )
-    #             )
-    #     return super(SaleOrder, self).action_confirm()
+    @api.multi
+    def action_confirm(self):
+        """Inherit to check if sender_pays carrier line added to order lines."""
+        for order in self.filtered(lambda so: so.carrier_payment_type == "sender_pays"):
+            if not order.order_line.filtered(
+                    lambda ol: ol.product_id == order.carrier_id.product_id
+            ):
+                raise UserError(
+                    _(
+                        "Carrier line is not added to order lines. "
+                        "Please add carrier line to order lines."
+                    )
+                )
+        return super(SaleOrder, self).action_confirm()
 
     def _create_delivery_line(self, carrier, price_unit):
         """Inherit to change delivery line name."""
