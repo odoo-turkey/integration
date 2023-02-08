@@ -14,6 +14,19 @@ class SaleOrder(models.Model):
         readonly=True,
     )
 
+    delivery_price_try = fields.Monetary(
+        string="Delivery Price (TRY)",
+        currency_field="currency_id_try",
+        digits=dp.get_precision("Product Price"),
+        readonly=True,
+    )
+
+    currency_id_try = fields.Many2one(
+        related="company_id.currency_id",
+        string="Currency",
+        readonly=True,
+    )
+
     sale_deci = fields.Float(
         string="Sale Deci",
         digits=dp.get_precision("Product Unit of Measure"),
