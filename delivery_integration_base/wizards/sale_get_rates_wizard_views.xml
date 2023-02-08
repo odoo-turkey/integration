@@ -9,8 +9,13 @@
                 <field name="carrier_prices" widget="many2many">
                     <tree editable="top" delete="0" create="0">
                         <field name="carrier_id" readonly="1"/>
-                        <field name="price" readonly="1" currency_field="currency_id"/>
+                        <field name="price" readonly="1"
+                               currency_field="currency_id"/>
                         <field name="currency_id" invisible="1"/>
+                        <field name="try_currency_id" invisible="1"/>
+                        <field name="try_price" readonly="1"
+                               attrs="{'invisible': [('try_currency_id', '=', 'currency_id')]}"
+                               currency_field="try_currency_id"/>
                         <field name="selected"/>
                     </tree>
                 </field>
