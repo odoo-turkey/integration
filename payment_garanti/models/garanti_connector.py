@@ -268,7 +268,7 @@ class GarantiConnector:
                                  timeout=10)
             root = etree.fromstring(resp.content)
             error_msg = root.find('.//ErrorMsg')
-            if error_msg is not None:
+            if error_msg and error_msg.text:
                 return "Garanti: %s" % error_msg.text
             else:
                 return True
