@@ -187,6 +187,10 @@ class DeliveryCarrier(models.Model):
 
     def _get_price_available(self, order):
         self.ensure_one()
+
+        if isinstance(order, int):
+            order = self.env["sale.order"].browse(order)
+
         dp = 4  # decimal precision
         res = order.order_line._compute_line_deci(self.deci_type)
         factor = (100.0 + self.weight_calc_percentage) / 100.0
@@ -283,3 +287,13 @@ class DeliveryCarrier(models.Model):
                 picking.delivery_state = "customer_delivered"
 
         return True
+
+    def rate_endpoint(self, order_id):
+        """
+        order_id: id of the sale order
+
+        This method is called by the connector_odoo to get the price of the delivery
+        :return: dict
+        """
+        order = self.env["sale.order"].browse(order_id)
+        return self._get_price_available(order)
