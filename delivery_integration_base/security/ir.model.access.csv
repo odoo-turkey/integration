@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_connector_delivery_region,access_connector_delivery_region,model_delivery_region,base.group_no_one,1,1,1,0
+access_connector_delivery_region_mgr,access_connector_delivery_region,model_delivery_region,base.group_no_one,1,1,1,1
