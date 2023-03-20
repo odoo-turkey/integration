@@ -1,4 +1,4 @@
-# Copyright 2022 Yiğit Budak (https://github.com/yibudak)
+# Copyright 2023 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import models, api
 
@@ -7,7 +7,7 @@ class DeliverySendBatchEmail(models.TransientModel):
     _name = "delivery.send.batch.email"
     _description = "Send Batch Email to Customers"
 
-    @api.multi
+    # @api.multi
     def send_batch_email(self):
         context = dict(self._context or {})
         active_ids = context.get('active_ids', []) or []

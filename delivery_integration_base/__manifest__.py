@@ -1,4 +1,4 @@
-# Copyright 2022 Yiğit Budak (https://github.com/yibudak)
+# Copyright 2023 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     'name': 'Delivery Integration Base Module',
@@ -7,21 +7,21 @@
     'website': 'https://github.com/odoo-turkey/integration',
     'license': 'AGPL-3',
     'category': 'Delivery',
-    'version': '12.0.1.1.0',
+    'version': '16.0.1.1.0',
     'depends': [
-        "delivery", "l10n_tr_address", "delivery_state", "product_dimension",
-        "queue_job", "sms_verimor_http", "short_url_yourls"
+        "stock", "delivery", "l10n_tr_address"
     ],
     'data': [
-        'data/cron.xml',
-        'views/stock_picking_views.xml',
-        'views/delivery_carrier_views.xml',
-        'views/delivery_price_rule_views.xml',
-        'wizards/sale_get_rates_wizard_views.xml',
-        'wizards/delivery_send_batch_email_views.xml',
-        'views/sale_order_views.xml',
-        'views/delivery_region_views.xml',
-        'report/delivery_mail_template.xml',
+        "security/ir.model.access.csv",
+        # 'data/cron.xml',
+        # 'views/stock_picking_views.xml',
+        # 'views/delivery_carrier_views.xml',
+        # 'views/delivery_price_rule_views.xml',
+        # 'wizards/sale_get_rates_wizard_views.xml',
+        # 'wizards/delivery_send_batch_email_views.xml',
+        # 'views/sale_order_views.xml',
+        # 'views/delivery_region_views.xml',
+        # 'report/delivery_mail_template.xml',
     ],
     'installable': True,
 }

@@ -13,7 +13,7 @@ class SaleOrderLine(models.Model):
         digits=dp.get_precision("Product Unit of Measure"),
     )
 
-    @api.multi
+    # @api.multi
     def _compute_line_deci(self, deci_type):
         uom_kg = self.env.ref("uom.product_uom_kgm")
         uom_dp = 4
@@ -43,11 +43,7 @@ class SaleOrderLine(models.Model):
             line_qty = line.product_uom._compute_quantity(
                 qty=line.product_uom_qty, to_unit=product.uom_id, round=False
             )
-            line_kg = product.weight_uom_id._compute_quantity(
-                qty=line_qty * product.weight,
-                to_unit=uom_kg,
-                round=False,
-            )
+            line_kg = (line_qty * product.weight) / 1000
             line_litre = (line_qty * line.product_id.volume * 1000.0) / (
                 line.product_id.dimensional_uom_id.factor**3
             )

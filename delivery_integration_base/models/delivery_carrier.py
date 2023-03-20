@@ -1,4 +1,4 @@
-# Copyright 2022 Yiğit Budak (https://github.com/yibudak)
+# Copyright 2023 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import models, fields, _
 from odoo.tools.safe_eval import safe_eval
@@ -45,11 +45,11 @@ class DeliveryCarrier(models.Model):
     deci_type = fields.Selection(
         string="Deci Type",
         selection=[
-            (3000, "(3000)"),
-            (4000, "(4000)"),
-            (5000, "(5000)"),
+            ("3000", "(3000)"),
+            ("4000", "(4000)"),
+            ("5000", "(5000)"),
         ],
-        default=3000,
+        default="3000",
         required=True,
     )
     weight_calc_percentage = fields.Float(
@@ -118,27 +118,29 @@ class DeliveryCarrier(models.Model):
         Update integrated pickings in a batch
         :return:
         """
-        pickings = self.env["stock.picking"].search(
-            [
-                (
-                    "carrier_id.delivery_type",
-                    "not in",
-                    [False, "fixed", "base_on_rule"],
-                ),
-                ("carrier_tracking_ref", "!=", False),
-                ("date_done", ">", fields.Date.today() - timedelta(days=5)),
-                (
-                    "delivery_state",
-                    "in",
-                    ["shipping_recorded_in_carrier", "in_transit"],
-                ),
-            ]
-        )
-
-        for picking in pickings:
-            method = "%s_tracking_state_update" % picking.delivery_type
-            if hasattr(picking.carrier_id, method):
-                getattr(picking.carrier_id, method)(picking)
+        # Todo: implement this method
+        return True
+        # pickings = self.env["stock.picking"].search(
+        #     [
+        #         (
+        #             "carrier_id.delivery_type",
+        #             "not in",
+        #             [False, "fixed", "base_on_rule"],
+        #         ),
+        #         ("carrier_tracking_ref", "!=", False),
+        #         ("date_done", ">", fields.Date.today() - timedelta(days=5)),
+        #         (
+        #             "delivery_state",
+        #             "in",
+        #             ["shipping_recorded_in_carrier", "in_transit"],
+        #         ),
+        #     ]
+        # )
+        #
+        # for picking in pickings:
+        #     method = "%s_tracking_state_update" % picking.delivery_type
+        #     if hasattr(picking.carrier_id, method):
+        #         getattr(picking.carrier_id, method)(picking)
 
     def _sms_notificaton_send(self, picking):
         """
@@ -192,7 +194,7 @@ class DeliveryCarrier(models.Model):
             order = self.env["sale.order"].browse(order)
 
         dp = 4  # decimal precision
-        res = order.order_line._compute_line_deci(self.deci_type)
+        res = order.order_line._compute_line_deci(int(self.deci_type))
         factor = (100.0 + self.weight_calc_percentage) / 100.0
         deci = res["deci"] * factor
         weight = res["weight"] * factor
@@ -287,13 +289,3 @@ class DeliveryCarrier(models.Model):
                 picking.delivery_state = "customer_delivered"
 
         return True
-
-    def rate_endpoint(self, order_id):
-        """
-        order_id: id of the sale order
-
-        This method is called by the connector_odoo to get the price of the delivery
-        :return: dict
-        """
-        order = self.env["sale.order"].browse(order_id)
-        return self._get_price_available(order)
