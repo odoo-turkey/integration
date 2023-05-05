@@ -61,7 +61,6 @@ class OnlineBankStatementProviderFinekra(models.Model):
         :param data:
         :return:
         '''
-        pass
         headers = {'Content-Type': 'application/json;odata.metadata=minimal;odata.streaming=true',
                    'Authorization': "Bearer %s" % self.finekra_jwt_token}
         response = requests.post(endpoint, json=data, headers=headers)
