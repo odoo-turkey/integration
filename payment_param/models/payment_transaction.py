@@ -3,29 +3,31 @@
 import logging
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
-from hashlib import sha256
 from odoo.addons.payment import utils as payment_utils
-from odoo.addons.payment_moka.const import MOKA_3D_ERRORS
+from odoo.addons.payment_param.const import PARAM_ERROR_CODES
+
 _logger = logging.getLogger(__name__)
 
 
 class PaymentTransaction(models.Model):
-    _inherit = 'payment.transaction'
+    _inherit = "payment.transaction"
 
-    moka_tx_code = fields.Char(string="Moka Transaction Code",
-                               readonly=True,
-                               copy=False)
-    moka_success_hash = fields.Char(string="Moka Success Hash",
-                                    readonly=True,
-                                    copy=False)
-    moka_fail_hash = fields.Char(string="Moka Failure Hash",
-                                 readonly=True,
-                                 copy=False)
+    param_islem_id = fields.Char(string="Param Islem ID", readonly=True, copy=False)
+    param_islem_guid = fields.Char(string="Param Islem GUID", readonly=True, copy=False)
+    param_islem_hash = fields.Char(string="Param Islem Hash", readonly=True, copy=False)
+    param_islem_tarihi = fields.Char(
+        string="Param Islem Tarihi", readonly=True, copy=False
+    )
+    param_dekont_id = fields.Char(string="Param Dekont ID", readonly=True, copy=False)
+    param_kk_no = fields.Char(string="Param KK No", readonly=True, copy=False)
+    param_tahsilat_tutari = fields.Char(
+        string="Param Tahsilat Tutari", readonly=True, copy=False
+    )
 
     # === BUSINESS METHODS ===#
 
     def _get_specific_processing_values(self, processing_values):
-        """ Override of payment to return  Moka-specific processing values.
+        """Override of payment to return  Moka-specific processing values.
 
         Note: self.ensure_one() from `_get_processing_values`
 
@@ -34,29 +36,19 @@ class PaymentTransaction(models.Model):
         :rtype: dict
         """
         res = super()._get_specific_processing_values(processing_values)
-        if self.provider_code != 'moka':
+        if self.provider_code != "param":
             return res
 
         return {
-            'access_token': payment_utils.generate_access_token(
-                processing_values['reference'],
-                processing_values['amount'],
-                processing_values['partner_id']
+            "access_token": payment_utils.generate_access_token(
+                processing_values["reference"],
+                processing_values["amount"],
+                processing_values["partner_id"],
             )
         }
 
-    def _moka_calculate_tx_hashes(self, unique_code):
-        self.ensure_one()
-        success_hash = sha256((unique_code + 'T').encode('utf-8')).hexdigest()
-        fail_hash = sha256((unique_code + 'F').encode('utf-8')).hexdigest()
-        self.write({
-            'moka_success_hash': success_hash,
-            'moka_fail_hash': fail_hash,
-        })
-        return True
-
     def _process_notification_data(self, notification_data):
-        """ Override of payment to process the transaction based on Moka data.
+        """Override of payment to process the transaction based on Moka data.
 
         Note: self.ensure_one()
 
@@ -65,27 +57,39 @@ class PaymentTransaction(models.Model):
         :raise: ValidationError if inconsistent data were received
         """
         super()._process_notification_data(notification_data)
-        if self.provider_code != 'moka':
+        if self.provider_code != "param":
             return
 
-        self.operation = 'online_redirect'
-        self.moka_tx_code = notification_data.get('trxCode')
+        self.operation = "online_redirect"
+        self.write(
+            {
+                "param_islem_guid": notification_data.get("TURKPOS_RETVAL_GUID"),
+                "param_islem_hash": notification_data.get("TURKPOS_RETVAL_Hash"),
+                "param_islem_tarihi": notification_data.get(
+                    "TURKPOS_RETVAL_Islem_Tarihi"
+                ),
+                "param_dekont_id": notification_data.get("TURKPOS_RETVAL_Dekont_ID"),
+                "param_kk_no": notification_data.get("TURKPOS_RETVAL_KK_No"),
+                "param_tahsilat_tutari": notification_data.get(
+                    "TURKPOS_RETVAL_Tahsilat_Tutari"
+                ),
+            }
+        )
 
-        result_code = notification_data.get('resultCode')
-        if result_code:
+        result_code = notification_data.get("TURKPOS_RETVAL_Sonuc")
+        if result_code != "1":
+            error_str = notification_data.get("TURKPOS_RETVAL_Sonuc_Str")
             _logger.warning(
-                "the transaction with reference %s underwent an error."
-                " reason: %s",
-                self.reference, result_code
+                "the transaction with reference %s underwent an error." " reason: %s",
+                self.reference,
+                error_str,
             )
-            self._set_error(
-                _(MOKA_3D_ERRORS.get(result_code, result_code))
-            )
+            self._set_error(error_str)
         else:
             self._set_done()
 
     def _get_tx_from_notification_data(self, provider_code, notification_data):
-        """ Override of payment to find the transaction based on Moka data.
+        """Override of payment to find the transaction based on Moka data.
 
         :param str provider_code: The code of the provider that handled the transaction
         :param dict notification_data: The notification data sent by the provider
@@ -94,29 +98,30 @@ class PaymentTransaction(models.Model):
         :raise: ValidationError if inconsistent data were received
         :raise: ValidationError if the data match no transaction
         """
-        tx = super()._get_tx_from_notification_data(provider_code,
-                                                    notification_data)
-        if provider_code != 'moka' or len(tx) == 1:
+        tx = super()._get_tx_from_notification_data(provider_code, notification_data)
+        if provider_code != "param" or len(tx) == 1:
             return tx
 
-        tx_code = notification_data.get('trxCode')
+        tx_code = notification_data.get("TURKPOS_RETVAL_Siparis_ID")
         if not tx_code:
             raise ValidationError(
-                "Moka: " + _("Received data with missing transaction code."))
+                "Param: " + _("Received data with missing transaction code.")
+            )
 
-        tx_hash = notification_data.get('hashValue')
-        if not tx_hash:
-            raise ValidationError(
-                "Moka: " + _("Received data with missing hash."))
+        tx_param_id = notification_data.get("TURKPOS_RETVAL_SanalPOS_Islem_ID")
+        if not tx_param_id:
+            raise ValidationError("Param: " + _("Received data with missing hash."))
 
-        tx = self.search(['|',
-                          ('moka_success_hash', '=', tx_hash),
-                          ('moka_fail_hash', '=', tx_hash),
-                          ('provider_code', '=', 'moka')])
+        tx = self.search(
+            [
+                ("reference", "=", tx_code),
+                ("param_islem_id", "=", tx_param_id),
+                ("provider_code", "=", "param"),
+            ]
+        )
 
         if not tx:
             raise ValidationError(
-                "Moka: " + _("No transaction found matching reference %s.",
-                             tx_code)
+                "Param: " + _("No transaction found matching reference %s.", tx_code)
             )
         return tx

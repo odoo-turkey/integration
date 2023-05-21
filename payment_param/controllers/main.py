@@ -10,12 +10,12 @@ from odoo.addons.payment import utils as payment_utils
 _logger = logging.getLogger(__name__)
 
 
-class MokaController(http.Controller):
-    _webhook_url = "/payment/moka/payments"
-    _return_url = "/payment/moka/return"
+class ParamController(http.Controller):
+    _webhook_url = "/payment/param/payments"
+    _return_url = "/payment/param/return"
 
     @http.route(_webhook_url, type="json", auth="public")
-    def moka_payments(
+    def param_payments(
         self,
         provider_id,
         reference,
@@ -44,15 +44,15 @@ class MokaController(http.Controller):
             access_token, reference, amount, partner_id
         ):
             raise ValidationError(
-                "Moka: " + _("Received tampered payment request data.")
+                "Param: " + _("Received tampered payment request data.")
             )
 
-        # Prepare the payment request to Moka
+        # Prepare the payment request to Param
         provider_sudo = (
             request.env["payment.provider"].sudo().browse(provider_id).exists()
         )
 
-        card_error = provider_sudo._moka_validate_card_args(card_args)
+        card_error = provider_sudo._param_validate_card_args(card_args)
         if card_error:
             raise ValidationError(card_error)
 
@@ -64,14 +64,11 @@ class MokaController(http.Controller):
 
         client_ip = request.httprequest.environ.get("REMOTE_ADDR")
 
-        resp = provider_sudo._moka_make_payment_request(
+        resp = provider_sudo._param_make_payment_request(
             tx_sudo, amount, currency_id, card_args, client_ip
         )
-
-        tx_sudo._moka_calculate_tx_hashes(unique_code=resp.get("CodeForHash"))
-
         # Handle the response
-        return {"redirect_url": resp.get("Url")}
+        return {"redirect_url": resp}
 
     @http.route(
         _return_url,
@@ -81,19 +78,19 @@ class MokaController(http.Controller):
         save_session=False,
         methods=["POST"],
     )
-    def moka_return_from_3ds_auth(self, **kwargs):
+    def param_return_from_3ds_auth(self, **kwargs):
         """
         Handle the return from the 3DS authentication.
-        notification_data is a dict coming from Moka.
+        notification_data is a dict coming from Param.
         """
         tx_sudo = (
             request.env["payment.transaction"]
             .sudo()
-            ._handle_notification_data("moka", kwargs)
+            ._handle_notification_data("param", kwargs)
         )
 
         _logger.info(
-            "handling redirection from Moka for transaction with"
+            "handling redirection from Param for transaction with"
             " reference %s with data:\n%s",
             tx_sudo.reference,
             pprint.pformat(kwargs),
