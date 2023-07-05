@@ -159,6 +159,14 @@ class DeliveryCarrier(models.Model):
             )
             if message and self.sms_service_id:
                 sms_api._send_sms([mobile_number], message)
+                picking.message_post(
+                    body=_(
+                        "<span>SMS notification sent to %s</span>"
+                        "<br>"
+                        "<span>Message:%s</span>" %
+                        (picking.partner_id.mobile, message)
+                    )
+                )
         return True
 
     def get_tracking_link(self, picking):
