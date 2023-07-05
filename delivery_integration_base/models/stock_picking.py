@@ -29,6 +29,7 @@ class StockPicking(models.Model):
                 self.carrier_id.send_sms_customer and
                 self.carrier_id.sms_service_id):
             self.carrier_id.with_delay()._sms_notificaton_send(self)
+        return True
 
     def write(self, vals):
         if "delivery_state" in vals:
@@ -91,10 +92,8 @@ class StockPicking(models.Model):
         mail_template = self.env.ref('delivery_integration_base.delivery_mail_template')
         email = self.partner_id.email or self.sale_id.partner_id.email
         if email and not self.mail_sent:
-            mail_template.with_delay().send_mail(res_id=self.id, force_send=True, raise_exception=False,
-                                                 email_values={'email_to': self.partner_id.email})
+            self.with_delay().message_post_with_template(mail_template.id)
             self.write({
                 'mail_sent': True,
             })
-
         return True
