@@ -185,9 +185,8 @@ class DeliveryCarrier(models.Model):
     def yurtici_get_tracking_link(self, picking):
         """Provide tracking link for the customer"""
         return (
-                "http://selfservis.yurticikargo.com/reports/"
-                "SSWDocumentDetail.aspx?DocId=%s"
-                % picking.shipping_number
+            f"https://www.yurticikargo.com/tr/online-servisler/"
+            f"gonderi-sorgula?code={picking.shipping_number}"
         )
 
     def yurtici_tracking_state_update(self, picking):
