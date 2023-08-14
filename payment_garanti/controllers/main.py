@@ -93,7 +93,7 @@ class GarantiController(http.Controller):
         auth="public",
         csrf=False,
         save_session=False,
-        methods=["GET"],
+        methods=["POST"],
     )
     def garanti_return_from_3ds_auth(self, **kwargs):
         """
