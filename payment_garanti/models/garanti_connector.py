@@ -12,14 +12,16 @@ import time
 
 
 class GarantiConnector:
-    def __init__(self, acquirer, tx, amount, currency, card_args=None, client_ip=None):
+    def __init__(
+        self, acquirer, tx, amount, currency_id, card_args=None, client_ip=None
+    ):
         self.url = acquirer._garanti_get_api_url()
         self.provider = acquirer
         self.tx = tx
         self.amount = int(
             round(amount * 100, 0)
         )  # Garanti API expects amount in kuruş.
-        self.currency = currency
+        self.currency_id = currency_id
         self.card_args = card_args
         self.client_ip = client_ip
 
@@ -41,10 +43,11 @@ class GarantiConnector:
         form = soup.find("form", {"id": "webform0"})
 
         if form:
-            return str(form)
+            return "form", str(form)
 
+        # This means that the response is redirection page
         else:
-            raise ValidationError(_("Garanti Sanal Pos Error"))
+            return "redirect", str(soup)
 
     def _garanti_make_payment_request(self):
         """Send payment request to Garanti Sanal Pos API.
@@ -89,6 +92,7 @@ class GarantiConnector:
             str(self.provider.garanti_store_key)
             + str(self._garanti_compute_security_data())  # storekey  # securitydata
         )
+        # Save hash to transaction to use in callback.
         self.tx.garanti_secure3d_hash = (
             sha1(hash_strings.encode("utf-8")).hexdigest().upper()
         )
@@ -108,8 +112,8 @@ class GarantiConnector:
             "cardnumber": self.provider._garanti_format_card_number(
                 self.card_args.get("card_number")
             ),
-            "cardexpiredatemonth": self.card_args.get("card_valid_month").zfill(2),
-            "cardexpiredateyear": self.card_args.get("card_valid_year").lstrip("20"),
+            "cardexpiredatemonth": self.card_args.get("card_valid_month"),
+            "cardexpiredateyear": self.card_args.get("card_valid_year"),
             "cardcvv2": self.card_args.get("card_cvv"),
             "companyname": self.provider._garanti_get_company_name(),
             "apiversion": "16",
@@ -122,7 +126,9 @@ class GarantiConnector:
             "customeremailaddress": self.tx.partner_email,
             "customeripaddress": self.client_ip,
             "txnamount": str(self.amount),
-            "txncurrencycode": self.provider._garanti_get_currency_code(self.currency),
+            "txncurrencycode": self.provider._garanti_get_currency_code(
+                self.currency_id
+            ),
             "txninstallmentcount": "",  # Taksit yok. Boş olacak.
             "successurl": self.provider._garanti_get_return_url(),
             "errorurl": self.provider._garanti_get_return_url(),
@@ -303,7 +309,7 @@ class GarantiConnector:
         try:
             root = etree.fromstring(resp.content)
             error_msg = root.find(".//ErrorMsg")
-            if error_msg and error_msg.text:
+            if len(error_msg) > 0 and error_msg.text:
                 return "Garanti: %s" % error_msg.text
             else:
                 return True

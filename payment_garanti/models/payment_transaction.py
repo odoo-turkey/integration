@@ -48,7 +48,7 @@ class PaymentTransaction(models.Model):
             )
         return tx
 
-    def _process_notification_data(self, notification_data):
+    def _garanti_form_validate(self, notification_data):
         """Override of payment to process the transaction based on Garanti data.
 
         Note: self.ensure_one()
@@ -65,18 +65,26 @@ class PaymentTransaction(models.Model):
         error_msg = notification_data.get("mderrormessage")
         if md_status != "1":
             _logger.warning(
-                "the transaction with reference %s underwent an error." " reason: %s",
-                self.reference,
-                error_msg,
+                "Transaction %s is not authorized: %s", self.reference, error_msg
             )
-            self._set_error(_("Payment failed: %s" % error_msg))
+            self._set_transaction_cancel()
         else:
             connector = GarantiConnector(
                 self.acquirer_id, self, self.amount, self.currency_id.id
             )
-            res = connector._garanti_payment_callback(notification_data)
-            if isinstance(res, bool):
-                self._set_transaction_done()
-                self._post_process_after_done()
-            else:
-                self._set_error(_("Payment failed. %s" % res))
+            try:
+                res = connector._garanti_payment_callback(notification_data)
+                if isinstance(res, bool):
+                    self._set_transaction_done()
+                    self._post_process_after_done()
+                else:
+                    self._set_transaction_cancel()
+            except Exception as e:
+                _logger.warning(
+                    "Garanti payment callback error: %s, data: %s",
+                    (e, notification_data),
+                    exc_info=True,
+                )
+                self._set_transaction_cancel()
+
+        return self  # for the controller

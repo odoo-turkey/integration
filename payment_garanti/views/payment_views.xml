@@ -14,6 +14,11 @@
                     <field name="garanti_prov_user"/>
                     <field name="garanti_prov_password" password="True"/>
                     <field name="garanti_store_key" password="True"/>
+                    <!--
+                     payment_flow fieldı odoo'ya ait ama invisible.
+                     değerin garanti için s2s olması gerek.
+                    -->
+                    <field name="payment_flow"/>
                 </group>
             </xpath>
         </field>

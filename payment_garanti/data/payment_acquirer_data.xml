@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<odoo noupdate="1">
 
     <record id="payment_acquirer_garanti" model="payment.acquirer">
         <field name="name">Garanti</field>
@@ -9,6 +9,7 @@
         <field name="view_template_id" ref="payment_garanti.garanti_form"/>
         <field name="registration_view_template_id" ref="payment_garanti.garanti_s2s_form"/>
         <field name="environment">test</field>
+        <field name="payment_flow">s2s</field>
         <field name="pre_msg"><![CDATA[
             <p><br></p>]]></field>
 
@@ -22,9 +23,6 @@
         <field name="garanti_prov_user">dummy</field>
         <field name="garanti_prov_password">dummy</field>
         <field name="garanti_store_key">dummy</field>
-
-
-        <!--        <field name="inline_form_view_id" ref="inline_form"/>-->
     </record>
 
 </odoo>

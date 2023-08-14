@@ -6,14 +6,45 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-27 07:28+0000\n"
-"PO-Revision-Date: 2023-07-27 07:28+0000\n"
+"POT-Creation-Date: 2023-08-14 16:49+0000\n"
+"PO-Revision-Date: 2023-08-14 16:49+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: payment_garanti
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_payment_result
+msgid "<b>Amount:</b>"
+msgstr "<b>Tutar:</b>"
+
+#. module: payment_garanti
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_payment_result
+msgid "<b>Partner:</b>"
+msgstr ""
+
+#. module: payment_garanti
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_payment_result
+msgid "<b>Payment Date:</b>"
+msgstr ""
+
+#. module: payment_garanti
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_payment_result
+msgid "<b>Reference:</b>"
+msgstr "<b>Referans:</b>"
+
+#. module: payment_garanti
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_payment_result
+msgid "<b>Transaction Ref:</b>"
+msgstr ""
+
+#. module: payment_garanti
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_payment_result
+msgid "<i class=\"fa fa-arrow-right fa-fw\" role=\"img\" aria-label=\"Arrow\" title=\"Arrow\"/>\n"
+"                            View Order"
+msgstr ""
 
 #. module: payment_garanti
 #: model_terms:payment.acquirer,pending_msg:payment_garanti.payment_acquirer_garanti
@@ -36,84 +67,128 @@ msgid "<span><i>İptal,</i> Ödeme İptal Edildi.</span>"
 msgstr ""
 
 #. module: payment_garanti
-#: selection:payment.acquirer,provider:0
-msgid "Authorize.Net"
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_payment_result
+msgid "<strong>Payment Status:</strong>\n"
+"                                Awaiting payment. You can make your payments from\n"
+"                                our sales portal."
 msgstr ""
 
 #. module: payment_garanti
-#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_form
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_payment_result
+msgid "<strong>Payment Status:</strong>\n"
+"                                Canceled. Your payment has been canceled. Please\n"
+"                                contact us or leave a message on sales portal."
+msgstr ""
+
+#. module: payment_garanti
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_payment_result
+msgid "<strong>Payment Status:</strong>\n"
+"                                Completed. Thank you for your payment. Your order\n"
+"                                will be processed as soon as possible."
+msgstr ""
+
+#. module: payment_garanti
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_payment_result
+msgid "<strong>Payment Status:</strong>\n"
+"                                Error. Your payment could not be completed. Please\n"
+"                                contact us or leave a message on sales portal."
+msgstr ""
+
+#. module: payment_garanti
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_payment_result
+msgid "<strong>Payment Status:</strong>\n"
+"                                Pending. You can make your payments from our sales\n"
+"                                portal."
+msgstr ""
+
+#. module: payment_garanti
+#: code:addons/payment_garanti/controllers/main.py:116
+#, python-format
+msgid "An error occurred while processing your payment. Please contact us."
+msgstr "Ödemeniz işlenirken bir hata oluştu. Lütfen bizimle iletişime geçin."
+
+#. module: payment_garanti
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_s2s_form
+msgid "CVC"
+msgstr ""
+
+#. module: payment_garanti
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_s2s_form
 msgid "CVV\n"
 "                                            <i class=\"fa fa-question-circle d-inline\"/>"
 msgstr ""
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_acquirer.py:147
+#: code:addons/payment_garanti/models/payment_acquirer.py:162
 #, python-format
 msgid "Card CVV is not valid.\n"
 ""
 msgstr "Kart CVV geçerli değil.\n"
+""
 
 #. module: payment_garanti
-#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_form
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_s2s_form
 msgid "Card Owner"
 msgstr "Kart Sahibi"
 
 #. module: payment_garanti
-#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_form
-msgid "Card Owner Name"
-msgstr "Kart Sahibi Adı"
-
-#. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_acquirer.py:154
+#: code:addons/payment_garanti/models/payment_acquirer.py:170
 #, python-format
 msgid "Card expiration date is not valid.\n"
 ""
 msgstr "Kart son kullanma tarihi geçerli değil.\n"
+""
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_acquirer.py:150
+#: code:addons/payment_garanti/models/payment_acquirer.py:165
 #, python-format
 msgid "Card name is not valid.\n"
 ""
 msgstr "Kart adı geçerli değil.\n"
+""
 
 #. module: payment_garanti
-#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_form
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_s2s_form
 msgid "Card number"
 msgstr "Kart numarası"
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_acquirer.py:105
+#: code:addons/payment_garanti/models/payment_acquirer.py:119
 #, python-format
 msgid "Card number is not valid."
 msgstr "Kart numarası geçerli değil."
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_acquirer.py:144
+#: code:addons/payment_garanti/models/payment_acquirer.py:159
 #, python-format
 msgid "Card number is not valid.\n"
 ""
 msgstr "Kart numarası geçerli değil.\n"
+""
 
 #. module: payment_garanti
-#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_form
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_s2s_form
+msgid "Cardholder name"
+msgstr "Kart sahibi adı"
+
+#. module: payment_garanti
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_s2s_form
 msgid "Expiration Date"
 msgstr "Son Kullanma Tarihi"
+
+#. module: payment_garanti
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_s2s_form
+msgid "Expires (MM / YY)"
+msgstr "Son Kullanma Tarihi (AA / YY)"
 
 #. module: payment_garanti
 #: model:payment.acquirer,name:payment_garanti.payment_acquirer_garanti
 #: selection:payment.acquirer,provider:0
 msgid "Garanti"
-msgstr "Garanti"
+msgstr "Banka & Kredi Kartı"
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/garanti_connector.py:47
-#, python-format
-msgid "Garanti Sanal Pos Error"
-msgstr "Garanti Sanal Pos Hatası"
-
-#. module: payment_garanti
-#: code:addons/payment_garanti/models/garanti_connector.py:39
+#: code:addons/payment_garanti/models/garanti_connector.py:41
 #, python-format
 msgid "Garanti Sanal Pos Error: %s"
 msgstr "Garanti Sanal Pos Hatası: %s"
@@ -129,22 +204,29 @@ msgid "Garanti XID"
 msgstr ""
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/garanti_connector.py:61
+#: code:addons/payment_garanti/models/garanti_connector.py:64
 #, python-format
 msgid "Garanti: An error occurred. Please try again."
 msgstr "Garanti: Bir hata oluştu. Lütfen tekrar deneyin."
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/garanti_connector.py:301
+#: code:addons/payment_garanti/models/garanti_connector.py:307
 #, python-format
 msgid "Garanti: Error. Please try again."
 msgstr "Garanti: Hata. Lütfen tekrar deneyin."
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/garanti_connector.py:311
+#: code:addons/payment_garanti/models/garanti_connector.py:317
 #, python-format
 msgid "Garanti: Timeout. Please try again."
 msgstr "Garanti: Zaman aşımı. Lütfen tekrar deneyin."
+
+#. module: payment_garanti
+#: code:addons/payment_garanti/controllers/main.py:55
+#: code:addons/payment_garanti/controllers/main.py:59
+#, python-format
+msgid "Invalid amount"
+msgstr "Geçersiz tutar"
 
 #. module: payment_garanti
 #: selection:payment.acquirer,provider:0
@@ -162,25 +244,10 @@ msgid "Merchant ID provided by Garanti Sanal Pos"
 msgstr ""
 
 #. module: payment_garanti
-#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_form
-msgid "Month"
-msgstr "Ay"
-
-#. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_transaction.py:118
+#: code:addons/payment_garanti/models/payment_transaction.py:47
 #, python-format
 msgid "No transaction found matching reference %s."
 msgstr "Bu kodla işlem bulunamadı %s"
-
-#. module: payment_garanti
-#: selection:payment.acquirer,provider:0
-msgid "Ogone"
-msgstr ""
-
-#. module: payment_garanti
-#: selection:payment.acquirer,provider:0
-msgid "PayUmoney"
-msgstr ""
 
 #. module: payment_garanti
 #: model:ir.model,name:payment_garanti.model_payment_acquirer
@@ -193,27 +260,10 @@ msgid "Payment Transaction"
 msgstr "Ödeme İşlemi"
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_transaction.py:85
-#, python-format
-msgid "Payment failed. %s"
-msgstr "Ödeme yapılamadı. %s"
-
-#. module: payment_garanti
-#: code:addons/payment_garanti/models/garanti_connector.py:37
+#: code:addons/payment_garanti/models/garanti_connector.py:39
 #, python-format
 msgid "Payment failed. Garanti: Card is not authenticated."
 msgstr "Ödeme yapılamadı. Garanti: Kart yetkilendirilmemiş."
-
-#. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_transaction.py:77
-#, python-format
-msgid "Payment failed: %s"
-msgstr "Ödeme yapılamadı: %s"
-
-#. module: payment_garanti
-#: selection:payment.acquirer,provider:0
-msgid "Paypal"
-msgstr ""
 
 #. module: payment_garanti
 #: model:ir.model.fields,field_description:payment_garanti.field_payment_acquirer__provider
@@ -241,23 +291,22 @@ msgid "Provision User provided by Garanti Sanal Pos"
 msgstr "Garanti Sanal Pos tarafından sağlanan provizyon kullanıcısı"
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_transaction.py:111
+#: code:addons/payment_garanti/models/payment_transaction.py:39
 #, python-format
 msgid "Received data with missing ref."
 msgstr "Eksik referans ile veri alındı."
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_transaction.py:105
+#: code:addons/payment_garanti/models/payment_transaction.py:34
 #, python-format
 msgid "Received data with missing transaction code."
 msgstr "Eksik işlem kodu ile veri alındı."
 
 #. module: payment_garanti
-#. openerp-web
-#: code:addons/payment_garanti/static/src/js/payment_form.js:79
+#: code:addons/payment_garanti/controllers/main.py:49
 #, python-format
-msgid "Server Error"
-msgstr "Sunucu Hatası"
+msgid "Sale order not found"
+msgstr "Satış siparişi bulunamadı"
 
 #. module: payment_garanti
 #: model:ir.model.fields,field_description:payment_garanti.field_payment_acquirer__garanti_store_key
@@ -285,34 +334,26 @@ msgid "The hash used to authenticate the transaction with Garanti Secure 3D"
 msgstr "Garanti Secure 3D ile işlemin kimliğini doğrulamak için kullanılan hash"
 
 #. module: payment_garanti
-#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_form
+#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_s2s_form
 msgid "Three digit CV code on the back of your card"
 msgstr "Kartın arkasındaki 3 haneli CV kodu"
 
 #. module: payment_garanti
 #. openerp-web
-#: code:addons/payment_garanti/static/src/js/payment_form.js:80
+#: code:addons/payment_garanti/static/src/js/payment_form.js:84
 #, python-format
-msgid "We are not able to process your payment."
-msgstr "Ödemenizi işleme alamıyoruz."
+msgid "Unable to save card"
+msgstr "Kart kaydedilemedi"
+
+#. module: payment_garanti
+#. openerp-web
+#: code:addons/payment_garanti/static/src/js/payment_form.js:85
+#, python-format
+msgid "We are not able to add your payment method at the moment. "
+msgstr "Şu anda ödeme yönteminizi ekleyemiyoruz. "
 
 #. module: payment_garanti
 #: selection:payment.acquirer,provider:0
 msgid "Wire Transfer"
-msgstr "Banka Havalesi"
-
-#. module: payment_garanti
-#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_form
-msgid "XXXX XXXX XXXX XXXX"
 msgstr ""
-
-#. module: payment_garanti
-#: model_terms:ir.ui.view,arch_db:payment_garanti.garanti_form
-msgid "Year"
-msgstr "Yıl"
-
-#. module: payment_garanti
-#: model_terms:payment.acquirer,pre_msg:payment_garanti.payment_acquirer_garanti
-msgid "You will be redirected to the Garanti website after clicking on payment button."
-msgstr "Ödeme butonuna tıkladıktan sonra Garanti internet sitesine yönlendirileceksiniz."
 

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="garanti_payment_result" name="Garanti Payment Result">
+        <t t-call="portal.frontend_layout">
+            <div class="wrap">
+                <div class="container o_website_payment">
+                    <div class="col-12 col-lg mt16">
+                        <h2 class="my-0 mb-2">
+                            <span t-field="order_id.type_name"></span>
+                            <em t-esc="order_id.name"/>
+                        </h2>
+
+                        <div class="card p-3 mb-3">
+                            <div>
+                                <b>Partner:</b>
+                                <span class="text-muted"
+                                      t-esc="order_id.partner_id.display_name"/>
+                            </div>
+                            <div t-if="order_id.client_order_ref">
+                                <b>Reference:</b>
+                                <span class="text-muted"
+                                      t-esc="order_id.client_order_ref"/>
+                            </div>
+                            <div>
+                                <b>Amount:</b>
+                                <span class="text-muted"
+                                      t-field="order_id.amount_total"
+                                      t-options='{"widget": "monetary", "display_currency": order_id.pricelist_id.currency_id}'/>
+                            </div>
+                            <div>
+                                <b>Payment Date:</b>
+                                <span class="text-muted" t-field="tx_id.date"
+                                      t-options='{"widget": "datetime"}'/>
+                            </div>
+                            <div>
+                                <b>Transaction Ref:</b>
+                                <span class="text-muted" t-esc="tx_id.reference"/>
+                            </div>
+
+                        </div>
+                        <t t-if="tx_id.state == 'draft'">
+                            <div class="alert alert-info col-12">
+                                <strong>Payment Status:</strong>
+                                Awaiting payment. You can make your payments from
+                                our sales portal.
+                            </div>
+                        </t>
+                        <t t-if="tx_id.state == 'pending'">
+                            <div class="alert alert-warning col-12">
+                                <strong>Payment Status:</strong>
+                                Pending. You can make your payments from our sales
+                                portal.
+                            </div>
+                        </t>
+                        <t t-if="tx_id.state == 'done'">
+                            <div class="alert alert-success col-12">
+                                <strong>Payment Status:</strong>
+                                Completed. Thank you for your payment. Your order
+                                will be processed as soon as possible.
+                            </div>
+
+                        </t>
+                        <t t-if="tx_id.state == 'error'">
+                            <div class="alert alert-danger col-12">
+                                <strong>Payment Status:</strong>
+                                Error. Your payment could not be completed. Please
+                                contact us or leave a message on sales portal.
+                            </div>
+                        </t>
+                        <t t-if="tx_id.state == 'cancel'">
+                            <div class="alert alert-secondary col-12">
+                                <strong>Payment Status:</strong>
+                                Canceled. Your payment has been canceled. Please
+                                contact us or leave a message on sales portal.
+                            </div>
+                        </t>
+                        <a t-att-href="order_id.get_portal_url()"
+                           target="_blank"
+                           class="btn btn-primary">
+                            <i class="fa fa-arrow-right fa-fw" role="img"
+                               aria-label="Arrow" title="Arrow"></i>
+                            View Order
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+        </t>
+    </template>
+</odoo>

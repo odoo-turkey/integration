@@ -8,7 +8,6 @@
     "website": "https://github.com/odoo-turkey",
     "author": "Yigit Budak",
     "sequence": 350,
-    # TODO: Summary ingilizceye çevrilebilir
     "summary": "Garanti BBVA Sanal POS, internet üzerinden yapılan satışlarda"
     " kredi kartı ile ödeme alınabilmesi için oluşturulan güvenli"
     " bir ödeme çözümüdür.",
@@ -17,13 +16,9 @@
     "data": [
         "views/payment_garanti_templates.xml",
         "views/payment_views.xml",
+        "templates/result_page.xml",
         "data/payment_acquirer_data.xml",
     ],
-    # 'assets': {
-    #     'web.assets_frontend': [
-    #         'payment_garanti/static/src/js/payment_form.js',
-    #     ],
-    # },
     "application": True,
     "post_init_hook": "create_missing_journal_for_acquirers",
     "uninstall_hook": "uninstall_hook",

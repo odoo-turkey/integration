@@ -1,8 +1,7 @@
 # Copyright 2022 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
-import requests
-from odoo import _, fields, models
+from odoo import _, fields, models, api
 from odoo.exceptions import ValidationError
 from .garanti_connector import GarantiConnector
 from odoo.addons.payment_garanti.const import TEST_URL, PROD_URL, CURRENCY_CODES
@@ -50,6 +49,21 @@ class PaymentAcquirerGaranti(models.Model):
         groups="base.group_user",
     )
 
+    @api.model
+    def garanti_s2s_form_process(self, data):
+        values = {
+            "cc_number": data.get("cc_number"),
+            "cc_holder_name": data.get("cc_holder_name"),
+            "cc_expiry": data.get("cc_expiry"),
+            "cc_cvc": data.get("cc_cvc"),
+            "cc_brand": data.get("cc_brand"),
+            "acquirer_id": int(data.get("acquirer_id")),
+            "partner_id": int(data.get("partner_id")),
+            "acquirer_ref": "denemedir",  # todo: remove
+        }
+        payment_method = self.env["payment.token"].sudo().create(values)
+        return payment_method
+
     def _garanti_get_api_url(self):
         """Return the API URL according to the provider state.
 
@@ -59,7 +73,6 @@ class PaymentAcquirerGaranti(models.Model):
         :rtype: str
         """
         self.ensure_one()
-
         if self.environment == "prod":
             return PROD_URL
         else:
@@ -71,10 +84,7 @@ class PaymentAcquirerGaranti(models.Model):
         :return: The mode of the transaction
         """
         self.ensure_one()
-        if self.state == "enabled":
-            return "PROD"
-        else:
-            return "TEST"
+        return self.environment.upper()
 
     def _garanti_get_company_name(self):
         """
@@ -119,7 +129,7 @@ class PaymentAcquirerGaranti(models.Model):
             + "/payment/garanti/return"
         )
 
-    def _garanti_make_payment_request(self, tx, amount, currency, card_args, client_ip):
+    def _garanti_make_payment_request(self, tx, amount, currency_id, card_args, client_ip):
         """
         This method is used to make a payment request to the Garanti Endpoint
         :param tx: The transaction
@@ -127,12 +137,13 @@ class PaymentAcquirerGaranti(models.Model):
         :param currency: The currency of the transaction
         """
         self.ensure_one()
-        connector = GarantiConnector(self, tx, amount, currency, card_args, client_ip)
-        resp = connector._garanti_make_payment_request()
+        connector = GarantiConnector(self, tx, amount, currency_id, card_args, client_ip)
+        method, resp = connector._garanti_make_payment_request()
 
         return {
             "status": "success",
-            "form": resp,
+            "method": method,
+            "response": resp,
         }
 
     def _garanti_validate_card_args(self, card_args):
