@@ -41,10 +41,11 @@ class GarantiConnector:
         form = soup.find("form", {"id": "webform0"})
 
         if form:
-            return str(form)
+            return "form", str(form)
 
+        # This means Garanti returned a redirection page. We need to follow it.
         else:
-            raise ValidationError(_("Garanti Sanal Pos Error"))
+            return "redirect", response.text
 
     def _garanti_make_payment_request(self):
         """Send payment request to Garanti Sanal Pos API.

@@ -126,11 +126,12 @@ class PaymentProvider(models.Model):
         self.ensure_one()
         connector = GarantiConnector(self, tx, amount, currency, card_args,
                                      client_ip)
-        resp = connector._garanti_make_payment_request()
+        method, resp = connector._garanti_make_payment_request()
 
         return {
             'status': 'success',
-            'form': resp,
+            'method': method,
+            'response': resp,
         }
 
     def _garanti_validate_card_args(self, card_args):
