@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="payment_acquirer_garanti" model="payment.acquirer">
+        <field name="name">Garanti</field>
+        <field name="image" type="base64" file="payment_garanti/static/description/icon.png"/>
+        <field name="provider">garanti</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="view_template_id" ref="payment_garanti.garanti_form"/>
+        <field name="registration_view_template_id" ref="payment_garanti.garanti_s2s_form"/>
+        <field name="environment">test</field>
+        <field name="payment_flow">s2s</field>
+        <field name="pre_msg"><![CDATA[
+            <p><br></p>]]></field>
+
+        <field name="payment_icon_ids"
+               eval="[(6, 0, [
+                   ref('payment.payment_icon_cc_mastercard'),
+                   ref('payment.payment_icon_cc_visa'),
+               ])]"/>
+        <field name="garanti_merchant_id">dummy</field>
+        <field name="garanti_terminal_id">dummy</field>
+        <field name="garanti_prov_user">dummy</field>
+        <field name="garanti_prov_password">dummy</field>
+        <field name="garanti_store_key">dummy</field>
+    </record>
+
+</odoo>
