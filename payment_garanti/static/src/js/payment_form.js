@@ -1,108 +1,91 @@
-// Copyright 2022 Yiğit Budak (https://github.com/yibudak)
+// Copyright 2022 Samet Altuntaş (https://github.com/samettal)
 // License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
+odoo.define('payment_garanti.payment_form', function (require) {
+    "use strict";
+    var rpc = require("web.rpc");
+    var _t = core._t;
+    var PaymentForm = require('payment.payment_form');
+    ajax.loadXML('/payment_garanti/static/src/xml/payment_garanti_templates.xml', qweb);
 
-$(document).on("keydown", ".garanti-form [name='cardNumber']", function (e) {
-    console.log("1");
-    var cursor = this.selectionStart;
-    if (this.selectionEnd != cursor) return;
-    if (e.which == 46) {
-        if (this.value[cursor] == " ") this.selectionStart++;
-    } else if (e.which == 8) {
-        if (cursor && this.value[cursor - 1] == " ") this.selectionEnd--;
-    }
-}).on("input", ".garanti-form [name='cardNumber']", function () {
-    console.log("2");
-    var value = this.value;
-    var cursor = this.selectionStart;
-    var matches = value.substring(0, cursor).match(/[^0-9]/g);
-    if (matches) cursor -= matches.length;
-    value = value.replace(/[^0-9]/g, "").substring(0, 16);
-    var formatted = "";
-    for (var i = 0, n = value.length; i < n; i++) {
-        if (i && i % 4 == 0) {
-            if (formatted.length <= cursor) cursor++;
-            formatted += " ";
-        }
-        formatted += value[i];
-    }
-    if (formatted == this.value) return;
-    this.value = formatted;
-    this.selectionEnd = cursor;
-});
 
-const paymentGarantiMixin = {
+    PaymentForm.include({
+        /**
+         * @override
+         */
+        payEvent: function (ev) {
+            ev.preventDefault();
+            var $checkedRadio = this.$('input[type="radio"]:checked');
 
-    //--------------------------------------------------------------------------
-    // Private
-    //--------------------------------------------------------------------------
-
-    /**
-     * Simulate a feedback from a payment provider and redirect the customer to the status page.
-     *
-     * @override method from payment.payment_form_mixin
-     * @private
-     * @param {string} code - The code of the provider
-     * @param {number} providerId - The id of the provider handling the transaction
-     * @param {object} processingValues - The processing values of the transaction
-     * @return {Promise}
-     */
-    _processDirectPayment: function (code, providerId, processingValues) {
-        if (code !== 'garanti') {
-            return this._super(...arguments);
-        }
-
-        return this._rpc({
-            route: '/payment/garanti/payments',
-            params: {
-                'provider_id': providerId,
-                'reference': processingValues.reference,
-                'amount': processingValues.amount,
-                'currency_id': processingValues.currency_id,
-                'partner_id': processingValues.partner_id,
-                'access_token': processingValues.access_token,
-                'card_args': {
-                    'card_name': $(".garanti-form [name='cardName']").val(),
-                    'card_number': $(".garanti-form [name='cardNumber']").val(),
-                    'card_valid_month': $(".garanti-form [name='validMonth']").val(),
-                    'card_valid_year': $(".garanti-form [name='validYear']").val(),
-                    'card_cvv': $(".garanti-form [name='cardCVV']").val(),
-                }
-            },
-        }).then(paymentResponse => {
-            if (paymentResponse.status === 'success') {
-                $("#payment_method").append(paymentResponse.form);
-                $("#webform0").submit();
+            if ($checkedRadio.length === 1 && $checkedRadio.data('provider') === 'garanti' && this.isNewPaymentRadio($checkedRadio)) {
+                return this._garanti_pay(ev, $checkedRadio);
+            } else {
+                return this._super.apply(this, arguments);
             }
-        }).guardedCatch((error) => {
-            error.event.preventDefault();
-            this._displayError(
-                _t("Server Error"),
-                _t("We are not able to process your payment."),
-                error.message.data.message
-            );
-        });
-    },
+        },
 
-    /**
-     * Prepare the inline form of Moka for direct payment.
-     *
-     * @override method from payment.payment_form_mixin
-     * @private
-     * @param {string} code - The code of the selected payment option's provider
-     * @param {integer} paymentOptionId - The id of the selected payment option
-     * @param {string} flow - The online payment flow of the selected payment option
-     * @return {Promise}
-     */
-    _prepareInlineForm: function (code, paymentOptionId, flow) {
-        console.log("3");
-        if (code !== 'garanti') {
-            return this._super(...arguments);
-        } else if (flow === 'token') {
-            return Promise.resolve();
+
+        _garanti_pay: function (ev, $checkedRadio, addPmEvent) {
+            var self = this;
+            if (ev.type === 'submit') {
+                var button = $(ev.target).find('*[type="submit"]')[0]
+            } else {
+                var button = ev.target;
+            }
+            this.disableButton(button);
+            var acquirerID = this.getAcquirerIdFromRadio($checkedRadio);
+            var acquirerForm = this.$('#o_payment_add_token_acq_' + acquirerID);
+            var inputsForm = $('input', acquirerForm);
+            if (this.options.partnerId === undefined) {
+                console.warn('payment_form: unset partner_id when adding new token; things could go wrong');
+            }
+
+            var formData = self.getFormData(inputsForm);
+            var stripe = this.stripe;
+            var card = this.stripe_card_element;
+            if (card._invalid) {
+                return;
+            }
+            return rpc.query({
+                route: '/payment/stripe/s2s/create_setup_intent',
+                params: {'acquirer_id': formData.acquirer_id}
+            }).then(function (intent_secret) {
+                // need to convert between ES6 promises and jQuery 2 deferred \o/
+                return $.Deferred(function (defer) {
+                    stripe.handleCardSetup(intent_secret, card)
+                        .then(function (result) {
+                            defer.resolve(result)
+                        })
+                });
+            }).then(function (result) {
+                if (result.error) {
+                    return $.Deferred().reject({"message": {"data": {"message": result.error.message}}});
+                } else {
+                    _.extend(formData, {"payment_method": result.setupIntent.payment_method});
+                    return rpc.query({
+                        route: formData.data_set,
+                        params: formData,
+                    })
+                }
+            }).then(function (result) {
+                if (addPmEvent) {
+                    if (formData.return_url) {
+                        window.location = formData.return_url;
+                    } else {
+                        window.location.reload();
+                    }
+                } else {
+                    $checkedRadio.val(result.id);
+                    self.el.submit();
+                }
+            }).fail(function (error, event) {
+                // if the rpc fails, pretty obvious
+                self.enableButton(button);
+                self.displayError(
+                    _t('Unable to save card'),
+                    _t("We are not able to add your payment method at the moment. ") +
+                    error.message.data.message
+                );
+            });
         }
-        this._setPaymentFlow('direct');
-        return Promise.resolve()
-    },
-};
-// checkoutForm.include(paymentGarantiMixin);
-// manageForm.include(paymentGarantiMixin);
+    });
+});

@@ -7,10 +7,12 @@
 
         <template id="garanti_s2s_form">
             <input type="hidden" name="data_set" data-create-route="/payment/garanti/s2s/create_json_3ds"/>
+            <input t-if="return_url" type="hidden" name="return_url" t-att-value="return_url"/>
+            <input t-if="partner_id" type="hidden" name="partner_id" t-att-value="partner_id"/>
             <div class="row">
                 <div class="col-12 col-lg-8 garanti-form">
-                    <input name="acquirer_id" type="hidden" id="acquirer_id"
-                           t-att-value="id"/>
+                    <input type="hidden" name="acquirer_id" t-att-value="id"/>
+                    <input type="hidden" name="order_id" t-att-value="sale_order.id"/>
                     <input name="partner_id" type="hidden"
                            t-att-value="partner_id"/>
                     <div id="credit-card">
@@ -18,22 +20,16 @@
                             <label for="username">
                                 <h6>Card Owner</h6>
                             </label>
-                            <input type="text"
-                                   name="cc_holder_name"
-                                   placeholder="Card Owner Name"
-                                   class="form-control "/>
+                            <input type="text" name="cc_holder_name" id="cc_holder_name" class="form-control"
+                                   placeholder="Cardholder name" data-is-required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="cardNumber">
                                 <h6>Card number</h6>
                             </label>
                             <div class="input-group">
-                                <input type="text"
-                                       maxlength="19"
-                                       name="cc_number"
-                                       placeholder="XXXX XXXX XXXX XXXX"
-                                       inputmode="numeric"
-                                       class="form-control "/>
+                                <input type="tel" name="cc_number" id="cc_number" class="form-control"
+                                       placeholder="Card number" data-is-required="true"/>
                                 <span class="input-group-text text-muted">
                                     <i class="fa fa-credit-card mx-1"></i>
                                 </span>
@@ -50,32 +46,6 @@
                                     <div class="input-group">
                                         <input type="text" name="cc_expiry" id="cc_expiry" class="form-control"
                                                maxlength="7" placeholder="Expires (MM / YY)" data-is-required="true"/>
-                                        <!--                                        <select name="validMonth"-->
-                                        <!--                                                t-attf-class="form-select">-->
-                                        <!--                                            <option value=""-->
-                                        <!--                                                    disabled="disabled"-->
-                                        <!--                                                    selected="selected">Month-->
-                                        <!--                                            </option>-->
-                                        <!--                                            <t t-foreach="range(1, 13)"-->
-                                        <!--                                               t-as="r">-->
-                                        <!--                                                <option t-att-value="r">-->
-                                        <!--                                                    <t t-esc="('%s' % r).zfill(2)"/>-->
-                                        <!--                                                </option>-->
-                                        <!--                                            </t>-->
-                                        <!--                                        </select>-->
-                                        <!--                                        <select name="validYear"-->
-                                        <!--                                                t-attf-class="form-select">-->
-                                        <!--                                            <option value=""-->
-                                        <!--                                                    disabled="disabled"-->
-                                        <!--                                                    selected="selected">Year-->
-                                        <!--                                            </option>-->
-                                        <!--                                            <t t-foreach="range(datetime.date.today().year-1, datetime.date.today().year+13)"-->
-                                        <!--                                               t-as="r">-->
-                                        <!--                                                <option t-att-value="r">-->
-                                        <!--                                                    <t t-esc="r"/>-->
-                                        <!--                                                </option>-->
-                                        <!--                                            </t>-->
-                                        <!--                                        </select>-->
                                     </div>
                                 </div>
                             </div>
@@ -87,9 +57,8 @@
                                         </h6>
                                     </label>
                                     <div class="input-group">
-                                        <input type="text" name="cc_cvc"
-                                               maxlength="3"
-                                               class="form-control"/>
+                                        <input type="text" name="cc_cvc" id="cc_cvc" class="form-control" maxlength="3"
+                                               placeholder="CVC" data-is-required="true"/>
                                     </div>
                                 </div>
                             </div>
@@ -104,6 +73,12 @@
                 </div>
             </div>
             <div class="d-none" id="webform"></div>
+<!--            <script type="text/javascript">-->
+<!--                odoo.define(function (require) {-->
+<!--                var ajax = require('web.ajax');-->
+<!--                ajax.loadJS("/payment_garanti/static/src/js/payment_form");-->
+<!--                });-->
+<!--            </script>-->
         </template>
     </data>
 </odoo>
