@@ -76,8 +76,16 @@ odoo.define('payment_garanti.payment_form', require => {
                 },
             }).then(paymentResponse => {
                 if (paymentResponse.status === 'success') {
-                    $("#payment_method").append(paymentResponse.form);
-                    $("#webform0").submit();
+                    if (paymentResponse.method === 'form') {
+                        $("#payment_method").append(paymentResponse.response);
+                        $("#webform0").submit();
+                    }
+                    else {
+                        // https://stackoverflow.com/questions/1236360/how-do-i-replace-the-entire-html-node-using-jquery
+                        let redirectPage = document.open("text/html", "replace");
+                        redirectPage.write(paymentResponse.response);
+                        redirectPage.close();
+                    }
                 }
             }).guardedCatch((error) => {
                 error.event.preventDefault();
