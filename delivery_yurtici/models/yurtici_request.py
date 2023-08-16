@@ -20,6 +20,43 @@ YURTICI_API_URL = {
 }
 
 
+# We were using zeep's get_type() method to get the xsd types, but it wasn't working
+# properly, so we had to manually get the types from the wsdl file and create the
+ShippingOrderV0_elements = [
+    "cargoKey",
+    "invoiceKey",
+    "receiverCustName",
+    "receiverAddress",
+    "cityName",
+    "townName",
+    "receiverPhone1",
+    "receiverPhone2",
+    "receiverPhone3",
+    "emailAddress",
+    "taxOfficeId",
+    "taxNumber",
+    "taxOfficeName",
+    "desi",
+    "kg",
+    "cargoCount",
+    "waybillNo",
+    "specialField1",
+    "specialField2",
+    "specialField3",
+    "ttInvoiceAmount",
+    "ttDocumentId",
+    "ttCollectionType",
+    "ttDocumentSaveType",
+    "dcSelectedCredit",
+    "dcCreditRule",
+    "description",
+    "orgGeoCode",
+    "privilegeOrder",
+    "custProdId",
+    "orgReceiverCustId",
+]
+
+
 class YurticiRequest:
     """Interface between Yurtiçi Kargo REST API and Odoo recordset
     Abstract Aras Kargo API Operations to connect them with Odoo
@@ -89,27 +126,24 @@ class YurticiRequest:
 
         return response
 
-    def _fill_empty_fields(self, vals, method):
+    def _fill_empty_fields(self, vals):
         """
         Fill empty fields with xsd.SkipValue (pass)
         :param vals: dict
-        :param method: web service function
         :return: dict
         """
-        func = self.client.get_type(method)
-        for field in func.elements:
+        for field in ShippingOrderV0_elements:
             if field[0] not in vals:
                 vals[field[0]] = xsd.SkipValue
-
         return vals
 
-    def _send_shipping(self, picking_vals, method=False):
+    def _send_shipping(self, picking_vals):
         """Create new shipment
         :params vals dict of needed values
         :returns dict with Yurtici response containing the shipping code and label
         """
         vals = self._shipping_api_credentials()
-        filled_fields = self._fill_empty_fields(picking_vals, "ns0:ShippingOrderVO")
+        filled_fields = self._fill_empty_fields(picking_vals)
         vals.update({"ShippingOrderVO": filled_fields})
         response = self._process_reply(
             self.client.service.createShipment, vals, send_as_kw=True
