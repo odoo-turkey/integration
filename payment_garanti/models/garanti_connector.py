@@ -12,18 +12,29 @@ import time
 
 
 class GarantiConnector:
-    def __init__(
-        self, acquirer, tx, amount, currency_id, card_args=None, client_ip=None
-    ):
+    def __init__(self, acquirer, tx, amount, card_args=None, client_ip=None):
         self.url = acquirer._garanti_get_api_url()
         self.provider = acquirer
         self.tx = tx
-        self.amount = int(
-            round(amount * 100, 0)
-        )  # Garanti API expects amount in kuruş.
-        self.currency_id = currency_id
+        self.amount = self._get_amount(amount)
+        self.currency_id = self._get_currency_id()
         self.card_args = card_args
         self.client_ip = client_ip
+
+    def _get_amount(self, amount):
+        """Get amount in kuruş.
+        Note: convert turkish partner's amount to turkish lira always.
+        :param amount: float
+        :return: Amount in kuruş
+        """
+        # amount = self.tx.sale_order_ids.garanti_payment_amount
+        return int(round(amount * 100, 0))
+
+    def _get_currency_id(self):
+        """Get currency id.
+        :return: Currency id
+        """
+        return self.tx.sale_order_ids.garanti_payment_currency_id.id
 
     def _garanti_parse_response_html(self, response):
         """Parse response HTML from Garanti Sanal Pos API.
@@ -36,9 +47,9 @@ class GarantiConnector:
         if error_msg:
             if error_msg["value"] == "Not Authenticated":
                 raise ValidationError(
-                    _("Payment failed." " Garanti: Card is not authenticated.")
+                    _("Payment failed." " POS: Card is not authenticated.")
                 )
-            raise ValidationError(_("Garanti Sanal Pos Error: %s") % error_msg["value"])
+            raise ValidationError(_("Payment Error: %s") % error_msg["value"])
 
         form = soup.find("form", {"id": "webform0"})
 
@@ -61,7 +72,7 @@ class GarantiConnector:
             )
             return self._garanti_parse_response_html(resp)
         except requests.RequestException:
-            raise ValidationError(_("Garanti: An error occurred. Please try again."))
+            raise ValidationError(_("Payment Error: An error occurred. Please try again."))
 
     def _garanti_compute_security_data(self):
         return (
@@ -116,7 +127,7 @@ class GarantiConnector:
             "cardexpiredateyear": self.card_args.get("card_valid_year"),
             "cardcvv2": self.card_args.get("card_cvv"),
             "companyname": self.provider._garanti_get_company_name(),
-            "apiversion": "16",
+            "apiversion": "12",
             "mode": self.provider._garanti_get_mode(),
             "terminalprovuserid": self.provider.garanti_prov_user,
             "terminaluserid": self.provider.garanti_terminal_id,
@@ -127,7 +138,7 @@ class GarantiConnector:
             "customeripaddress": self.client_ip,
             "txnamount": str(self.amount),
             "txncurrencycode": self.provider._garanti_get_currency_code(
-                self.currency_id
+                self.currency_id, self.tx
             ),
             "txninstallmentcount": "",  # Taksit yok. Boş olacak.
             "successurl": self.provider._garanti_get_return_url(),
@@ -304,14 +315,14 @@ class GarantiConnector:
                 PROVISION_URL, data=xml_data.decode("utf-8"), timeout=10
             )
         except requests.RequestException:
-            raise ValidationError(_("Garanti: Error. Please try again."))
+            raise ValidationError(_("Payment Error: Error. Please try again."))
 
         try:
             root = etree.fromstring(resp.content)
             error_msg = root.find(".//ErrorMsg")
             if len(error_msg) > 0 and error_msg.text:
-                return "Garanti: %s" % error_msg.text
+                return _("Payment Error: %s") % error_msg.text
             else:
                 return True
         except Exception:  # pylint: disable=broad-except
-            raise ValidationError(_("Garanti: Timeout. Please try again."))
+            raise ValidationError(_("Payment Error: Timeout. Please try again."))

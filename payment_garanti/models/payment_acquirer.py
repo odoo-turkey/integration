@@ -94,7 +94,7 @@ class PaymentAcquirerGaranti(models.Model):
         self.ensure_one()
         return self.company_id.name
 
-    def _garanti_get_currency_code(self, currency):
+    def _garanti_get_currency_code(self, currency, tx):
         """
         This method is used to get the currency code
         :param currency: The currency id

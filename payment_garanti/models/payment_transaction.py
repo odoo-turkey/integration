@@ -1,7 +1,7 @@
 # Copyright 2022 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
-from odoo import _, fields, models
+from odoo import _, fields, models, api
 from odoo.exceptions import ValidationError
 from .garanti_connector import GarantiConnector
 from odoo.http import request
@@ -25,6 +25,36 @@ class PaymentTransaction(models.Model):
 
     garanti_xid = fields.Char(string="Garanti XID", readonly=True, copy=False)
 
+    # Remove the constraint on reference field, because we use the same name for
+    # different transactions in a single order.
+    _sql_constraints = [
+        ("reference_uniq", "Check(1=1)", "Reference must be unique!"),
+    ]
+
+    @api.constrains("reference")
+    def _check_reference(self):
+        """
+        Prevent duplicate payment for the same order.
+        :return:
+        """
+        for rec in self:
+            if (
+                rec.reference
+                and rec.search_count(
+                    [
+                        ("reference", "=", rec.reference),
+                        ("state", "not in", ["cancel", "error"]),
+                    ]
+                )
+                > 1
+            ):
+                raise ValidationError(
+                    _(
+                        "There is already a payment transaction for this sales order."
+                        " If you think this is an error, please contact us."
+                    )
+                )
+
     def _garanti_form_get_tx_from_data(self, data):
         """Given a data dict coming from garanti, verify it and find the related
         transaction record."""
@@ -36,7 +66,7 @@ class PaymentTransaction(models.Model):
 
         tx_ref = data.get("orderid")
         if not tx_ref:
-            raise ValidationError("Garanti: " + _("Received data with missing ref."))
+            raise ValidationError(_("Payment Error: Received data with missing ref."))
 
         tx = self.search(
             [("garanti_secure3d_hash", "=", tx_code), ("reference", "=", tx_ref)]
@@ -44,7 +74,8 @@ class PaymentTransaction(models.Model):
 
         if not tx:
             raise ValidationError(
-                "Garanti: " + _("No transaction found matching reference %s.", tx_code)
+                _("Payment Error: No transaction found matching reference %s.")
+                % tx_code
             )
         return tx
 
