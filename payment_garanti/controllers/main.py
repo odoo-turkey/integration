@@ -7,6 +7,7 @@ from odoo.exceptions import ValidationError
 from odoo.addons.payment.controllers.portal import PaymentProcessing
 from odoo.tools import float_compare
 from odoo.http import request
+from werkzeug.utils import redirect
 from datetime import datetime
 
 
@@ -81,9 +82,14 @@ class GarantiController(http.Controller):
         client_ip = request.httprequest.environ.get("REMOTE_ADDR")
 
         # Get the payment response, it can be a redirect or a form
-        response_content = acq.sudo()._garanti_make_payment_request(
-            tx_sudo, amount, card_args, client_ip
-        )
+        try:
+            response_content = acq.sudo()._garanti_make_payment_request(
+                tx_sudo, amount, card_args, client_ip
+            )
+        except Exception as e:
+            _logger.exception("Garanti: error when sending payment request: %s", str(e))
+            tx_sudo._set_transaction_error(e)
+            raise e
         # Save the transaction in the session
         PaymentProcessing.add_payment_transaction(tx_sudo)
         return response_content
@@ -94,7 +100,7 @@ class GarantiController(http.Controller):
         auth="public",
         csrf=False,
         save_session=False,
-        methods=["POST  "],
+        methods=["POST", "GET"],
     )
     def garanti_return_from_3ds_auth(self, **kwargs):
         """
@@ -113,7 +119,7 @@ class GarantiController(http.Controller):
                 .sudo()
                 .form_feedback(data=kwargs, acquirer_name="garanti")
             )
-            if tx.state != "done":
+            if not tx.sale_order_ids:
                 raise ValidationError(_("Transaction not completed"))
         except:
             return _(
@@ -121,10 +127,5 @@ class GarantiController(http.Controller):
             )
 
         # Redirect the user to the status page
-        return request.render(
-            "payment_garanti.garanti_payment_result",
-            qcontext={
-                "tx_id": tx,
-                "order_id": fields.first(tx.sale_order_ids[0]),
-            },
-        )
+        order = fields.first(tx.sale_order_ids)
+        return redirect(order.get_portal_url())

@@ -8,7 +8,7 @@
                 <ul>
                     <li>Amount: <span t-esc="sale_order.garanti_payment_amount" t-options="{'widget': 'monetary', 'display_currency': sale_order.garanti_payment_currency_id}"/></li>
                     <li t-if="sale_order.currency_id.name != 'TRY' and sale_order.partner_id.commercial_partner_id.country_id.code == 'TR'">
-                        Currency Rate: <span t-esc="'{:,.4f}'.format(sale_order.garanti_currency_rate)"/>
+                        Currency Rate: <span t-esc="'{:,.4f}'.format(sale_order.garanti_payment_currency_rate)"/>
                     </li>
                     <li>Date: <span t-esc="datetime.date.today().strftime('%d-%m-%Y')"/></li>
                 </ul>
