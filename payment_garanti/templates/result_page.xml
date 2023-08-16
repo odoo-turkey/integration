@@ -22,10 +22,10 @@
                                       t-esc="order_id.client_order_ref"/>
                             </div>
                             <div>
-                                <b>Amount:</b>
+                                <b>Payment Amount:</b>
                                 <span class="text-muted"
-                                      t-field="order_id.amount_total"
-                                      t-options='{"widget": "monetary", "display_currency": order_id.pricelist_id.currency_id}'/>
+                                      t-field="order_id.garanti_payment_amount"
+                                      t-options='{"widget": "monetary", "display_currency": order_id.garanti_payment_currency_id}'/>
                             </div>
                             <div>
                                 <b>Payment Date:</b>
@@ -41,21 +41,21 @@
                         <t t-if="tx_id.state == 'draft'">
                             <div class="alert alert-info col-12">
                                 <strong>Payment Status:</strong>
-                                Awaiting payment. You can make your payments from
+                                Awaiting payment.<br/> You can make your payments from
                                 our sales portal.
                             </div>
                         </t>
                         <t t-if="tx_id.state == 'pending'">
                             <div class="alert alert-warning col-12">
                                 <strong>Payment Status:</strong>
-                                Pending. You can make your payments from our sales
+                                Pending.<br/> You can make your payments from our sales
                                 portal.
                             </div>
                         </t>
                         <t t-if="tx_id.state == 'done'">
                             <div class="alert alert-success col-12">
                                 <strong>Payment Status:</strong>
-                                Completed. Thank you for your payment. Your order
+                                Completed.<br/> Thank you for your payment. Your order
                                 will be processed as soon as possible.
                             </div>
 
@@ -63,15 +63,15 @@
                         <t t-if="tx_id.state == 'error'">
                             <div class="alert alert-danger col-12">
                                 <strong>Payment Status:</strong>
-                                Error. Your payment could not be completed. Please
+                                Error.<br/> Your payment could not be completed. Please
                                 contact us or leave a message on sales portal.
                             </div>
                         </t>
                         <t t-if="tx_id.state == 'cancel'">
                             <div class="alert alert-secondary col-12">
                                 <strong>Payment Status:</strong>
-                                Canceled. Your payment has been canceled. Please
-                                contact us or leave a message on sales portal.
+                                Canceled.<br/> Your payment has been canceled. Please try
+                                again.
                             </div>
                         </t>
                         <a t-att-href="order_id.get_portal_url()"
