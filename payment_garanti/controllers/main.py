@@ -7,6 +7,7 @@ from odoo.exceptions import ValidationError
 from odoo.addons.payment.controllers.portal import PaymentProcessing
 from odoo.tools import float_compare
 from odoo.http import request
+from werkzeug.utils import redirect
 from datetime import datetime
 
 
@@ -118,18 +119,13 @@ class GarantiController(http.Controller):
                 .sudo()
                 .form_feedback(data=kwargs, acquirer_name="garanti")
             )
-            # if tx.state != "done":
-            #     raise ValidationError(_("Transaction not completed"))
+            if not tx.sale_order_ids:
+                raise ValidationError(_("Transaction not completed"))
         except:
             return _(
                 "An error occurred while processing your payment. Please contact us."
             )
 
         # Redirect the user to the status page
-        return request.render(
-            "payment_garanti.garanti_payment_result",
-            qcontext={
-                "tx_id": tx,
-                "order_id": fields.first(tx.sale_order_ids[0]),
-            },
-        )
+        order = fields.first(tx.sale_order_ids)
+        return redirect(order.get_portal_url())
