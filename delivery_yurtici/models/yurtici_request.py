@@ -12,23 +12,23 @@ from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
-YURTICI_API_URL = {"prod": "https://webservices.yurticikargo.com/"
-                           "KOPSWebServices/ShippingOrderDispatcherServices?wsdl",
-                   "test": "https://testwebservices.yurticikargo.com/"
-                           "KOPSWebServices/ShippingOrderDispatcherServices?wsdl"}
+YURTICI_API_URL = {
+    "prod": "https://webservices.yurticikargo.com/"
+    "KOPSWebServices/ShippingOrderDispatcherServices?wsdl",
+    "test": "https://testwebservices.yurticikargo.com/"
+    "KOPSWebServices/ShippingOrderDispatcherServices?wsdl",
+}
 
 
 class YurticiRequest:
     """Interface between Yurtiçi Kargo REST API and Odoo recordset
-       Abstract Aras Kargo API Operations to connect them with Odoo
+    Abstract Aras Kargo API Operations to connect them with Odoo
 
-       Not all the features are implemented, but could be easily extended with
-       the provided API. We leave the operations empty for future.
+    Not all the features are implemented, but could be easily extended with
+    the provided API. We leave the operations empty for future.
     """
 
-    def __init__(
-        self, username=None, password=None, user_language=None, prod=False
-    ):
+    def __init__(self, username=None, password=None, user_language=None, prod=False):
         self.username = username or ""
         self.password = password or ""
         self.user_language = user_language or ""
@@ -42,12 +42,11 @@ class YurticiRequest:
         )
 
     def _shipping_api_credentials(self):
-        """ API credentials for Yurtici Kargo Web Services
-        """
+        """API credentials for Yurtici Kargo Web Services"""
         return {
-            'wsUserName': self.username,
-            'wsPassword': self.password,
-            'userLanguage': self.user_language,
+            "wsUserName": self.username,
+            "wsPassword": self.password,
+            "userLanguage": self.user_language,
         }
 
     def _process_reply(self, service, vals=None, send_as_kw=False):
@@ -85,7 +84,7 @@ class YurticiRequest:
                 except Exception:
                     raise Fault(e)
 
-        if response.outFlag != '0':
+        if response.outFlag != "0":
             raise ValidationError("%s %s" % (response.errCode, response.outResult))
 
         return response
@@ -110,9 +109,11 @@ class YurticiRequest:
         :returns dict with Yurtici response containing the shipping code and label
         """
         vals = self._shipping_api_credentials()
-        filled_fields = self._fill_empty_fields(picking_vals, 'ns0:ShippingOrderVO')
-        vals.update({'ShippingOrderVO': filled_fields})
-        response = self._process_reply(self.client.service.createShipment, vals, send_as_kw=True)
+        filled_fields = self._fill_empty_fields(picking_vals, "ns0:ShippingOrderVO")
+        vals.update({"ShippingOrderVO": filled_fields})
+        response = self._process_reply(
+            self.client.service.createShipment, vals, send_as_kw=True
+        )
         return response.shippingOrderDetailVO[0]
 
     def _cancel_shipment(self, cargo_keys):
@@ -122,8 +123,10 @@ class YurticiRequest:
         :returns: bool True if success
         """
         vals = self._shipping_api_credentials()
-        vals.update({'cargoKeys': cargo_keys})
-        response = self._process_reply(self.client.service.cancelShipment, vals, send_as_kw=True)
+        vals.update({"cargoKeys": cargo_keys})
+        response = self._process_reply(
+            self.client.service.cancelShipment, vals, send_as_kw=True
+        )
         return response
 
     def _query_shipment(self, picking):
@@ -132,10 +135,18 @@ class YurticiRequest:
         :returns: Yurtiçi queryShipment object
         """
         vals = self._shipping_api_credentials()
-        vals['wsLanguage'] = vals.pop('userLanguage')  # this method requires the language field in wsLanguage
-        vals.update({'keys': picking.carrier_tracking_ref,
-                     'keyType': 0,  # 0 = ref_number, 1 = tracking_number
-                     'addHistoricalData': True,
-                     'onlyTracking': False})
-        response = self._process_reply(self.client.service.queryShipment, vals, send_as_kw=True)
+        vals["wsLanguage"] = vals.pop(
+            "userLanguage"
+        )  # this method requires the language field in wsLanguage
+        vals.update(
+            {
+                "keys": picking.carrier_tracking_ref,
+                "keyType": 0,  # 0 = ref_number, 1 = tracking_number
+                "addHistoricalData": True,
+                "onlyTracking": False,
+            }
+        )
+        response = self._process_reply(
+            self.client.service.queryShipment, vals, send_as_kw=True
+        )
         return response.shippingDeliveryDetailVO[0]
