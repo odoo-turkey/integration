@@ -21,10 +21,12 @@ class SaleOrder(models.Model):
         readonly=True,
     )
 
+    # note: we should use ~default=lambda self: self.env.ref("base.TRY")~ but
+    # it causes _unknown error on sale.order form view.
     currency_id_try = fields.Many2one(
-        string="Currency (TRY)",
+        related="company_id.currency_id",
+        string="Currency",
         readonly=True,
-        default=lambda self: self.env.ref("base.TRY"),
     )
 
     sale_deci = fields.Float(
