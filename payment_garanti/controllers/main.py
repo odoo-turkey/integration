@@ -55,7 +55,7 @@ class GarantiController(http.Controller):
             raise ValidationError(_("Invalid amount"))
 
         precision = request.env["decimal.precision"].precision_get("account")
-        if float_compare(amount, order_sudo.amount_total, precision) != 0:
+        if float_compare(amount, order_sudo.garanti_payment_amount, precision) != 0:
             raise ValidationError(_("Invalid amount"))
 
         # Create the transaction
@@ -64,8 +64,9 @@ class GarantiController(http.Controller):
             .sudo()
             .create(
                 {
-                    "amount": order_sudo.amount_total,
+                    "amount": order_sudo.garanti_payment_amount,
                     "acquirer_id": acq.id,
+                    "reference": order_sudo.name,
                     "acquirer_reference": order_sudo.name,
                     "partner_id": order_sudo.partner_id.id,
                     "sale_order_ids": [(4, order_sudo.id, False)],
@@ -81,7 +82,7 @@ class GarantiController(http.Controller):
 
         # Get the payment response, it can be a redirect or a form
         response_content = acq.sudo()._garanti_make_payment_request(
-            tx_sudo, amount, order_sudo.currency_id.id, card_args, client_ip
+            tx_sudo, amount, card_args, client_ip
         )
         # Save the transaction in the session
         PaymentProcessing.add_payment_transaction(tx_sudo)
@@ -93,7 +94,7 @@ class GarantiController(http.Controller):
         auth="public",
         csrf=False,
         save_session=False,
-        methods=["POST"],
+        methods=["POST  "],
     )
     def garanti_return_from_3ds_auth(self, **kwargs):
         """

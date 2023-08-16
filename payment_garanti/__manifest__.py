@@ -11,7 +11,7 @@
     "summary": "Garanti BBVA Sanal POS, internet üzerinden yapılan satışlarda"
     " kredi kartı ile ödeme alınabilmesi için oluşturulan güvenli"
     " bir ödeme çözümüdür.",
-    "depends": ["payment"],
+    "depends": ["sale", "payment"],
     "external_dependencies": {"python": ["lxml", "bs4"]},
     "data": [
         "views/payment_garanti_templates.xml",
