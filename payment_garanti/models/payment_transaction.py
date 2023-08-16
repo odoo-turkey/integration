@@ -116,6 +116,6 @@ class PaymentTransaction(models.Model):
                     (e, notification_data),
                     exc_info=True,
                 )
-                self._set_transaction_cancel()
+                self._set_transaction_error(e)
 
         return self  # for the controller
