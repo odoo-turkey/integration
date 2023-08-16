@@ -129,7 +129,7 @@ class PaymentAcquirerGaranti(models.Model):
             + "/payment/garanti/return"
         )
 
-    def _garanti_make_payment_request(self, tx, amount, currency_id, card_args, client_ip):
+    def _garanti_make_payment_request(self, tx, amount, card_args, client_ip):
         """
         This method is used to make a payment request to the Garanti Endpoint
         :param tx: The transaction
@@ -137,7 +137,7 @@ class PaymentAcquirerGaranti(models.Model):
         :param currency: The currency of the transaction
         """
         self.ensure_one()
-        connector = GarantiConnector(self, tx, amount, currency_id, card_args, client_ip)
+        connector = GarantiConnector(self, tx, amount, card_args, client_ip)
         method, resp = connector._garanti_make_payment_request()
 
         return {

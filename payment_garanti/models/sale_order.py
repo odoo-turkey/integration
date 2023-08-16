@@ -21,7 +21,7 @@ class SaleOrder(models.Model):
         readonly=True,
     )
     # We've added this rate field because we want to get today's rate.
-    garanti_currency_rate = fields.Float(
+    garanti_payment_currency_rate = fields.Float(
         string="Garanti Currency Rate",
         compute="_compute_garanti_payment_amount",
         readonly=True,
@@ -50,6 +50,6 @@ class SaleOrder(models.Model):
                 currency_id = order.currency_id
             order.garanti_payment_amount = amount
             order.garanti_payment_currency_id = currency_id
-            order.garanti_currency_rate = (
+            order.garanti_payment_currency_rate = (
                 order.garanti_payment_amount / order.amount_total
             )

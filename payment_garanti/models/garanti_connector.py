@@ -72,7 +72,9 @@ class GarantiConnector:
             )
             return self._garanti_parse_response_html(resp)
         except requests.RequestException:
-            raise ValidationError(_("Payment Error: An error occurred. Please try again."))
+            raise ValidationError(
+                _("Payment Error: An error occurred. Please try again.")
+            )
 
     def _garanti_compute_security_data(self):
         return (
