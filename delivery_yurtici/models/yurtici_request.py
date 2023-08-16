@@ -133,8 +133,8 @@ class YurticiRequest:
         :return: dict
         """
         for field in ShippingOrderV0_elements:
-            if field[0] not in vals:
-                vals[field[0]] = xsd.SkipValue
+            if field not in vals:
+                vals[field] = xsd.SkipValue
         return vals
 
     def _send_shipping(self, picking_vals):
