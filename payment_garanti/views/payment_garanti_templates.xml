@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+
+        <template id="garanti_portal_inherit" inherit_id="sale.sale_order_portal_template" name="Garanti Portal Inherit">
+            <xpath expr="//ul[@id='payment_terms']" position="after">
+                <span class="font-weight-bold">Payment Details:</span>
+                <ul>
+                    <li>Amount: <span t-esc="sale_order.garanti_payment_amount" t-options="{'widget': 'monetary', 'display_currency': sale_order.garanti_payment_currency_id}"/></li>
+                    <li t-if="sale_order.currency_id.name != 'TRY' and sale_order.partner_id.commercial_partner_id.country_id.code == 'TR'">
+                        Currency Rate: <span t-esc="'{:,.4f}'.format(sale_order.garanti_currency_rate)"/>
+                    </li>
+                    <li>Date: <span t-esc="datetime.date.today().strftime('%d-%m-%Y')"/></li>
+                </ul>
+
+            </xpath>
+        </template>
+
         <template id="garanti_form">
             <input type="hidden" name="data_set" t-att-data-action-url="tx_url" data-remove-me=""/>
         </template>
@@ -9,7 +24,7 @@
             <input type="hidden" name="data_set" data-create-route="/payment/garanti/s2s/create_json_3ds"/>
             <input t-if="return_url" type="hidden" name="return_url" t-att-value="return_url"/>
             <input t-if="partner_id" type="hidden" name="partner_id" t-att-value="partner_id"/>
-            <input t-if="sale_order" type="hidden" name="amount_total" t-att-value="sale_order.amount_total"/>
+            <input t-if="sale_order" type="hidden" name="amount_total" t-att-value="sale_order.garanti_payment_amount"/>
             <div class="row">
                 <div class="col-12 col-lg-8 garanti-form">
                     <input type="hidden" name="acquirer_id" t-att-value="id"/>
