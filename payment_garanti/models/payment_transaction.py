@@ -98,18 +98,18 @@ class PaymentTransaction(models.Model):
             _logger.warning(
                 "Transaction %s is not authorized: %s", self.reference, error_msg
             )
-            self._set_transaction_cancel()
+            self._set_transaction_error()
         else:
             connector = GarantiConnector(
                 self.acquirer_id, self, self.amount, self.currency_id.id
             )
             try:
                 res = connector._garanti_payment_callback(notification_data)
-                if isinstance(res, bool):
+                if res == "Approved":
                     self._set_transaction_done()
                     self._post_process_after_done()
                 else:
-                    self._set_transaction_cancel()
+                    self._set_transaction_error(res)
             except Exception as e:
                 _logger.warning(
                     "Garanti payment callback error: %s, data: %s",

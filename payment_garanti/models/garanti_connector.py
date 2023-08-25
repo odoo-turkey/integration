@@ -317,14 +317,18 @@ class GarantiConnector:
                 PROVISION_URL, data=xml_data.decode("utf-8"), timeout=10
             )
         except requests.RequestException:
-            raise ValidationError(_("Payment Error: Error. Please try again."))
+            return _("Payment Error: Error. Please try again.")
 
         try:
             root = etree.fromstring(resp.content)
-            error_msg = root.find(".//ErrorMsg")
-            if len(error_msg) > 0 and error_msg.text:
-                return _("Payment Error: %s") % error_msg.text
+            reason_code = root.find(".//Transaction/Response/ReasonCode").text
+            message = root.find(".//Transaction/Response/Message").text
+            if reason_code != "00" or message != "Approved":
+                return (
+                    _("Payment Error: %s")
+                    % root.find(".//Transaction/Response/ErrorMsg").text
+                )
             else:
-                return True
+                return message
         except Exception:  # pylint: disable=broad-except
-            raise ValidationError(_("Payment Error: Timeout. Please try again."))
+            return _("Payment Error: Timeout. Please try again.")
