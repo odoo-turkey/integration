@@ -1,0 +1,20 @@
+# Copyright 2023 Yiğit Budak (https://github.com/yibudak)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
+from odoo import _, api, fields, models
+
+
+class AccountPayment(models.Model):
+    _inherit = "account.payment"
+
+    sanalpos_payment = fields.Boolean(
+        string="SanalPOS Payment",
+        help="This payment is made through Garanti Sanal Pos",
+        readonly=True,
+        copy=False,
+        store=True,
+        compute="_compute_sanalpos_payment",
+    )
+
+    def _compute_sanalpos_payment(self):
+        for rec in self:
+            rec.garanti_payment = bool(rec.payment_transaction_id.garanti_secure3d_hash)
