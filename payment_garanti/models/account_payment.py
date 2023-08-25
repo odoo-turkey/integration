@@ -17,4 +17,6 @@ class AccountPayment(models.Model):
 
     def _compute_sanalpos_payment(self):
         for rec in self:
-            rec.garanti_payment = bool(rec.payment_transaction_id.garanti_secure3d_hash)
+            rec.sanalpos_payment = bool(
+                rec.payment_transaction_id.garanti_secure3d_hash
+            )
