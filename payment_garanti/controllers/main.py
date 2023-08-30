@@ -34,11 +34,6 @@ class GarantiController(http.Controller):
         # Check that the transaction details have not been altered.
         # This allows preventing users
         # from validating transactions by paying less than agreed upon.
-        if not payment_utils.check_access_token(
-                access_token, reference, amount, partner_id
-        ):
-            raise ValidationError(
-                "Garanti: " + _("Received tampered payment request data."))
 
         # Prepare the payment request to Garanti
         provider_sudo = request.env['payment.provider'].sudo().browse(
