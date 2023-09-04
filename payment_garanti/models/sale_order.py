@@ -50,6 +50,9 @@ class SaleOrder(models.Model):
                 currency_id = order.currency_id
             order.garanti_payment_amount = amount
             order.garanti_payment_currency_id = currency_id
-            order.garanti_payment_currency_rate = (
-                order.garanti_payment_amount / order.amount_total
-            )
+            try:
+                order.garanti_payment_currency_rate = (
+                        order.garanti_payment_amount / order.amount_total
+                )
+            except ZeroDivisionError:
+                order.garanti_payment_currency_rate = 1.0
