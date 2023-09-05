@@ -21,6 +21,9 @@ class GarantiConnector:
         self.card_args = card_args
         self.client_ip = client_ip
 
+    def __repr__(self):
+        return "<GarantiConnector: %s>" % self.tx.reference
+
     def _get_amount(self, amount):
         """Get amount in kuruş.
         Note: convert turkish partner's amount to turkish lira always.
