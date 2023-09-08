@@ -25,36 +25,6 @@ class PaymentTransaction(models.Model):
 
     garanti_xid = fields.Char(string="Garanti XID", readonly=True, copy=False)
 
-    # Remove the constraint on reference field, because we use the same name for
-    # different transactions in a single order.
-    _sql_constraints = [
-        ("reference_uniq", "Check(1=1)", "Reference must be unique!"),
-    ]
-
-    @api.constrains("reference")
-    def _check_reference(self):
-        """
-        Prevent duplicate payment for the same order.
-        :return:
-        """
-        for rec in self:
-            if (
-                rec.reference
-                and rec.search_count(
-                    [
-                        ("reference", "=", rec.reference),
-                        ("state", "not in", ["cancel", "error"]),
-                    ]
-                )
-                > 1
-            ):
-                raise ValidationError(
-                    _(
-                        "There is already a payment transaction for this sales order."
-                        " If you think this is an error, please contact us."
-                    )
-                )
-
     def _garanti_form_get_tx_from_data(self, data):
         """Given a data dict coming from garanti, verify it and find the related
         transaction record."""
@@ -69,7 +39,12 @@ class PaymentTransaction(models.Model):
             raise ValidationError(_("Payment Error: Received data with missing ref."))
 
         tx = self.search(
-            [("garanti_secure3d_hash", "=", tx_code), ("reference", "=", tx_ref)]
+            [
+                ("garanti_secure3d_hash", "=", tx_code),
+                ("state", "not in", ("done", "cancel", "error")),
+            ],
+            limit=1,
+            order="id desc",
         )
 
         if not tx:
@@ -98,7 +73,7 @@ class PaymentTransaction(models.Model):
             _logger.warning(
                 "Transaction %s is not authorized: %s", self.reference, error_msg
             )
-            self._set_transaction_error()
+            self._set_transaction_error(error_msg)
         else:
             connector = GarantiConnector(
                 acquirer=self.acquirer_id,
