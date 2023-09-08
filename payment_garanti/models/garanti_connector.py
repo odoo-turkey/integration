@@ -23,6 +23,15 @@ class GarantiConnector:
         self.card_args = card_args
         self.client_ip = client_ip
 
+    @property
+    def reference(self):
+        """
+        We can't use same reference in payment.transaction but we can send
+        same reference to Garanti Sanal Pos API.
+        :return:
+        """
+        return self.tx.reference.split("-")[0]
+
     def _garanti_parse_response_html(self, response):
         """Parse response HTML from Garanti Sanal Pos API.
 
@@ -80,7 +89,7 @@ class GarantiConnector:
         """
         hash_strings = (
             str(self.provider.garanti_terminal_id)
-            + str(self.tx.reference)  # terminalID
+            + str(self.reference)  # terminalID
             + str(self.amount)  # orderid
             + str(self.provider._garanti_get_return_url())  # txnamount
             + str(self.provider._garanti_get_return_url())  # successurl
@@ -110,7 +119,9 @@ class GarantiConnector:
                 self.card_args.get("card_number")
             ),
             "cardexpiredatemonth": self.card_args.get("card_valid_month").zfill(2),
-            "cardexpiredateyear": self.card_args.get("card_valid_year").replace("20", ""),
+            "cardexpiredateyear": self.card_args.get("card_valid_year").replace(
+                "20", ""
+            ),
             "cardcvv2": self.card_args.get("card_cvv"),
             "companyname": self.provider._garanti_get_company_name(),
             "apiversion": "16",
@@ -119,7 +130,7 @@ class GarantiConnector:
             "terminaluserid": self.provider.garanti_terminal_id,
             "terminalid": self.provider.garanti_terminal_id,
             "terminalmerchantid": self.provider.garanti_merchant_id,
-            "orderid": self.tx.reference,
+            "orderid": self.reference,
             "customeremailaddress": self.tx.partner_email,
             "customeripaddress": self.client_ip,
             "txnamount": str(self.amount),
@@ -303,10 +314,14 @@ class GarantiConnector:
 
         try:
             root = etree.fromstring(resp.content)
-            error_msg = root.find(".//ErrorMsg")
-            if error_msg and error_msg.text:
-                return "Garanti: %s" % error_msg.text
+            reason_code = root.find(".//Transaction/Response/ReasonCode").text
+            message = root.find(".//Transaction/Response/Message").text
+            if reason_code != "00" or message != "Approved":
+                return (
+                        _("Payment Error: %s")
+                        % root.find(".//Transaction/Response/ErrorMsg").text
+                )
             else:
-                return True
+                return message
         except Exception:  # pylint: disable=broad-except
             raise ValidationError(_("Garanti: Timeout. Please try again."))
