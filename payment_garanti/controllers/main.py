@@ -67,7 +67,6 @@ class GarantiController(http.Controller):
                 {
                     "amount": order_sudo.garanti_payment_amount,
                     "acquirer_id": acq.id,
-                    "reference": order_sudo.name,
                     "acquirer_reference": order_sudo.name,
                     "partner_id": order_sudo.partner_id.id,
                     "sale_order_ids": [(4, order_sudo.id, False)],
