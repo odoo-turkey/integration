@@ -101,7 +101,9 @@ class PaymentTransaction(models.Model):
             self._set_transaction_error()
         else:
             connector = GarantiConnector(
-                self.acquirer_id, self, self.amount, self.currency_id.id
+                acquirer=self.acquirer_id,
+                tx=self,
+                amount=self.amount,
             )
             try:
                 res = connector._garanti_payment_callback(notification_data)
