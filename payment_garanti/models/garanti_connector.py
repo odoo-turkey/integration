@@ -21,6 +21,18 @@ class GarantiConnector:
         self.card_args = card_args
         self.client_ip = client_ip
 
+    def __repr__(self):
+        return "<GarantiConnector: %s>" % self.tx.reference
+
+    @property
+    def reference(self):
+        """
+        We can't use same reference in payment.transaction but we can send
+        same reference to Garanti Sanal Pos API.
+        :return:
+        """
+        return self.tx.reference.split("-")[0]
+
     def _get_amount(self, amount):
         """Get amount in kuruş.
         Note: convert turkish partner's amount to turkish lira always.
@@ -95,7 +107,7 @@ class GarantiConnector:
         """
         hash_strings = (
             str(self.provider.garanti_terminal_id)
-            + str(self.tx.reference)  # terminalID
+            + str(self.reference)  # terminalID
             + str(self.amount)  # orderid
             + str(self.provider._garanti_get_return_url())  # txnamount
             + str(self.provider._garanti_get_return_url())  # successurl
@@ -135,7 +147,7 @@ class GarantiConnector:
             "terminaluserid": self.provider.garanti_terminal_id,
             "terminalid": self.provider.garanti_terminal_id,
             "terminalmerchantid": self.provider.garanti_merchant_id,
-            "orderid": self.tx.reference,
+            "orderid": self.reference,
             "customeremailaddress": self.tx.partner_email,
             "customeripaddress": self.client_ip,
             "txnamount": str(self.amount),

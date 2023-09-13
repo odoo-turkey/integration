@@ -137,7 +137,13 @@ class PaymentAcquirerGaranti(models.Model):
         :param currency: The currency of the transaction
         """
         self.ensure_one()
-        connector = GarantiConnector(self, tx, amount, card_args, client_ip)
+        connector = GarantiConnector(
+            acquirer=self,
+            tx=tx,
+            amount=amount,
+            card_args=card_args,
+            client_ip=client_ip,
+        )
         method, resp = connector._garanti_make_payment_request()
 
         return {

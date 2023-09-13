@@ -15,6 +15,8 @@ class AccountPayment(models.Model):
         compute="_compute_sanalpos_payment",
     )
 
+    @api.multi
+    @api.depends("payment_transaction_id")
     def _compute_sanalpos_payment(self):
         for rec in self:
             rec.sanalpos_payment = bool(
