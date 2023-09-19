@@ -1,0 +1,41 @@
+<GVPSResponse>
+  <Mode /> 
+<Terminal>
+  <ProvUserID>PROVAUT</ProvUserID> 
+  <UserID>XXXX</UserID> 
+  <ID>30691292</ID> 
+  <MerchantID>3424113</MerchantID> 
+  </Terminal>
+<Customer>
+  <IPAddress>127.0.0.1</IPAddress> 
+  <EmailAddress>eticaret@garanti.com.tr</EmailAddress> 
+  </Customer>
+<Order>
+  <OrderID>SISTBA0200E285E64AB0A974939521FA4A54</OrderID> 
+  <GroupID /> 
+  </Order>
+<Transaction>
+<Response>
+  <Source>HOST</Source> 
+  <Code>00</Code> 
+  <ReasonCode>00</ReasonCode> 
+  <Message>Approved</Message> 
+  <ErrorMsg /> 
+  <SysErrMsg /> 
+  </Response>
+  <RetrefNum>311616674739</RetrefNum> 
+  <AuthCode>874890</AuthCode> 
+  <BatchNum>000008</BatchNum> 
+  <SequenceNum>000024</SequenceNum> 
+  <ProvDate>20130426 16:39:02</ProvDate> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <CardHolderName>PE*** PEL** TON***</CardHolderName> 
+  <CardType>BONUS</CardType> 
+  <HashData>8F3BFC8EE96207EFBBFF6CC845516C0856A6691F</HashData> 
+  <HostMsgList /> 
+<RewardInqResult>
+  <RewardList /> 
+  <ChequeList /> 
+  </RewardInqResult>
+  </Transaction>
+  </GVPSResponse>

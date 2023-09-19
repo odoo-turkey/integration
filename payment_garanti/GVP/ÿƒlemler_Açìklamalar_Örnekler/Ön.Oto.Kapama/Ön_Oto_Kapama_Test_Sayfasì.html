@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-9">
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1254">
+<TITLE>Garanti Sanal POS XML İşlem Test Sayfası</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<FONT SIZE=5> XML İşlem Test Sayfası </FONT>
+<P>
+<HR ALIGN=LEFT WIDTH=100% SIZE=2>
+Aşağıdaki kod örneğini size gönderilen hesap bilgileriyle güncelleyerek XML formatında işlem gönderimini test edebilirsiniz.<br>
+(*** = hesap bilgilerinizi girmeniz gereken alan)<br>
+(xxx = kart ve ödeme bilgilerinizi girmeniz gereken alan)
+<HR ALIGN=LEFT WIDTH=100% SIZE=2>
+<br>
+<FORM ACTION="https://sanalposprovtest.garanti.com.tr/VPServlet" METHOD=POST>
+<TEXTAREA cols="80" rows="40" name="data" >
+<?xml version="1.0" encoding="UTF-8"?>
+<GVPSRequest>
+<Mode>TEST</Mode>
+<Version>v0.1</Version>
+<Terminal>
+<ProvUserID>PROVAUT</ProvUserID>
+<HashData>F17A6340B7FDCD1C027895A7842BDB69EF9381D0</HashData>
+<UserID>DENE</UserID>
+<ID>111995</ID>
+<MerchantID>600218</MerchantID>
+</Terminal>
+<Customer>
+<IPAddress>10.242.8.201</IPAddress>
+</Customer>
+<Order>
+<OrderID>SIST2FE2A2B9F4834E43947704B5E1C806CB</OrderID>
+</Order>
+<Transaction>
+<Type>postauth</Type>
+<Amount>1000</Amount>
+<CurrencyCode>949</CurrencyCode>
+<OriginalRetrefNum>105811652549</OriginalRetrefNum>
+</Transaction>
+</GVPSRequest>
+</TEXTAREA>
+<CENTER><INPUT type=submit value="Submit" >&nbsp;&nbsp;&nbsp;
+<INPUT type=reset value="Reset"></CENTER>
+</FORM>
+</BODY>
+</HTML>

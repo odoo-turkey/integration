@@ -1,0 +1,7 @@
+
+örnek içerisindeki storekey 1234578, bu alana kendi storekey verinizi yazmanýz gerekiyor.
+
+3D_PAY/3D_HALF/3D_FULL/3D_OOS_FULL/3D_OOS_PAY/3D_OOS_HALF ve OOS_PAY ICIN GUVENLIK DOGRULAMALI ÖRNEK DÖNÜÞ SAYFASIDIR...
+
+
+ResultSecure.asp içinde kodun kolay anlaþýlmasý için java dosyasý MACSHA1.asp olarak koda include edilmiþtir.

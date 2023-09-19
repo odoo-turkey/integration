@@ -1,0 +1,1291 @@
+- <GVPSResponse>
+  <Mode /> 
+- <Terminal>
+  <ProvUserID>PROVAUT</ProvUserID> 
+  <UserID>XXXX</UserID> 
+  <ID>111995</ID> 
+  <MerchantID>600218</MerchantID> 
+  </Terminal>
+- <Customer>
+  <IPAddress>127.0.0.1</IPAddress> 
+  <EmailAddress>eticaret@garanti.com.tr</EmailAddress> 
+  </Customer>
+- <Order>
+  <OrderID>144454</OrderID> 
+  <GroupID /> 
+  </Order>
+- <Transaction>
+- <Response>
+  <Source>GVPS</Source> 
+  <Code>00</Code> 
+  <ReasonCode>00</ReasonCode> 
+  <Message>Approved</Message> 
+  <ErrorMsg /> 
+  <SysErrMsg /> 
+  </Response>
+  <RetrefNum /> 
+  <AuthCode /> 
+  <BatchNum /> 
+  <SequenceNum /> 
+  <ProvDate>20130605 11:37:28</ProvDate> 
+  <CardNumberMasked /> 
+  <CardHolderName /> 
+  <CardType /> 
+  <HashData>587DC491202BDB4759B65B0BF3E428CD21B4ABE5</HashData> 
+  <HostMsgList /> 
+- <RewardInqResult>
+  <RewardList /> 
+  <ChequeList /> 
+  </RewardInqResult>
+  </Transaction>
+- <BatchInqResult>
+- <BatchInqList>
+  <TotalTxnCount>113</TotalTxnCount> 
+  <TotalPageCount>1</TotalPageCount> 
+  <ActPageNum>1</ActPageNum> 
+- <BathcTxn>
+  <ID>1</ID> 
+  <OrderID>GN0034743</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222109692593</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>2312</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 09:36:04.9</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>2</ID> 
+  <OrderID>GN0034744</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222109692595</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>3625</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 09:42:29.766</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>3</ID> 
+  <OrderID>GN0034745</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222109692596</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>2924</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 09:43:23.404</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>4</ID> 
+  <OrderID>GN0034746</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222109692597</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>7322</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 09:45:15.554</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>5</ID> 
+  <OrderID>GN0034747</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222109692598</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>8186</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 09:46:19.498</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>6</ID> 
+  <OrderID>GN0034748</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222109692599</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>7860</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 09:47:05.687</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>7</ID> 
+  <OrderID>GN0034749</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222109692600</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>8012</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 09:47:52.552</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>8</ID> 
+  <OrderID>0000644112</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692611</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>43066</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:25:37.853</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>9</ID> 
+  <OrderID>de783f18b79e40e1831a1f5b7cdd7ae9</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692613</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>100</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:27:26.981</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>10</ID> 
+  <OrderID>RO1344411324533</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692616</RetrefNum> 
+  <CardNumberMasked>540709******9014</CardNumberMasked> 
+  <TxnAmount>199</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:29:17.591</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>11</ID> 
+  <OrderID>RO1344412162778</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692626</RetrefNum> 
+  <CardNumberMasked>540709******9014</CardNumberMasked> 
+  <TxnAmount>199</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:43:15.639</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>12</ID> 
+  <OrderID>GN0034750</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692632</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>47481</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:50:52.751</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>13</ID> 
+  <OrderID>GN0034751</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692633</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>24130</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:50:57.835</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>14</ID> 
+  <OrderID>GN0034752</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692634</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>83603</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:50:58.228</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>15</ID> 
+  <OrderID>GN0034753</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692635</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>149196</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:50:59.594</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>16</ID> 
+  <OrderID>GN0034754</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692636</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>53100</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:01.199</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>17</ID> 
+  <OrderID>GN0034755</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692637</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>527972</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:02.553</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>18</ID> 
+  <OrderID>GN0034756</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692638</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>252343</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:03.075</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>19</ID> 
+  <OrderID>GN0034757</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692639</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>114496</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:04.404</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>20</ID> 
+  <OrderID>GN0034758</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692640</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>7459</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:05.862</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>21</ID> 
+  <OrderID>GN0034759</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692641</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>7334</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:07.418</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>22</ID> 
+  <OrderID>GN0034760</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692642</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>2010</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:08.998</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>23</ID> 
+  <OrderID>GN0034761</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692643</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>2210</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:10.662</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>24</ID> 
+  <OrderID>GN0034762</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692644</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>7590</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:11.926</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>25</ID> 
+  <OrderID>GN0034763</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692645</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>9831</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:12.338</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>26</ID> 
+  <OrderID>GN0034764</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692646</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>7117</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:13.479</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>27</ID> 
+  <OrderID>GN0034765</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692647</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>7459</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:13.882</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>28</ID> 
+  <OrderID>GN0034766</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692648</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>7334</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:15.082</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>29</ID> 
+  <OrderID>GN0034767</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692649</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>7318</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:15.605</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>30</ID> 
+  <OrderID>GN0034768</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692650</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>8177</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:17.351</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>31</ID> 
+  <OrderID>GN0034769</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692651</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>7859</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:18.172</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>32</ID> 
+  <OrderID>GN0034770</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692652</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>8012</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:19.61</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>33</ID> 
+  <OrderID>GN0034771</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692653</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>2150</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:20.019</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>34</ID> 
+  <OrderID>GN0034772</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692654</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>2200</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:21.222</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>35</ID> 
+  <OrderID>GN0034773</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692655</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>7941</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:21.58</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>36</ID> 
+  <OrderID>GN0034774</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692656</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>2308</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:22.791</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>37</ID> 
+  <OrderID>GN0034775</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692657</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>3625</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:24.167</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>38</ID> 
+  <OrderID>GN0034776</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692658</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>2916</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:24.479</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>39</ID> 
+  <OrderID>GN0034777</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692659</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>10126</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:25.719</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>40</ID> 
+  <OrderID>GN0034778</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692660</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>10652</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:26.139</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>41</ID> 
+  <OrderID>GN0034779</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692661</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>11058</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:27.546</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>42</ID> 
+  <OrderID>GN0034780</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222110692662</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>12415</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 10:51:28.912</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>43</ID> 
+  <OrderID>405f911b627542eaa676e21dadc5ea0d</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222111692664</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>100</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 11:15:52.197</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>44</ID> 
+  <OrderID>32ba9075b5c7415c92b9a463a41df22a</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222111692665</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>100</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 11:17:10.457</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>45</ID> 
+  <OrderID>5dc102bac2004b1ab6075fe153977ec7</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222111692691</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>100</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 11:37:51.659</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>46</ID> 
+  <OrderID>SIST99190E511F234FBB951D82788337D3AC</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222111692695</RetrefNum> 
+  <CardNumberMasked>554960******1023</CardNumberMasked> 
+  <TxnAmount>1000</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 11:49:59.22</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>47</ID> 
+  <OrderID>900095321</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222112692708</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>84900</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>3</InstallmentCnt> 
+  <ProvDate>2012-08-08 12:06:59.662</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>48</ID> 
+  <OrderID>900085321</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222112692709</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>84900</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>3</InstallmentCnt> 
+  <ProvDate>2012-08-08 12:08:11.571</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>49</ID> 
+  <OrderID>5fa2d41696f3404f8b297cfe55ad4542</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222112692727</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>100</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 12:51:28.934</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>50</ID> 
+  <OrderID>W00000000000167</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222113692733</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>3940</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 13:12:58.589</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>51</ID> 
+  <OrderID>W00000000000168</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222113692736</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>37794</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 13:36:36.126</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>52</ID> 
+  <OrderID>W00000000000169</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222113692737</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>37794</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 13:43:48.097</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>53</ID> 
+  <OrderID>W00000000000170</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222113692738</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>37794</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 13:44:44.891</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>54</ID> 
+  <OrderID>SISTC8E6C97499EC4E6686DCE0D4C7516CD4</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222113692740</RetrefNum> 
+  <CardNumberMasked>532443******0043</CardNumberMasked> 
+  <TxnAmount>1566</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 13:54:33.337</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>55</ID> 
+  <OrderID>SISTEA5EE86C6EC443678F0F314A0290E5F3</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222113692741</RetrefNum> 
+  <CardNumberMasked>532443******0043</CardNumberMasked> 
+  <TxnAmount>1577</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 13:54:56.228</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>56</ID> 
+  <OrderID>SIST3B0ABA988F7D4C06BF571F35EBB81E7E</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222113692742</RetrefNum> 
+  <CardNumberMasked>554960******1023</CardNumberMasked> 
+  <TxnAmount>1577</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 13:56:24.523</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>57</ID> 
+  <OrderID>W00000000000171</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222113692743</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>82673</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>6</InstallmentCnt> 
+  <ProvDate>2012-08-08 13:56:25.068</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>58</ID> 
+  <OrderID>0957b52f456b4e56a66c3a43b6c6409f</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222114692751</RetrefNum> 
+  <CardNumberMasked>540709******9014</CardNumberMasked> 
+  <TxnAmount>2600</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 14:08:14.665</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>59</ID> 
+  <OrderID>SISTA6A122F4A2B34C4EB2D3995A474343DD</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222114692755</RetrefNum> 
+  <CardNumberMasked>554960******1023</CardNumberMasked> 
+  <TxnAmount>1000</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 14:20:58.49</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>60</ID> 
+  <OrderID>SISTA6A122F4A2B34C4EB2D3995A474343DD</OrderID> 
+  <TrxType>Iade</TrxType> 
+  <RetrefNum>222114692760</RetrefNum> 
+  <CardNumberMasked>554960******1023</CardNumberMasked> 
+  <TxnAmount>900</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 14:24:01.157</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>61</ID> 
+  <OrderID>W00000000000172</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222114692764</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>18897</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>9</InstallmentCnt> 
+  <ProvDate>2012-08-08 14:33:20.573</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>62</ID> 
+  <OrderID>SIST6BE8DF589CBE4E29A0994DEE6A1E71DE</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222114692765</RetrefNum> 
+  <CardNumberMasked>554960******1023</CardNumberMasked> 
+  <TxnAmount>900</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 14:33:49.71</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>63</ID> 
+  <OrderID>SIST6BE8DF589CBE4E29A0994DEE6A1E71DE</OrderID> 
+  <TrxType>Iade</TrxType> 
+  <RetrefNum>222114692768</RetrefNum> 
+  <CardNumberMasked>554960******1023</CardNumberMasked> 
+  <TxnAmount>900</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 14:34:14.127</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>64</ID> 
+  <OrderID>AB0RZR</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222114692776</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>21600</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 14:43:22.97</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>65</ID> 
+  <OrderID>7766997244431</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222115692800</RetrefNum> 
+  <CardNumberMasked>540709******9014</CardNumberMasked> 
+  <TxnAmount>1050</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 15:13:16.913</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>66</ID> 
+  <OrderID>7150008244431</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222115692801</RetrefNum> 
+  <CardNumberMasked>540709******9014</CardNumberMasked> 
+  <TxnAmount>1050</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>3</InstallmentCnt> 
+  <ProvDate>2012-08-08 15:13:20.904</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>67</ID> 
+  <OrderID>0956908244431</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222115692803</RetrefNum> 
+  <CardNumberMasked>540709******9014</CardNumberMasked> 
+  <TxnAmount>1050</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 15:14:56.89</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>68</ID> 
+  <OrderID>AB0RPM</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222115692806</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>10700</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 15:31:03.952</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>69</ID> 
+  <OrderID>AB0RPN</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222115692807</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>3500</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 15:32:41.185</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>70</ID> 
+  <OrderID>AB0RZT</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222115692820</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>40400</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 15:51:47.568</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>71</ID> 
+  <OrderID>AB0RZZ</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222115692823</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>40400</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 15:57:09.684</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>72</ID> 
+  <OrderID>AB0S00</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692831</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>21600</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>4</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:17:21.178</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>73</ID> 
+  <OrderID>1371681344431</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692832</RetrefNum> 
+  <CardNumberMasked>540709******9014</CardNumberMasked> 
+  <TxnAmount>1050</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:17:43.966</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>74</ID> 
+  <OrderID>AB0S04</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692835</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>21600</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:22:00.215</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>75</ID> 
+  <OrderID>AB0S08</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692841</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>21600</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:26:33.523</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>76</ID> 
+  <OrderID>AB0S09</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692842</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>21600</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:29:29.982</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>77</ID> 
+  <OrderID>AB0S0B</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692844</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>21600</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:30:11.0</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>78</ID> 
+  <OrderID>6077862344431</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692845</RetrefNum> 
+  <CardNumberMasked>540709******9014</CardNumberMasked> 
+  <TxnAmount>1050</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:31:28.211</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>79</ID> 
+  <OrderID>AB0S0D</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692846</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>21600</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:34:40.625</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>80</ID> 
+  <OrderID>AB0S0K</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692847</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>21600</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:38:27.923</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>81</ID> 
+  <OrderID>AB0S0L</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692848</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>21600</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:39:06.72</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>82</ID> 
+  <OrderID>3010613344431</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692849</RetrefNum> 
+  <CardNumberMasked>540709******9014</CardNumberMasked> 
+  <TxnAmount>1050</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:39:20.467</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>83</ID> 
+  <OrderID>5256023344431</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692850</RetrefNum> 
+  <CardNumberMasked>540709******9014</CardNumberMasked> 
+  <TxnAmount>1050</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:40:07.217</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>84</ID> 
+  <OrderID>1367933344431</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692852</RetrefNum> 
+  <CardNumberMasked>540709******4017</CardNumberMasked> 
+  <TxnAmount>32500</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>5</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:43:18.183</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>85</ID> 
+  <OrderID>4971043344431</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692853</RetrefNum> 
+  <CardNumberMasked>404308******4014</CardNumberMasked> 
+  <TxnAmount>20000</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>10</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:43:22.107</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>86</ID> 
+  <OrderID>4618243344431</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692857</RetrefNum> 
+  <CardNumberMasked>540709******4017</CardNumberMasked> 
+  <TxnAmount>32500</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>5</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:43:48.626</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>87</ID> 
+  <OrderID>6620343344431</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222116692858</RetrefNum> 
+  <CardNumberMasked>404308******4014</CardNumberMasked> 
+  <TxnAmount>20000</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>10</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:43:50.633</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>88</ID> 
+  <OrderID>35827161_4571317</OrderID> 
+  <TrxType>On Otorizasyon Kapama</TrxType> 
+  <RetrefNum>222116692865</RetrefNum> 
+  <CardNumberMasked>375622******014</CardNumberMasked> 
+  <TxnAmount>13327</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>4</InstallmentCnt> 
+  <ProvDate>2012-08-08 16:50:27.629</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>89</ID> 
+  <OrderID>GN0034781</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692952</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>6450</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:30.997</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>90</ID> 
+  <OrderID>GN0034782</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692953</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>6600</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:39.433</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>91</ID> 
+  <OrderID>GN0034783</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692954</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>73180</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:40.075</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>92</ID> 
+  <OrderID>GN0034784</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692955</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>78590</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:40.439</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>93</ID> 
+  <OrderID>GN0034785</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692956</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>6450</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:40.862</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>94</ID> 
+  <OrderID>GN0034786</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692957</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>6600</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:41.461</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>95</ID> 
+  <OrderID>GN0034787</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692958</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>79410</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:42.066</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>96</ID> 
+  <OrderID>GN0034788</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692959</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>36250</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:42.439</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>97</ID> 
+  <OrderID>GN0034789</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692960</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>73180</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:43.182</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>98</ID> 
+  <OrderID>GN0034790</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692961</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>78590</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:43.62</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>99</ID> 
+  <OrderID>GN0034791</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692962</RetrefNum> 
+  <CardNumberMasked>491206******5271</CardNumberMasked> 
+  <TxnAmount>81600</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:44.01</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>100</ID> 
+  <OrderID>GN0034792</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692963</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>6450</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:46.745</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>101</ID> 
+  <OrderID>GN0034793</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692964</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>6600</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:47.177</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>102</ID> 
+  <OrderID>GN0034794</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692965</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>79410</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:47.478</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>103</ID> 
+  <OrderID>GN0034795</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222204692966</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>36250</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:47.822</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>104</ID> 
+  <OrderID>GN0034774</OrderID> 
+  <TrxType>Iade</TrxType> 
+  <RetrefNum>222204692967</RetrefNum> 
+  <CardNumberMasked>467293******8011</CardNumberMasked> 
+  <TxnAmount>1736</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 04:29:48.174</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>105</ID> 
+  <OrderID>SISTAD265C4D733E4FFA8248F82435C57C96</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222209693002</RetrefNum> 
+  <CardNumberMasked>545616******5454</CardNumberMasked> 
+  <TxnAmount>100</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 09:24:11.605</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>106</ID> 
+  <OrderID>0000036712</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222210693012</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>97300</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 10:15:33.03</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>107</ID> 
+  <OrderID>AB0RPW</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222210693013</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>10700</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 10:18:40.392</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>108</ID> 
+  <OrderID>35824028_4571457</OrderID> 
+  <TrxType>On Otorizasyon Kapama</TrxType> 
+  <RetrefNum>222210693016</RetrefNum> 
+  <CardNumberMasked>557113******8916</CardNumberMasked> 
+  <TxnAmount>35827</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 10:19:52.99</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>109</ID> 
+  <OrderID>AB0S0Q</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222210693019</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>31200</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>3</InstallmentCnt> 
+  <ProvDate>2012-08-09 10:26:09.734</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>110</ID> 
+  <OrderID>35827171_4571458</OrderID> 
+  <TrxType>On Otorizasyon Kapama</TrxType> 
+  <RetrefNum>222210693021</RetrefNum> 
+  <CardNumberMasked>375622******014</CardNumberMasked> 
+  <TxnAmount>3112</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>4</InstallmentCnt> 
+  <ProvDate>2012-08-09 10:26:16.523</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>111</ID> 
+  <OrderID>AB0RPZ</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222210693034</RetrefNum> 
+  <CardNumberMasked>428220******8015</CardNumberMasked> 
+  <TxnAmount>20100</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 10:38:23.828</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>112</ID> 
+  <OrderID>0000038012</OrderID> 
+  <TrxType>Satis</TrxType> 
+  <RetrefNum>222210693036</RetrefNum> 
+  <CardNumberMasked>554960******3012</CardNumberMasked> 
+  <TxnAmount>20563</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>0</InstallmentCnt> 
+  <ProvDate>2012-08-09 10:41:24.743</ProvDate> 
+  </BathcTxn>
+- <BathcTxn>
+  <ID>113</ID> 
+  <OrderID>35827176_4571460</OrderID> 
+  <TrxType>On Otorizasyon Kapama</TrxType> 
+  <RetrefNum>222210693038</RetrefNum> 
+  <CardNumberMasked>375622******014</CardNumberMasked> 
+  <TxnAmount>2619</TxnAmount> 
+  <Currency>949</Currency> 
+  <InstallmentCnt>4</InstallmentCnt> 
+  <ProvDate>2012-08-09 10:42:42.509</ProvDate> 
+  </BathcTxn>
+  </BatchInqList>
+  </BatchInqResult>
+  </GVPSResponse>

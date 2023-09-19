@@ -1,0 +1,32 @@
+<GVPSResponse>
+<Mode></Mode>
+<Order>
+<OrderID></OrderID>
+<GroupID></GroupID>
+<OrderListInqResult>
+<OrderTxnList></OrderTxnList>
+</OrderListInqResult>
+</Order>
+<Transaction>
+<Response>
+<Source>GVPS</Source>
+<Code>92</Code>
+<ReasonCode>0110</ReasonCode>
+<Message>Declined</Message><ErrorMsg>Ýþlem bulunamadý</ErrorMsg>
+<SysErrMsg>ErrorId: 0110</SysErrMsg>
+</Response>
+<RetrefNum></RetrefNum>
+<AuthCode> </AuthCode>
+<BatchNum></BatchNum>
+<SequenceNum></SequenceNum>
+<ProvDate>20110306 11:27:44</ProvDate>
+<CardNumberMasked></CardNumberMasked>
+<CardHolderName></CardHolderName>
+<HashData>2DCC3706EE5997A6DEE5BA78AC809C8F8A099730</HashData>
+<HostMsgList></HostMsgList>
+<RewardInqResult><RewardList>
+</RewardList>
+<ChequeList></ChequeList>
+</RewardInqResult>
+</Transaction>
+</GVPSResponse>

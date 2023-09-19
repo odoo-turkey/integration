@@ -1,0 +1,65 @@
+<VSTemplate Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>TradeSiS_GVP_C</Name>
+    <Description>&lt;No description available&gt;</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>TradeSiS_GVP_C</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="TradeSiS_GVP_C.csproj" File="TradeSiS_GVP_C.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DModel.aspx">3DModel.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DModel.aspx.cs">3DModel.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DModel.aspx.designer.cs">3DModel.aspx.designer.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DModelResults.aspx">3DModelResults.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DModelResults.aspx.cs">3DModelResults.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DModelResults.aspx.designer.cs">3DModelResults.aspx.designer.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DOOSPay.aspx">3DOOSPay.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DOOSPay.aspx.cs">3DOOSPay.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DOOSPay.aspx.designer.cs">3DOOSPay.aspx.designer.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DOOSPayResults.aspx">3DOOSPayResults.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DOOSPayResults.aspx.cs">3DOOSPayResults.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DOOSPayResults.aspx.designer.cs">3DOOSPayResults.aspx.designer.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DPay.aspx">3DPay.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DPay.aspx.cs">3DPay.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DPay.aspx.designer.cs">3DPay.aspx.designer.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DPayResults.aspx">3DPayResults.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DPayResults.aspx.cs">3DPayResults.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="3DPayResults.aspx.designer.cs">3DPayResults.aspx.designer.cs</ProjectItem>
+      <Folder Name="App_Data" TargetFolderName="App_Data" />
+      <ProjectItem ReplaceParameters="true" TargetFileName="CCPay.aspx">CCPay.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="CCPay.aspx.cs">CCPay.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="CCPay.aspx.designer.cs">CCPay.aspx.designer.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="HashData.aspx">HashData.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="HashData.aspx.cs">HashData.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="HashData.aspx.designer.cs">HashData.aspx.designer.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Index.htm">Index.htm</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="OOSPay.aspx">OOSPay.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="OOSPay.aspx.cs">OOSPay.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="OOSPay.aspx.designer.cs">OOSPay.aspx.designer.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="OOSPayResults.aspx">OOSPayResults.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="OOSPayResults.aspx.cs">OOSPayResults.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="OOSPayResults.aspx.designer.cs">OOSPayResults.aspx.designer.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Orderlistinq.aspx">Orderlistinq.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Orderlistinq.aspx.cs">Orderlistinq.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Orderlistinq.aspx.designer.cs">Orderlistinq.aspx.designer.cs</ProjectItem>
+      <Folder Name="Properties" TargetFolderName="Properties">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Rewarding.aspx">Rewarding.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Rewarding.aspx.cs">Rewarding.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Rewarding.aspx.designer.cs">Rewarding.aspx.designer.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="SecurityData.aspx">SecurityData.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="SecurityData.aspx.cs">SecurityData.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="SecurityData.aspx.designer.cs">SecurityData.aspx.designer.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Web.config">Web.config</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

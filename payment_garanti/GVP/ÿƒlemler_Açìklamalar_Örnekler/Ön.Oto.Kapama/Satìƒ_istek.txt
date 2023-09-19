@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GVPSRequest>
+<Mode>TEST</Mode>
+<Version>v0.1</Version>
+<Terminal>
+<ProvUserID>PROVAUT</ProvUserID>
+<HashData>F17A6340B7FDCD1C027895A7842BDB69EF9381D0</HashData>
+<UserID>DENE</UserID>
+<ID>111995</ID>
+<MerchantID>600218</MerchantID>
+</Terminal>
+<Customer>
+<IPAddress>10.242.8.201</IPAddress>
+</Customer>
+<Order>
+<OrderID>SIST2FE2A2B9F4834E43947704B5E1C806CB</OrderID>
+</Order>
+<Transaction>
+<Type>postauth</Type>
+<Amount>1000</Amount>
+<CurrencyCode>949</CurrencyCode>
+<OriginalRetrefNum>105811652549</OriginalRetrefNum>
+</Transaction>
+</GVPSRequest>

@@ -1,0 +1,35 @@
+<GVPSRequest>
+<Mode>TEST</Mode>
+<Version>v0.00</Version>
+<Terminal>
+	<ProvUserID>PROVAUT</ProvUserID>
+	<HashData>hash bilgisi</HashData>
+	<UserID>PROVAUT</UserID>
+	<ID>111995</ID>
+	<MerchantID>600218</MerchantID>
+</Terminal>
+<Customer>
+	<IPAddress>1.1.111.111</IPAddress>
+	<EmailAddress>Cem@cem.com</EmailAddress>
+</Customer>
+<Card>
+	<Number></Number>
+	<ExpireDate></ExpireDate>
+	<CVV2></CVV2>
+</Card>
+<Order>
+	<OrderID></OrderID>
+	<GroupID></GroupID>
+	<Description></Description>
+	<StartDate>01/12/2010 11:11</StartDate>	
+        <EndDate>08/12/2010 11:11</EndDate>
+</Order>
+<Transaction>
+	<Type>orderlistinq</Type>
+	<InstallmentCnt></InstallmentCnt>
+	<Amount>1</Amount>
+	<CurrencyCode>949</CurrencyCode>
+	<CardholderPresentCode>0</CardholderPresentCode>		
+	<MotoInd>H</MotoInd>
+</Transaction>
+</GVPSRequest>

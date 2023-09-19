@@ -1,0 +1,31 @@
+<GVPSResponse>
+<Mode></Mode>
+<Order>
+<OrderID>SISTC2AD69AD6ED947E99214DBFACF12A8AC</OrderID>
+<GroupID></GroupID>
+</Order>
+<Transaction>
+<Response>
+<Source>HOST</Source>
+<Code>06</Code>
+<ReasonCode>06</ReasonCode>
+<Message>Declined</Message>
+<ErrorMsg>Ýþleminizi gerçekleþtiremiyoruz.Tekrar deneyiniz</ErrorMsg>
+<SysErrMsg>Isteminiz kabul edilmedi.</SysErrMsg>
+</Response>
+<RetrefNum>106511652984</RetrefNum>
+<AuthCode></AuthCode>
+<BatchNum>000575</BatchNum>
+<SequenceNum>000126</SequenceNum>
+<ProvDate>20110306 11:35:52</ProvDate>
+<CardNumberMasked></CardNumberMasked>
+<CardHolderName></CardHolderName>
+<HashData>66FEFF4F25E7BF6ACCD31C6F1A1B07BB3BD345FA</HashData>
+<HostMsgList></HostMsgList>
+<RewardInqResult><RewardList>
+</RewardList>
+<ChequeList>
+</ChequeList>
+</RewardInqResult>
+</Transaction>
+</GVPSResponse>

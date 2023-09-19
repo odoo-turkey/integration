@@ -1,0 +1,37 @@
+<GVPSRequest>
+	<Mode>TEST</Mode>
+	<Version>v0.00</Version>
+	<Terminal>
+		<ProvUserID>PROVAUT</ProvUserID>
+		<HashData>BC706A5E7B0849F53EA3F4BCEB515E2E094839D3</HashData>
+		<UserID>PROVAUT</UserID>
+		<ID>30690133</ID>
+		<MerchantID>3424113</MerchantID>
+	</Terminal>
+	<Customer>
+		<IPAddress>127.0.0.1</IPAddress>
+		<EmailAddress>mehmet@ali.com</EmailAddress>
+	</Customer>
+	<Card>
+		<Number/>
+		<ExpireDate/>
+		<CVV2/>
+	</Card>
+	<Order>
+		<OrderID>5322643414_7992_1</OrderID>
+		<GroupID/>
+		<Description/>
+	</Order>
+	<Transaction>
+		<Type>walletorderinq</Type>
+		<SubType/>
+		<InstallmentCnt/>
+		<Amount>110</Amount>
+		<CurrencyCode>949</CurrencyCode>
+		<CardholderPresentCode>0</CardholderPresentCode>
+		<MotoInd>H</MotoInd>
+		<GSM>
+			<GSMNumber>5309400351</GSMNumber>
+		</GSM>
+	</Transaction>
+</GVPSRequest>

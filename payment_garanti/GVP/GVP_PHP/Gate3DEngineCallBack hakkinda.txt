@@ -1,0 +1,12 @@
+
+
+Gate3DEngineCallBack Dosyasý iþlemin dönüþü bankadanmý geliyor kontrol için hazýrlanmýþ bir uygulamadýr.
+Validation :True ise yanýt bankadan geliyor.
+yanýt bankadan geliyorsa  procreturncode deðerini kontrol edebiliriz 00 ise iþlem onay alýnmýþ anlamýna gelmektedir
+
+
+dönen deðerlerde : 
+Validation sonucu :True olmalýdýr.
+procreturncode örnek 00 onay diðer dönüþ mesajlarý red örnek 51 "hesap müsait deðildir" gibi.
+errmsg hatanýn nedeni örnek : "Müþteri hesap limiti yetersiz "
+authcode alanýnda onay numarasý döner.

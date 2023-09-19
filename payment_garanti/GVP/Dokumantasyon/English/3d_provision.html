@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-9">
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1254">
+<TITLE>Garanti Virtual POSl POS XML Transaction Test Page</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<FONT SIZE=5> XML Transaction Test Page </FONT>
+<P>
+<HR ALIGN=LEFT WIDTH=100% SIZE=2>
+You can update the code below with the account information you received to test transactions in XML format.<br>
+(*** = Account information)<br>
+(xxx = Card and Payment info)
+<HR ALIGN=LEFT WIDTH=100% SIZE=2>
+<br>
+<FORM ACTION="https://sanalposprovtest.garanti.com.tr/VPServlet" METHOD=POST>
+<TEXTAREA cols="80" rows="40" name="data" >
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<GVPSRequest>
+<Mode>TEST</Mode>
+<Version>v0.00</Version>
+<Terminal>
+	<ProvUserID>PROVAUT</ProvUserID>
+	<HashData>/HashData>
+	<UserID>PROVAUT</UserID>
+	<ID>111995</ID>
+	<MerchantID>600218</MerchantID>
+</Terminal>
+<Customer>
+	<IPAddress>1.1.111.111</IPAddress>
+	<EmailAddress>Cem@cem.com</EmailAddress>
+</Customer>
+<Card>
+	<Number></Number>
+	<ExpireDate></ExpireDate>
+	<CVV2></CVV2>
+</Card>
+<Order>
+	<OrderID></OrderID>
+	<GroupID></GroupID>
+</Order>
+<Transaction>
+	<Type>sales</Type>
+	<InstallmentCnt></InstallmentCnt>
+	<Amount>1110</Amount>
+	<CurrencyCode>949</CurrencyCode>
+	<CardholderPresentCode>13</CardholderPresentCode>	///For 3D it should be 13 	
+	<MotoInd>H</MotoInd>
+	<Description></Description>
+	<Secure3D>
+    		<AuthenticationCode>CAVV</AuthenticationCode>   
+    		<SecurityLevel>ECI</SecurityLevel>
+    		<TxnID>XID</TxnID>
+    		<Md>MD </Md> //// Instead of Card data this field is used 
+	</Secure3D>
+</Transaction>
+</GVPSRequest>
+</TEXTAREA>
+<CENTER><INPUT type=submit value="Submit" >&nbsp;&nbsp;&nbsp;
+<INPUT type=reset value="Reset"></CENTER>
+</FORM>
+</BODY>
+</HTML>

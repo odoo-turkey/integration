@@ -1,0 +1,11 @@
+<% 
+Dim sayi 
+Randomize 
+sayi = int((Rnd * 9999 )+1 ) & now() & int((Rnd * 9999 )+1 )
+sayi = Replace(sayi," ","")
+sayi = Replace(sayi,":","")
+sayi = Replace(sayi,".","")
+response.write  sayi
+strOrderID = sayi
+%>
+

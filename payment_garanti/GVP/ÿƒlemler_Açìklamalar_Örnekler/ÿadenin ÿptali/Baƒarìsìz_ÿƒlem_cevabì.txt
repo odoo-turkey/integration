@@ -1,0 +1,41 @@
+<GVPSResponse>
+  <Mode /> 
+<Terminal>
+  <ProvUserID>PROVRFN</ProvUserID> 
+  <UserID>XXXX</UserID> 
+  <ID>30691292</ID> 
+  <MerchantID>3424113</MerchantID> 
+  </Terminal>
+<Customer>
+  <IPAddress>127.0.0.1</IPAddress> 
+  <EmailAddress>eticaret@garanti.com.tr</EmailAddress> 
+  </Customer>
+<Order>
+  <OrderID>1476</OrderID> 
+  <GroupID /> 
+  </Order>
+<Transaction>
+<Response>
+  <Source>GVPS</Source> 
+  <Code>92</Code> 
+  <ReasonCode>0210</ReasonCode> 
+  <Message>Declined</Message> 
+  <ErrorMsg>Ýptal etmek istediðiniz iþlem geçerli deðil</ErrorMsg> 
+  <SysErrMsg>ErrorId: 0210</SysErrMsg> 
+  </Response>
+  <RetrefNum>311617674814</RetrefNum> 
+  <AuthCode /> 
+  <BatchNum>000008</BatchNum> 
+  <SequenceNum>000037</SequenceNum> 
+  <ProvDate>20130426 17:14:46</ProvDate> 
+  <CardNumberMasked /> 
+  <CardHolderName /> 
+  <CardType /> 
+  <HashData>2ED1CB709475B9D21C2C85EB3BB5B627524E485B</HashData> 
+  <HostMsgList /> 
+<RewardInqResult>
+  <RewardList /> 
+  <ChequeList /> 
+  </RewardInqResult>
+  </Transaction>
+  </GVPSResponse>

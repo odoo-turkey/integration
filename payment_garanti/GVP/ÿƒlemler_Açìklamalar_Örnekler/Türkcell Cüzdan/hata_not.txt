@@ -1,0 +1,2 @@
+0507 - Declined  - Remote Payment iþleminizi gerçekleþtiremiyoruz.Tekrar deneyiniz
+0808 - Declined  - Terminalin Remote Payment kullaným yetkisi yok

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GVPSRequest>
+<Mode>PROD</Mode>
+<Version>v0.01</Version>
+<ChannelCode></ChannelCode>
+<Terminal>
+<ProvUserID>PROVAUT</ProvUserID>
+<HashData>A3140642CC35A77F29A092FDA26BA96E446640D1</HashData>
+<UserID>XXXX</UserID>
+<ID>111995</ID>
+<MerchantID>600218</MerchantID></Terminal>
+<Customer>
+<IPAddress>127.0.0.1</IPAddress>
+<EmailAddress>eticaret@garanti.com.tr</EmailAddress></Customer>
+<Card>
+<Number></Number>
+<ExpireDate>1212</ExpireDate>
+<CVV2>123</CVV2></Card>
+<Order>
+<OrderID>144454</OrderID>
+<GroupID></GroupID>
+</Order>
+<Transaction>
+            <Type>batchinq</Type>
+            <BatchNum>1346</BatchNum>
+       <ListPageNum>1</ListPageNum>
+<InstallmentCnt></InstallmentCnt>
+<Amount>1</Amount>
+<CurrencyCode>949</CurrencyCode>
+<CardholderPresentCode>0</CardholderPresentCode>
+<MotoInd>N</MotoInd>
+<Secure3D>
+<AuthenticationCode></AuthenticationCode>
+<SecurityLevel></SecurityLevel>
+<TxnID></TxnID>
+<Md></Md></Secure3D></Transaction>
+</GVPSRequest>

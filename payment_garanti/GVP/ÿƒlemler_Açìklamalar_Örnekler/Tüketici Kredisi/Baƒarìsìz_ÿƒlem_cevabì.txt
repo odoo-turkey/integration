@@ -1,0 +1,40 @@
+<GVPSResponse>
+<Mode> </Mode>
+<Order>
+<OrderID>SISTDED3AE3BC97F48078DE4CFAD0BDFDE40</OrderID>
+<GroupID></GroupID>
+</Order>
+<Transaction>
+<Response>
+<Source>HOST</Source>
+<Code>57</Code>
+<ReasonCode>57</ReasonCode>
+<Message>Declined</Message>
+<ErrorMsg>Ýþleminizi gerçekleþtiremiyoruz.Tekrar deneyiniz</ErrorMsg>
+<SysErrMsg>KART BU ISLEMI YAPAMAZ</SysErrMsg>
+</Response>
+<RetrefNum>105810652545</RetrefNum>
+<AuthCode> </AuthCode>
+<BatchNum>000574</BatchNum>
+<SequenceNum>000515</SequenceNum>
+<ProvDate>20110227 10:36:23</ProvDate>
+<CardNumberMasked> </CardNumberMasked>
+<CardHolderName> </CardHolderName> <HashData>9F99F9D9B2D356FF6E36CD715E5BDB881791C3EA</HashData>
+<HostMsgList> </HostMsgList>
+<ExtendedCreditResult>
+<TotalAmount>0</TotalAmount>
+<InterestAmount>0</InterestAmount>
+<BITTAmount>0</BITTAmount>
+<RUSFAmount>0</RUSFAmount>
+<InterestRate>0</InterestRate>
+<BITTRate>0</BITTRate>
+<RUSFRate>0</RUSFRate>
+<InstallmentCnt>0</InstallmentCnt>
+<PaymentList> </PaymentList>
+</ExtendedCreditResult>
+<RewardInqResult>
+<RewardList> </RewardList>
+<ChequeList> </ChequeList>
+</RewardInqResult>
+</Transaction>
+</GVPSResponse>

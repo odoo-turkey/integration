@@ -1,0 +1,44 @@
+<GVPSResponse>
+<Mode></Mode>
+<Order>
+<OrderID></OrderID>
+<GroupID></GroupID>
+<OrderListInqResult><OrderTxnList>
+<OrderTxn>
+<Id>1</Id><LastTrxDate>2010-12-08 10:53:37</LastTrxDate><TrxType>Satis</TrxType><OrderID>SIST1ACD3B11AB5C408D8F5A158A48215584</OrderID><Name></Name><CardNumberMasked>375622******015</CardNumberMasked><BankBin>375622</BankBin><BatchNum>53600</BatchNum><AuthCode>237676</AuthCode><RetrefNum>034210648598</RetrefNum><InstallmentCnt>5</InstallmentCnt><Status>Basarili</Status><AuthAmount>9000</AuthAmount><CurrencyCode>TL </CurrencyCode><SafeType></SafeType><Comment1></Comment1><Comment2></Comment2><Comment3></Comment3>
+</OrderTxn>
+<OrderTxn>
+<Id>2</Id><LastTrxDate>2010-12-08 10:50:34</LastTrxDate><TrxType>Satis</TrxType><OrderID>SIST338C64A402554E0E8C6FEF36838827DD</OrderID><Name></Name><CardNumberMasked>375622******015</CardNumberMasked><BankBin>375622</BankBin><BatchNum>53600</BatchNum><AuthCode>422167</AuthCode><RetrefNum>034210648597</RetrefNum><InstallmentCnt>5</InstallmentCnt><Status>Basarili</Status><AuthAmount>9000</AuthAmount><CurrencyCode>TL </CurrencyCode><SafeType></SafeType><Comment1></Comment1><Comment2></Comment2><Comment3></Comment3>
+</OrderTxn>
+<OrderTxn>
+<Id>3</Id><LastTrxDate>2010-12-08 10:47:33</LastTrxDate><TrxType>Satis</TrxType><OrderID>SISTC8E4BB68E0614DB0984F284E3BA38928</OrderID><Name></Name><CardNumberMasked>375622******015</CardNumberMasked><BankBin>375622</BankBin><BatchNum>53600</BatchNum><AuthCode>770236</AuthCode><RetrefNum>034210648596</RetrefNum><InstallmentCnt>5</InstallmentCnt><Status>Basarili</Status><AuthAmount>9000</AuthAmount><CurrencyCode>TL </CurrencyCode><SafeType></SafeType><Comment1></Comment1><Comment2></Comment2><Comment3></Comment3>
+</OrderTxn>
+</OrderTxnList>
+</OrderListInqResult>
+</Order>
+<Transaction>
+<Response>
+<Source>GVPS</Source>
+<Code>00</Code>
+<ReasonCode></ReasonCode>
+<Message></Message>
+<ErrorMsg></ErrorMsg>
+<SysErrMsg></SysErrMsg>
+</Response>
+<RetrefNum></RetrefNum>
+<AuthCode></AuthCode>
+<BatchNum></BatchNum>
+<SequenceNum></SequenceNum>
+<ProvDate>20110306 11:23:41</ProvDate>
+<CardNumberMasked></CardNumberMasked>
+<CardHolderName></CardHolderName>
+<HashData>65F5DD2C0D11061860DDB94BB226075A03C3EC60</HashData>
+<HostMsgList></HostMsgList>
+<RewardInqResult>
+<RewardList>
+</RewardList>
+<ChequeList>
+</ChequeList>
+</RewardInqResult>
+</Transaction>
+</GVPSResponse>

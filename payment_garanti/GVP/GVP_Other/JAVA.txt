@@ -1,0 +1,383 @@
+package PAX.Payment;
+
+
+import UtilityPack.Common.CommonJava;
+
+
+
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+
+import java.net.URL;
+import java.net.URLConnection;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import java.text.DecimalFormat;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
+
+import javax.net.ssl.HostnameVerifier;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+
+public class GARANTI_TEST extends PaymentType{
+    public GARANTI_TEST() {
+    }
+                                     
+    public String doAuthorization() throws Exception{
+          String approved="Approved";
+           generateOrderId();
+   
+          String amount=getFormattedAmount(getAmount());
+           String hashPassword="provAUT123"+"010000039";//9 karaktere tamamlanacak
+           hashPassword=generateHash(hashPassword).toUpperCase();
+           String hashstr =getOrderID()+"10000039"+getPaymentToolNumber()+amount+hashPassword;
+           String hash=generateHash(hashstr).toUpperCase(); 
+          
+        String authXML=generateXML(getUserName(),hash,getUserID(),getIPAddress(),getPaymentToolNumber(),"1212",getCvc(),getOrderID(),amount,getCurrencyCode());
+     /*String  authXML="<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" + 
+       "<GVPSRequest>\n" + 
+       "<Mode>PROD</Mode>\n" + 
+       "<Version>v0.00</Version>\n" + 
+       "<Terminal>\n" + 
+       "	<ProvUserID>PROVAUT</ProvUserID>\n" + 
+       "	<HashData> 72E533733F535ECF088EC6CB5719E48E94FDD063 </HashData>\n" + 
+       "	<UserID>PROVAUT</UserID>\n" + 
+       "	<ID>10000039</ID>\n" + 
+       "	<MerchantID>3409000</MerchantID>\n" + 
+       "</Terminal>\n" + 
+       "<Customer>\n" + 
+       "	<IPAddress>192.168.10.50</IPAddress>\n" + 
+       "	<EmailAddress>Cem@cem.com</EmailAddress>\n" + 
+       "</Customer>\n" + 
+       "<Card>\n" + 
+       "	<Number>5549601234512345</Number>\n" + 
+       "	<ExpireDate>1212</ExpireDate>\n" + 
+       "	<CVV2>555</CVV2>\n" + 
+       "</Card>\n" + 
+       "<Order>\n" + 
+       "	<OrderID>PGS19882062</OrderID>\n" + 
+       "	<GroupID></GroupID>\n" + 
+       "</Order>\n" + 
+       "<Transaction>\n" + 
+       "	<Type>sales</Type>\n" + 
+       "	<InstallmentCnt></InstallmentCnt>\n" + 
+       "	<Amount>2777</Amount>\n" + 
+       "	<CurrencyCode>949</CurrencyCode>\n" + 
+       "	<CardholderPresentCode>0</CardholderPresentCode>		\n" + 
+       "	<MotoInd>N</MotoInd>\n" + 
+       "</Transaction>\n" + 
+       "</GVPSRequest>\n";*/
+      System.out.println(authXML);
+     // hostAddress=https://sanalposprov.garanti.com.tr/VPServlet 
+        String responseXML=  createPostRequest(authXML, getHostAddress());
+        System.out.println(responseXML);
+    return "abc";
+    }
+    
+    public String getFormattedAmount(double amount) {
+        DecimalFormat df = new DecimalFormat(".00");
+        String formattedAmount = 
+            df.format(amount).replaceAll(",", "").replaceAll("\\.", "");
+        return formattedAmount;
+    }
+   
+    public String getVPOSAPI() {
+        return null;//CommonPAX.VPOS_API_TYPE_GLBC;
+    }
+    
+    
+    public String generateHash(String input ){
+    
+    
+    try{
+        MessageDigest md = MessageDigest.getInstance("SHA1");
+        md.reset();
+        byte[] buffer = input.getBytes();
+        md.update(buffer);
+        byte[] digest = md.digest();
+        
+        String hexStr = "";
+        for (int i = 0; i < digest.length; i++) {
+                hexStr +=  Integer.toString( ( digest[i] & 0xff ) + 0x100, 16).substring( 1 );
+        }
+        return hexStr;
+        
+                                
+     
+        
+    }catch(NoSuchAlgorithmException e){
+       // setError(ss,"SHA1",ss.translate("SHA1 Hashing Error 3DPay"));//Sorr
+        CommonJava.ilog("SHA1 Hashing Error 3DPay "+e);
+        CommonJava.cclog("EXCEPTION at SHA1 Hashing Error 3DPay  "+"\n"+CommonJava.exception2String(e));
+        return null;
+    }
+    
+    
+    
+        
+    }
+    
+    private static String createPostRequest(String request, 
+                                            String hostAddress) throws Exception {
+                                            
+                                            
+          /* TODO  TRUSTALLCERTIFICATE KALDIR */
+            HostnameVerifier hv = new HostnameVerifier()
+                   {
+                       public boolean verify(String urlHostName, SSLSession session)
+                       {
+                           System.out.println("Warning: URL Host: " + urlHostName + " vs. "
+                                   + session.getPeerHost());
+                           return true;
+                       }
+                   };
+
+
+        // Now you are telling the JRE to trust any https server.
+        // If you know the URL that you are connecting to then this should not be a problem
+        trustAllHttpsCertificates();
+        HttpsURLConnection.setDefaultHostnameVerifier(hv);
+        URL garanti= new URL(hostAddress);  
+        URLConnection connection = garanti.openConnection();
+        connection.setDoOutput(true);
+        
+            OutputStreamWriter out = new OutputStreamWriter(
+                connection.getOutputStream());
+            out.write(request);
+            out.flush();
+            out.close();
+
+        
+        
+       BufferedReader in = new BufferedReader(
+                                new InputStreamReader(
+                                            connection.getInputStream()));
+
+        StringBuilder responseXMLBuilder = new StringBuilder();
+
+        String line;
+
+        while ((line = in.readLine()) != null) 
+             responseXMLBuilder.append(line);
+             responseXMLBuilder.append("\n");            
+        in.close();
+        
+        return responseXMLBuilder.toString();
+
+    }
+    
+        private static void trustAllHttpsCertificates() throws Exception
+      {
+    
+          //  Create a trust manager that does not validate certificate chains:
+    
+          javax.net.ssl.TrustManager[] trustAllCerts =
+    
+          new javax.net.ssl.TrustManager[1];
+    
+          javax.net.ssl.TrustManager tm = new miTM();
+    
+          trustAllCerts[0] = tm;
+    
+          javax.net.ssl.SSLContext sc =
+    
+          javax.net.ssl.SSLContext.getInstance("SSL");
+    
+          sc.init(null, trustAllCerts, null);
+    
+          javax.net.ssl.HttpsURLConnection.setDefaultSSLSocketFactory(
+    
+          sc.getSocketFactory());
+    
+      } 
+      public static class miTM implements javax.net.ssl.TrustManager,
+              javax.net.ssl.X509TrustManager
+      {
+          public java.security.cert.X509Certificate[] getAcceptedIssuers()
+          {
+              return null;
+          }
+    
+          public boolean isServerTrusted(
+                  java.security.cert.X509Certificate[] certs)
+          {
+              return true;
+          }
+    
+          public boolean isClientTrusted(
+                  java.security.cert.X509Certificate[] certs)
+          {
+              return true;
+          }
+    
+          public void checkServerTrusted(
+                  java.security.cert.X509Certificate[] certs, String authType)
+                  throws java.security.cert.CertificateException
+          {
+              return;
+          }
+    
+          public void checkClientTrusted(
+                  java.security.cert.X509Certificate[] certs, String authType)
+                  throws java.security.cert.CertificateException
+          {
+              return;
+          }
+      }
+      
+
+    private static String generateXML(String userName,String hash,String userID,String ipAddress,String paymentToolNumber,String expDate,String cvc,String orderID,String amount,String currency){
+    
+        try{
+        //Create instance of DocumentBuilderFactory
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        //Get the DocumentBuilder
+        DocumentBuilder docBuilder = factory.newDocumentBuilder();
+        //Create blank DOM Document
+            Document doc = docBuilder.newDocument();
+        
+           
+            Element root = doc.createElement("GVPSRequest");
+            doc.appendChild(root);
+            
+            Element Mode = doc.createElement("Mode");
+            Mode.appendChild(doc.createTextNode("PROD"));
+            root.appendChild(Mode);
+            
+            Element Version =doc.createElement("Version");
+            Version.appendChild(doc.createTextNode("v0.01"));
+            root.appendChild(Version);
+            
+            Element Terminal=doc.createElement("Terminal");
+            root.appendChild(Terminal);
+            
+            Element ProvUserID=doc.createElement("ProvUserID");
+           // ProvUserID.appendChild(doc.createTextNode(userName));
+            ProvUserID.appendChild(doc.createTextNode("PROVAUT"));
+            Terminal.appendChild(ProvUserID);
+            
+            Element HashData_=doc.createElement("HashData");
+            HashData_.appendChild(doc.createTextNode(hash));
+            Terminal.appendChild(HashData_);
+            
+            Element UserID=doc.createElement("UserID");
+            UserID.appendChild(doc.createTextNode("deneme"));
+            Terminal.appendChild(UserID);
+            
+            Element ID=doc.createElement("ID");
+            ID.appendChild(doc.createTextNode("10000039"));
+            Terminal.appendChild(ID);
+            
+            Element MerchantID=doc.createElement("MerchantID");
+            MerchantID.appendChild(doc.createTextNode(userID));
+            Terminal.appendChild(MerchantID);
+            
+            Element Customer=doc.createElement("Customer");
+            root.appendChild(Customer);
+            
+            Element IPAddress=doc.createElement("IPAddress");
+            IPAddress.appendChild(doc.createTextNode(ipAddress));
+            Customer.appendChild(IPAddress);
+            
+            Element EmailAddress=doc.createElement("EmailAddress");
+            EmailAddress.appendChild(doc.createTextNode("aa@b.com"));
+            Customer.appendChild(EmailAddress);
+            
+            Element Card=doc.createElement("Card");
+            root.appendChild(Card);
+            
+            Element Number=doc.createElement("Number");
+            Number.appendChild(doc.createTextNode(paymentToolNumber));
+            Card.appendChild(Number);
+            
+            Element ExpireDate=doc.createElement("ExpireDate");
+            ExpireDate.appendChild(doc.createTextNode("1212"));
+            Card.appendChild(ExpireDate);
+            
+            Element CVV2=doc.createElement("CVV2");
+            CVV2.appendChild(doc.createTextNode(cvc));
+            Card.appendChild(CVV2);
+            
+            Element Order=doc.createElement("Order");
+            root.appendChild(Order);
+            
+            Element OrderID=doc.createElement("OrderID");
+            OrderID.appendChild(doc.createTextNode(orderID));
+            Order.appendChild(OrderID);
+            
+            Element GroupID=doc.createElement("GroupID");
+            GroupID.appendChild(doc.createTextNode(""));
+            Order.appendChild(GroupID);
+            
+            /*Element Description=doc.createElement("Description");
+            Description.appendChild(doc.createTextNode(""));
+            Order.appendChild(Description);*/
+            
+            Element Transaction=doc.createElement("Transaction");
+            root.appendChild(Transaction);
+            
+            Element Type=doc.createElement("Type");
+            Type.appendChild(doc.createTextNode("sales"));
+            Transaction.appendChild(Type);
+            
+            Element InstallmentCnt=doc.createElement("InstallmentCnt");
+            InstallmentCnt.appendChild(doc.createTextNode(""));
+            Transaction.appendChild(InstallmentCnt);
+            
+            Element Amount=doc.createElement("Amount");
+            Amount.appendChild(doc.createTextNode(amount));
+            Transaction.appendChild(Amount);
+            
+            Element CurrencyCode=doc.createElement("CurrencyCode");
+            CurrencyCode.appendChild(doc.createTextNode(currency));
+            Transaction.appendChild(CurrencyCode);
+            
+            Element CardholderPresentCode=doc.createElement("CardholderPresentCode");
+            CardholderPresentCode.appendChild(doc.createTextNode("0"));
+            Transaction.appendChild(CardholderPresentCode);
+            
+            Element MotoInd=doc.createElement("MotoInd");
+            MotoInd.appendChild(doc.createTextNode("N"));
+            Transaction.appendChild(MotoInd);
+            
+           /* Element _Description=doc.createElement("Description");
+            _Description.appendChild(doc.createTextNode(""));
+            Transaction.appendChild(_Description);
+            
+            Element OriginalRetrefNum=doc.createElement("OriginalRetrefNum");
+            OriginalRetrefNum.appendChild(doc.createTextNode(""));
+            Transaction.appendChild(OriginalRetrefNum);*/
+            //Convert dom to String
+            TransformerFactory tranFactory = TransformerFactory.newInstance(); 
+            Transformer aTransformer = tranFactory.newTransformer(); 
+            StringWriter buffer = new StringWriter();
+            aTransformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            aTransformer.transform(new DOMSource(doc),
+                  new StreamResult(buffer));
+            return buffer.toString();
+        
+        }catch(Exception e){
+         return null;
+        }
+        
+    
+    }
+    
+    
+}

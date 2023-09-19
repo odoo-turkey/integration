@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GVPSRequest>
+<Mode>TEST</Mode>
+<Version>v0.1</Version>
+<Terminal>
+<ProvUserID>PROVRFN</ProvUserID>
+<HashData>84B1845B82973491D379CBA07EB60C29C9B1523E</HashData>
+<UserID>DENE</UserID>
+<ID>111995</ID>
+<MerchantID>600218</MerchantID>
+</Terminal>
+<Customer>
+<IPAddress>10.242.8.201</IPAddress>
+</Customer>
+<Order>
+<OrderID>SIST2FE2A2B9F4834E43947704B5E1C806CB</OrderID>
+</Order>
+<Transaction>
+<Type>void</Type>
+<OriginalRetrefNum>105811652550</OriginalRetrefNum>
+</Transaction>
+</GVPSRequest>

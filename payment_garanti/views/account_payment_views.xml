@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_form_garanti" model="ir.ui.view">
+        <field name="name">Garanti Account Payment Form</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <field name="payment_method_code" position="after">
+                <field name="sanalpos_payment" invisible="1"/>
+            </field>
+            <div class="oe_button_box" name="button_box">
+                <button class="oe_stat_button" type="object"
+                        attrs="{'invisible': [('sanalpos_payment', '!=', True)]}"
+                        name="check_garanti_payment_status" icon="fa-check-square-o"
+                        string="Check Payment Status"/>
+            </div>
+        </field>
+    </record>
+
+</odoo>
