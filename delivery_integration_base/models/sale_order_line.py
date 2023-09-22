@@ -30,8 +30,8 @@ class SaleOrderLine(models.Model):
                 continue
 
             if product.type == "product" and (
-                float_is_zero(product.weight, uom_dp)
-                or float_is_zero(product.volume, uom_dp)
+                float_is_zero(product.product_weight, uom_dp)
+                or float_is_zero(product.product_volume, uom_dp)
             ):
                 continue
                 # Todo: this raise error is not working, need to fix it
@@ -46,24 +46,24 @@ class SaleOrderLine(models.Model):
                 qty=line.product_uom_qty, to_unit=product.uom_id, round=False
             )
             line_kg = product.weight_uom_id._compute_quantity(
-                qty=line_qty * product.weight,
+                qty=line_qty * product.product_weight,
                 to_unit=uom_kg,
                 round=False,
             )
             if line.product_id.volume_uom_id.uom_type == "smaller":
                 line_litre = (
                     line_qty
-                    * line.product_id.volume
+                    * line.product_id.product_volume
                     * line.product_id.volume_uom_id.factor_inv
                 )
             elif line.product_id.volume_uom_id.uom_type == "bigger":
                 line_litre = (
                     line_qty
-                    * line.product_id.volume
+                    * line.product_id.product_volume
                     * line.product_id.volume_uom_id.factor
                 )
             else:
-                line_litre = line_qty * line.product_id.volume
+                line_litre = line_qty * line.product_id.product_volume
 
             line.deci = (
                 line_litre * 1000.0
