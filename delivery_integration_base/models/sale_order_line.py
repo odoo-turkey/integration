@@ -48,9 +48,13 @@ class SaleOrderLine(models.Model):
                 to_unit=uom_kg,
                 round=False,
             )
-            line_litre = (line_qty * line.product_id.volume * 1000.0) / (
-                line.product_id.dimensional_uom_id.factor**3
-            )
+            if line.product_id.volume_uom_id.uom_type =="smaller":
+                line_litre = line_qty * line.product_id.volume * line.product_id.volume_uom_id.factor_inv
+            elif line.product_id.volume_uom_id.uom_type =="bigger":
+                line_litre = line_qty * line.product_id.volume * line.product_id.volume_uom_id.factor
+            else:
+                line_litre = line_qty * line.product_id.volume
+
             line.deci = (line_litre * 1000.0) / deci_type  # save deci in sale order line
             calculated_deci = max(line_kg, line.deci)
             deci += calculated_deci
