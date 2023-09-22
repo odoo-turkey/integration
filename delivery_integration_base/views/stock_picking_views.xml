@@ -30,12 +30,15 @@
                 <field name="shipping_number" attrs="{'readonly': 1}"/>
             </xpath>
             <xpath expr="//field[@name='shipping_weight']" position="after">
-                <field name="carrier_total_weight" attrs="{'readonly': [('carrier_tracking_ref', '!=', False)]}"/>
+                <field name="carrier_total_deci" attrs="{'readonly': [('carrier_tracking_ref', '!=', False)]}"/>
                 <field name="carrier_shipping_cost" attrs="{'readonly': 1}" widget="monetary"/>
                 <field name="carrier_shipping_vat" attrs="{'readonly': 1}" widget="monetary"/>
                 <field name="carrier_shipping_total" attrs="{'readonly': 1}" widget="monetary"/>
                 <field name="carrier_currency_id" attrs="{'readonly': 1, 'invisible': 1}"/>
                 <field name="mail_sent" attrs="{'readonly': 1}"/>
+            </xpath>
+            <xpath expr="//field[@name='shipping_weight']" position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
         </field>
     </record>

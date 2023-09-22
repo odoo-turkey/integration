@@ -13,6 +13,7 @@ class SaleGetRatesWizard(models.TransientModel):
 
     carrier_prices = fields.Many2many("delivery.carrier.lines", string="Prices")
     sale_id = fields.Many2one("sale.order", string="Sale Order")
+    sale_deci = fields.Float(string="Sale Deci", readonly=True)
 
     @api.model
     def create(self, vals):
@@ -26,6 +27,8 @@ class SaleGetRatesWizard(models.TransientModel):
         date = datetime.now()
         for wizard in res.filtered(lambda w: w.sale_id):
             carrier_prices = res.get_delivery_prices()
+            # Save deci to wizard
+            wizard.sale_deci = wizard.sale_id.sale_deci
             create_list = []
             for carrier, result in carrier_prices.items():
                 if result["success"]:
