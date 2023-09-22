@@ -231,7 +231,7 @@ class DeliveryCarrier(models.Model):
 
         if response.shippingDeliveryItemDetailVO:
             vals.update({
-                'carrier_total_weight': float(response.shippingDeliveryItemDetailVO.totalDesiKg),
+                'carrier_total_deci': float(response.shippingDeliveryItemDetailVO.totalDesiKg),
                 'carrier_shipping_cost': float(response.shippingDeliveryItemDetailVO.totalPrice),
                 'carrier_shipping_vat': float(response.shippingDeliveryItemDetailVO.totalVat),
                 'carrier_shipping_total': float(response.shippingDeliveryItemDetailVO.totalAmount),
