@@ -1,0 +1,609 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* delivery_integration_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-02-01 14:40+0000\n"
+"PO-Revision-Date: 2023-02-01 14:40+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: delivery_integration_base
+#: model:mail.template,report_name:delivery_integration_base.delivery_mail_template
+msgid "${(object.name or '').replace('/','_')}"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:mail.template,subject:delivery_integration_base.delivery_mail_template
+msgid "${object.company_id.name|safe} Sevk (Ref ${object.sale_id.client_order_ref or ''} ${object.sale_id.name or '/'})"
+msgstr ""
+
+#. module: delivery_integration_base
+#: code:addons/delivery_integration_base/models/stock_picking.py:67
+#, python-format
+msgid "%s etiket"
+msgstr ""
+
+#. module: delivery_integration_base
+#: selection:delivery.carrier,deci_type:0
+msgid "(3000)"
+msgstr ""
+
+#. module: delivery_integration_base
+#: selection:delivery.carrier,deci_type:0
+msgid "(4000)"
+msgstr ""
+
+#. module: delivery_integration_base
+#: selection:delivery.carrier,deci_type:0
+msgid "(5000)"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:mail.template,body_html:delivery_integration_base.delivery_mail_template
+msgid "<p style=\"margin-right: 0px; margin-left: 0px; font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Merhaba,</p><p style=\"margin-right: 0px; margin-left: 0px; font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\"><br><span style=\"font-style: initial; font-variant-ligatures: initial; font-variant-caps: initial; font-weight: initial; text-align: inherit;\">${object.sale_id.client_order_ref or ''}&nbsp;</span>${object.sale_id.name or ''} referans numaralı siparişiniz kargoya verilmiştir.</p><p style=\"margin-right: 0px; margin-left: 0px; font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Teslimat Yöntemi: ${object.carrier_id.display_name or ''}</p><p style=\"margin-right: 0px; margin-left: 0px; font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Takip No:&nbsp;<span style=\"font-style: initial; font-variant-ligatures: initial; font-variant-caps: initial; font-weight: initial; text-align: inherit;\">${object.shipping_number or ''}</span><br></p><p style=\"margin-right: 0px; margin-left: 0px; font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">${'Takip için: %s' % object.carrier_tracking_url if object.carrier_tracking_url else ''}<br></p><p style=\"margin-right: 0px; margin-left: 0px; font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\"><br></p><p style=\"margin-right: 0px; margin-left: 0px; font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Altınkaya Elektronik Cihaz Kutuları</p>"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_sale_order_delivery_get_rates
+msgid "<span class=\"ml-3\">Deci: </span>"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_integration_base_delivery_price_rule_form
+msgid "<span class=\"text-muted\" attrs=\"{'invisible': [('variable', '!=', 'deci')]}\">\n"
+"                    Variable factor must be deci.\n"
+"                </span>"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_delivery_carrier__fuel_surcharge_percentage
+msgid "Additional Price to add after calculation of tables"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__attach_barcode
+msgid "Attach Barcode to Picking"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__barcode_text_1
+msgid "Barcode Text 1"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__carrier_barcode_type
+msgid "Barcode Type"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model_terms:ir.ui.view,arch_db:delivery_integration_base.delivery_send_batch_email
+#: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_sale_get_rates_wizard
+msgid "Cancel"
+msgstr ""
+
+#. module: delivery_integration_base
+#: code:addons/delivery_integration_base/models/delivery_carrier.py:206
+#, python-format
+msgid "Cannot calculate Shipping, Weight and Volume for product %s missing."
+msgstr ""
+
+#. module: delivery_integration_base
+#: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_carrier_picking_withcarrier_out_form
+msgid "Cargo Label"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier_lines__carrier_id
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_region__carrier_ids
+msgid "Carrier"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__carrier_currency_id
+#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__carrier_currency_id
+msgid "Carrier Currency"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_sale_order__carrier_payment_type
+msgid "Carrier Payment Type"
+msgstr ""
+
+#. module: delivery_integration_base
+#: code:addons/delivery_integration_base/models/sale_order.py:55
+#: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_sale_get_rates_wizard
+#, python-format
+msgid "Carrier Rates"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__carrier_total_weight
+msgid "Carrier Total Weight"
+msgstr ""
+
+#. module: delivery_integration_base
+#: code:addons/delivery_integration_base/models/sale_order.py:30
+#, python-format
+msgid "Carrier line is not added to order lines. Please add carrier line to order lines."
+msgstr ""
+
+#. module: delivery_integration_base
+#: model_terms:ir.actions.act_window,help:delivery_integration_base.action_delivery_region
+msgid "Click to add a Region in your Delivery Region list."
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_region__country_ids
+msgid "Country"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier_lines__create_uid
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_region__create_uid
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_send_batch_email__create_uid
+#: model:ir.model.fields,field_description:delivery_integration_base.field_sale_get_rates_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier_lines__create_date
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_region__create_date
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_send_batch_email__create_date
+#: model:ir.model.fields,field_description:delivery_integration_base.field_sale_get_rates_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__currency_id
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier_lines__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: delivery_integration_base
+#: selection:delivery.carrier,payment_type:0
+msgid "Customer Pays"
+msgstr ""
+
+#. module: delivery_integration_base
+#: selection:delivery.price.rule,variable:0
+#: selection:delivery.price.rule,variable_factor:0
+#: model:ir.model.fields,field_description:delivery_integration_base.field_sale_order_line__deci
+msgid "Deci"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__deci_type
+msgid "Deci Type"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__carrier_total_weight
+#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__picking_total_weight
+msgid "Decimal of packages"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__default_printer_id
+msgid "Default Printer"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model,name:delivery_integration_base.model_delivery_carrier_lines
+msgid "Delivery Carrier Lines"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__delivery_deadline_no_integration
+msgid "Delivery Deadline (In Days)"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model,name:delivery_integration_base.model_delivery_carrier
+msgid "Delivery Methods"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model,name:delivery_integration_base.model_delivery_price_rule
+msgid "Delivery Price Rules"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.actions.act_window,name:delivery_integration_base.action_delivery_region
+#: model:ir.ui.menu,name:delivery_integration_base.delivery_region_menu
+msgid "Delivery Regions"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_delivery_carrier__delivery_deadline_no_integration
+msgid "Delivery deadline for carrier that has no integration."
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model,name:delivery_integration_base.model_delivery_region
+msgid "Delivery regions for price calculation"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier_lines__display_name
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_region__display_name
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_send_batch_email__display_name
+#: model:ir.model.fields,field_description:delivery_integration_base.field_sale_get_rates_wizard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__Emergency_fee_per_kg
+msgid "Emergency Charge Per Kg"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_delivery_carrier__Emergency_fee_per_kg
+msgid "Emergency fee added after postal chargee percentage"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__environment_fee_per_kg
+msgid "Environment Charge per Kg"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_delivery_carrier__environment_fee_per_kg
+msgid "Environment fee per KG added after fuel surcharge"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_delivery_carrier__postal_charge_percentage
+msgid "For shipments below 30kg or Deci additional percentage to add"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__fuel_surcharge_percentage
+msgid "Fuel Surcharge Percentage"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_sale_order_delivery_get_rates
+msgid "Get Rates"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier_lines__id
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_region__id
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_send_batch_email__id
+#: model:ir.model.fields,field_description:delivery_integration_base.field_sale_get_rates_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_delivery_carrier__attach_barcode
+msgid "If checked, barcode will be attached to picking as a file."
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier_lines____last_update
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_region____last_update
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_send_batch_email____last_update
+#: model:ir.model.fields,field_description:delivery_integration_base.field_sale_get_rates_wizard____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier_lines__write_uid
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_region__write_uid
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_send_batch_email__write_uid
+#: model:ir.model.fields,field_description:delivery_integration_base.field_sale_get_rates_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier_lines__write_date
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_region__write_date
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_send_batch_email__write_date
+#: model:ir.model.fields,field_description:delivery_integration_base.field_sale_get_rates_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__mail_sent
+msgid "Mail Sent To Customer"
+msgstr ""
+
+#. module: delivery_integration_base
+#: code:addons/delivery_integration_base/models/delivery_carrier.py:114
+#, python-format
+msgid "No Reference Sequence defined for this carrier"
+msgstr ""
+
+#. module: delivery_integration_base
+#: code:addons/delivery_integration_base/models/stock_picking.py:54
+#, python-format
+msgid "No default printer defined for the carrier %s"
+msgstr ""
+
+#. module: delivery_integration_base
+#: code:addons/delivery_integration_base/models/delivery_carrier.py:288
+#, python-format
+msgid "No price rule matching this order; delivery cost cannot be computed."
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__carrier_package_count
+msgid "Number of packages"
+msgstr ""
+
+#. module: delivery_integration_base
+#: selection:delivery.carrier,carrier_barcode_type:0
+msgid "PDF"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__carrier_package_count
+msgid "Package Count"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__payment_type
+msgid "Payment Type"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.actions.server,name:delivery_integration_base.ir_cron_delivery_update_pickings_state_ir_actions_server
+#: model:ir.cron,cron_name:delivery_integration_base.ir_cron_delivery_update_pickings_state
+#: model:ir.cron,name:delivery_integration_base.ir_cron_delivery_update_pickings_state
+msgid "Picking Delivery State Update"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__picking_total_weight
+msgid "Picking Total Weight"
+msgstr ""
+
+#. module: delivery_integration_base
+#: code:addons/delivery_integration_base/wizards/sale_get_rates_wizard.py:65
+#, python-format
+msgid "Please select one delivery carrier."
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__postal_charge_percentage
+msgid "Postal Charge Percentage"
+msgstr ""
+
+#. module: delivery_integration_base
+#: selection:delivery.price.rule,variable:0
+#: selection:delivery.price.rule,variable_factor:0
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier_lines__price
+msgid "Price"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_sale_get_rates_wizard__carrier_prices
+msgid "Prices"
+msgstr ""
+
+#. module: delivery_integration_base
+#: selection:delivery.price.rule,variable:0
+#: selection:delivery.price.rule,variable_factor:0
+msgid "Quantity"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__carrier_received_by
+msgid "Received By"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__carrier_received_by
+msgid "Received by"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__ref_sequence_id
+msgid "Reference Sequence"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_price_rule__region_id
+msgid "Region"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_region__name
+msgid "Region Name"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__sms_service_id
+msgid "SMS Service"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_sale_order__sale_deci
+msgid "Sale Deci"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model,name:delivery_integration_base.model_sale_get_rates_wizard
+msgid "Sale Get Rates Wizard"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model,name:delivery_integration_base.model_sale_order
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier_lines__order_id
+#: model:ir.model.fields,field_description:delivery_integration_base.field_sale_get_rates_wizard__sale_id
+msgid "Sale Order"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model,name:delivery_integration_base.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_sale_get_rates_wizard
+msgid "Select"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_sale_get_rates_wizard
+msgid "Select preferred delivery carrier. Shipment price will be added on order lines as product."
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier_lines__selected
+msgid "Selected"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model,name:delivery_integration_base.model_delivery_send_batch_email
+msgid "Send Batch Email to Customers"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.actions.act_window,name:delivery_integration_base.action_delivery_send_batch_email
+#: model_terms:ir.ui.view,arch_db:delivery_integration_base.delivery_send_batch_email
+msgid "Send E-mails To Customer"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model_terms:ir.ui.view,arch_db:delivery_integration_base.delivery_send_batch_email
+msgid "Send Mails"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__send_sms_customer
+msgid "Send SMS to Customer"
+msgstr ""
+
+#. module: delivery_integration_base
+#: selection:delivery.carrier,payment_type:0
+msgid "Sender Pays"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__carrier_shipping_cost
+msgid "Shipping Cost"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__shipping_number
+msgid "Shipping Number"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__carrier_shipping_total
+msgid "Shipping Total"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__shipping_number
+msgid "Shipping Tracking Number"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__carrier_shipping_vat
+#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__carrier_shipping_vat
+msgid "Shipping VAT"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__carrier_shipping_cost
+msgid "Shipping cost"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__carrier_shipping_total
+msgid "Shipping total"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__show_in_price_table
+msgid "Show in Price Table"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_delivery_carrier__show_in_price_table
+msgid "Show this carrier in Sale Order Shipment Price table"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_delivery_carrier__barcode_text_1
+msgid "Some static text for this carrier to package labels."
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_region__state_ids
+msgid "States"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__tracking_url_prefix_no_integration
+msgid "Tracking URL Prefix"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_delivery_carrier__tracking_url_prefix_no_integration
+msgid "Tracking URL prefix for carrier that has no integration."
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model,name:delivery_integration_base.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__url_shortener_id
+msgid "URL Shortener"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_price_rule__variable
+msgid "Variable"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_price_rule__variable_factor
+msgid "Variable Factor"
+msgstr ""
+
+#. module: delivery_integration_base
+#: selection:delivery.price.rule,variable:0
+#: selection:delivery.price.rule,variable_factor:0
+msgid "Volume"
+msgstr ""
+
+#. module: delivery_integration_base
+#: selection:delivery.price.rule,variable:0
+#: selection:delivery.price.rule,variable_factor:0
+msgid "Weight"
+msgstr ""
+
+#. module: delivery_integration_base
+#: selection:delivery.price.rule,variable:0
+#: selection:delivery.price.rule,variable_factor:0
+msgid "Weight * Volume"
+msgstr ""
+
+#. module: delivery_integration_base
+#: selection:delivery.carrier,carrier_barcode_type:0
+msgid "ZPL (Zebra)"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__weight_calc_percentage
+msgid "additional percentage for weight calculation"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_sale_get_rates_wizard
+msgid "or"
+msgstr ""
+
