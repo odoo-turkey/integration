@@ -8,7 +8,9 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     carrier_package_count = fields.Integer('Package Count', help='Number of packages', default=1)
-    carrier_total_weight = fields.Float('Carrier Total Weight', help='Carrier total reception deci weight')
+    carrier_total_weight = fields.Float('Carrier Total Weight', help='Carrier total reception weight kg')
+    carrier_total_deci = fields.Float('Carrier Total Deci', help='Carrier total reception Deci')
+
     picking_total_weight = fields.Float('Picking Total Weight', help='Shipments Total Measured Exit Deci weight')
     carrier_received_by = fields.Char('Received By', help='Received by')
     shipping_number = fields.Char('Shipping Number', help='Shipping Tracking Number')
