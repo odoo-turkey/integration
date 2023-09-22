@@ -6,6 +6,8 @@
         <field name="arch" type="xml">
             <form string="Carrier Rates">
                 <field name="sale_id" invisible="1"/>
+                    <span>Sale Deci: </span>
+                    <field name="sale_deci" string="Calculated Sale Deci" nolabel="1" />
                 <field name="carrier_prices" widget="many2many">
                     <tree editable="top" delete="0" create="0">
                         <field name="carrier_id" readonly="1"/>

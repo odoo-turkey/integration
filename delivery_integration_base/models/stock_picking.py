@@ -10,13 +10,9 @@ class StockPicking(models.Model):
     carrier_package_count = fields.Integer(
         "Package Count", help="Number of packages", default=1
     )
-    carrier_total_weight = fields.Float(
-        "Carrier Total Weight", help="Carrier total reception weight kg"
-    )
     carrier_total_deci = fields.Float(
         "Carrier Total Deci", help="Carrier total reception Deci"
     )
-
     picking_total_weight = fields.Float(
         "Picking Total Weight", help="Shipments Total Measured Exit Deci weight"
     )
