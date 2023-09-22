@@ -29,8 +29,10 @@ class SaleOrderLine(models.Model):
             if not product or line.is_delivery:
                 continue
 
-            if product.type == "product" and (float_is_zero(product.weight, uom_dp)
-                                              or float_is_zero(product.volume, uom_dp)):
+            if product.type == "product" and (
+                float_is_zero(product.weight, uom_dp)
+                or float_is_zero(product.volume, uom_dp)
+            ):
                 continue
                 # Todo: this raise error is not working, need to fix it
                 # raise UserError(
@@ -43,11 +45,29 @@ class SaleOrderLine(models.Model):
             line_qty = line.product_uom._compute_quantity(
                 qty=line.product_uom_qty, to_unit=product.uom_id, round=False
             )
-            line_kg = (line_qty * product.weight) / 1000
-            line_litre = (line_qty * line.product_id.volume * 1000.0) / (
-                line.product_id.dimensional_uom_id.factor**3
+            line_kg = product.weight_uom_id._compute_quantity(
+                qty=line_qty * product.weight,
+                to_unit=uom_kg,
+                round=False,
             )
-            line.deci = (line_litre * 1000.0) / deci_type  # save deci in sale order line
+            if line.product_id.volume_uom_id.uom_type == "smaller":
+                line_litre = (
+                    line_qty
+                    * line.product_id.volume
+                    * line.product_id.volume_uom_id.factor_inv
+                )
+            elif line.product_id.volume_uom_id.uom_type == "bigger":
+                line_litre = (
+                    line_qty
+                    * line.product_id.volume
+                    * line.product_id.volume_uom_id.factor
+                )
+            else:
+                line_litre = line_qty * line.product_id.volume
+
+            line.deci = (
+                line_litre * 1000.0
+            ) / deci_type  # save deci in sale order line
             calculated_deci = max(line_kg, line.deci)
             deci += calculated_deci
             weight += line_kg
