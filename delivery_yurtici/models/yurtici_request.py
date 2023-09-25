@@ -122,7 +122,7 @@ class YurticiRequest:
                     raise Fault(e)
 
         if response.outFlag != "0":
-            raise ValidationError("%s %s" % (response.errCode, response.outResult))
+            raise ValidationError("%s:\n%s" % (response.outResult, response.shippingOrderDetailVO.errMessage))
 
         return response
 
