@@ -3,6 +3,7 @@
 from odoo import models, fields, api, _
 from odoo.addons import decimal_precision as dp
 from odoo.tools import float_is_zero
+from odoo.exceptions import ValidationError
 
 
 class SaleOrderLine(models.Model):
@@ -29,16 +30,14 @@ class SaleOrderLine(models.Model):
             if not product or line.is_delivery:
                 continue
 
-            if product.type == "product" and (float_is_zero(product.weight, uom_dp)
-                                              or float_is_zero(product.volume, uom_dp)):
-                continue
-                # Todo: this raise error is not working, need to fix it
-                # raise UserError(
-                #     _(
-                #         "Cannot calculate Deci, Weight and Volume for product %s missing."
-                #     )
-                #     % (product.display_name)
-                # )
+            if product.type == "product" and (
+                float_is_zero(product.weight, uom_dp)
+                or float_is_zero(product.volume, uom_dp)
+            ):
+                raise ValidationError(
+                    _("Cannot calculate Deci, Weight or Volume for product %s missing.")
+                    % (product.display_name)
+                )
 
             line_qty = line.product_uom._compute_quantity(
                 qty=line.product_uom_qty, to_unit=product.uom_id, round=False
@@ -48,14 +47,24 @@ class SaleOrderLine(models.Model):
                 to_unit=uom_kg,
                 round=False,
             )
-            if line.product_id.volume_uom_id.uom_type =="smaller":
-                line_litre = line_qty * line.product_id.volume * line.product_id.volume_uom_id.factor_inv
-            elif line.product_id.volume_uom_id.uom_type =="bigger":
-                line_litre = line_qty * line.product_id.volume * line.product_id.volume_uom_id.factor
+            if line.product_id.volume_uom_id.uom_type == "smaller":
+                line_litre = (
+                    line_qty
+                    * line.product_id.volume
+                    * line.product_id.volume_uom_id.factor_inv
+                )
+            elif line.product_id.volume_uom_id.uom_type == "bigger":
+                line_litre = (
+                    line_qty
+                    * line.product_id.volume
+                    * line.product_id.volume_uom_id.factor
+                )
             else:
                 line_litre = line_qty * line.product_id.volume
 
-            line.deci = (line_litre * 1000.0) / deci_type  # save deci in sale order line
+            line.deci = (
+                line_litre * 1000.0
+            ) / deci_type  # save deci in sale order line
             calculated_deci = max(line_kg, line.deci)
             deci += calculated_deci
             weight += line_kg
