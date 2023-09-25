@@ -30,12 +30,12 @@ class SaleOrderLine(models.Model):
             if not product or line.is_delivery:
                 continue
 
-            if product.type == "product" and (float_is_zero(product.weight, uom_dp)
-                                              or float_is_zero(product.volume, uom_dp)):
+            if product.type == "product" and (
+                float_is_zero(product.weight, uom_dp)
+                or float_is_zero(product.volume, uom_dp)
+            ):
                 raise ValidationError(
-                    _(
-                        "Cannot calculate Deci, Weight or Volume for product %s missing."
-                    )
+                    _("Cannot calculate Deci, Weight or Volume for product %s missing.")
                     % (product.display_name)
                 )
 
@@ -47,14 +47,24 @@ class SaleOrderLine(models.Model):
                 to_unit=uom_kg,
                 round=False,
             )
-            if line.product_id.volume_uom_id.uom_type =="smaller":
-                line_litre = line_qty * line.product_id.volume * line.product_id.volume_uom_id.factor_inv
-            elif line.product_id.volume_uom_id.uom_type =="bigger":
-                line_litre = line_qty * line.product_id.volume * line.product_id.volume_uom_id.factor
+            if line.product_id.volume_uom_id.uom_type == "smaller":
+                line_litre = (
+                    line_qty
+                    * line.product_id.volume
+                    * line.product_id.volume_uom_id.factor_inv
+                )
+            elif line.product_id.volume_uom_id.uom_type == "bigger":
+                line_litre = (
+                    line_qty
+                    * line.product_id.volume
+                    * line.product_id.volume_uom_id.factor
+                )
             else:
                 line_litre = line_qty * line.product_id.volume
 
-            line.deci = (line_litre * 1000.0) / deci_type  # save deci in sale order line
+            line.deci = (
+                line_litre * 1000.0
+            ) / deci_type  # save deci in sale order line
             calculated_deci = max(line_kg, line.deci)
             deci += calculated_deci
             weight += line_kg
