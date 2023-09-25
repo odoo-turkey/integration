@@ -74,26 +74,21 @@ class PostmarkController(http.Controller):
         :param mail_message: mail.message
         :return: bool
         """
-        following_states_for_sale = (
+        following_states = (
             "Delivery",
             "Bounce",
             "SpamComplaint",
             "Open",
             "Click",
         )
-        if mail_message.model != "sale.order":
-            return
-        sale_order = (
-            request.env["sale.order"]
-            .sudo()
-            .search([("id", "=", mail_message.res_id)], limit=1)
-        )
+        related_model = mail_message.model
+        related_record = request.env[related_model].sudo().search([("id", "=", mail_message.res_id)], limit=1)
 
         # Update context for translation
-        lang = sale_order.partner_id.lang
+        lang = related_record.partner_id.lang
         request.env.context = frozendict(request.env.context, lang=lang)
 
-        if sale_order and postmark_api_record_type in following_states_for_sale:
+        if related_model and postmark_api_record_type in following_states:
             chatter_msg = ""
 
             if postmark_api_record_type == "Delivery":
@@ -146,6 +141,6 @@ class PostmarkController(http.Controller):
                     client.get("Name", ""),
                 )
             if chatter_msg:
-                sale_order.message_post(body=chatter_msg, message_type="notification")
+                related_record.message_post(body=chatter_msg, message_type="notification")
 
         return True
