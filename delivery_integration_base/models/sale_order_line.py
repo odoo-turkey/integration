@@ -3,6 +3,7 @@
 from odoo import models, fields, api, _
 from odoo.addons import decimal_precision as dp
 from odoo.tools import float_is_zero
+from odoo.exceptions import ValidationError
 
 
 class SaleOrderLine(models.Model):
@@ -31,14 +32,12 @@ class SaleOrderLine(models.Model):
 
             if product.type == "product" and (float_is_zero(product.weight, uom_dp)
                                               or float_is_zero(product.volume, uom_dp)):
-                continue
-                # Todo: this raise error is not working, need to fix it
-                # raise UserError(
-                #     _(
-                #         "Cannot calculate Deci, Weight and Volume for product %s missing."
-                #     )
-                #     % (product.display_name)
-                # )
+                raise ValidationError(
+                    _(
+                        "Cannot calculate Deci, Weight or Volume for product %s missing."
+                    )
+                    % (product.display_name)
+                )
 
             line_qty = line.product_uom._compute_quantity(
                 qty=line.product_uom_qty, to_unit=product.uom_id, round=False
