@@ -16,10 +16,10 @@ class MailMail(models.Model):
                 related_record = self.env[msg.model].search(
                     [("id", "=", msg.res_id)], limit=1
                 )
-                related_record.message_post(
-                    body=mail.failure_reason, message_type="notification"
-                )
-
+                if related_record:
+                    related_record.message_post(
+                        body=mail.failure_reason, message_type="notification"
+                    )
 
         return super()._postprocess_sent_message(
             success_pids=success_pids,
