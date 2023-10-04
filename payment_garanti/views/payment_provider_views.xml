@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <group name="provider_credentials" position='inside'>
                 <group attrs="{'invisible': [('code', '!=', 'garanti')]}">
+                    <field name="always_pay_with_try"/>
                     <field name="garanti_merchant_id"
                            attrs="{'required':[('code', '=', 'garanti'), ('state', '!=', 'disabled')]}"/>
                     <field name="garanti_terminal_id"/>

@@ -318,8 +318,8 @@ class GarantiConnector:
             message = root.find(".//Transaction/Response/Message").text
             if reason_code != "00" or message != "Approved":
                 return (
-                        _("Payment Error: %s")
-                        % root.find(".//Transaction/Response/ErrorMsg").text
+                    _("Payment Error: %s")
+                    % root.find(".//Transaction/Response/ErrorMsg").text
                 )
             else:
                 return message
