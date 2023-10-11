@@ -6,6 +6,9 @@ from odoo.exceptions import ValidationError
 from odoo.exceptions import UserError
 from odoo.tools import float_is_zero
 from datetime import timedelta, datetime
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class DeliveryCarrier(models.Model):
@@ -136,10 +139,14 @@ class DeliveryCarrier(models.Model):
         )
 
         for picking in pickings:
-            method = "%s_tracking_state_update" % picking.delivery_type
-            if hasattr(picking.carrier_id, method):
-                getattr(picking.carrier_id, method)(picking)
-
+            try:
+                method = "%s_tracking_state_update" % picking.delivery_type
+                if hasattr(picking.carrier_id, method):
+                    getattr(picking.carrier_id, method)(picking)
+            except Exception as exc:
+                _logger.error(
+                    "Error updating picking %s state: %s", picking.name, exc
+                )
     def _sms_notificaton_send(self, picking):
         """
         Send SMS notification to customer
