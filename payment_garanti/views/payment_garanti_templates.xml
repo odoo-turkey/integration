@@ -90,10 +90,16 @@
                 </div>
             </div>
             <div class="col-12 col-lg-4 text-center my-auto">
+                <t t-if="list(filter(lambda lg : lg[0] == lang, languages))[0][0] == 'tr_TR'">
                     <img class="img-fluid w-50 w-lg-75"
                          src="/payment_garanti/static/img/ssl_256bit.png"/>
                     <img class="img-fluid w-50 w-lg-75"
                          src="/payment_garanti/static/img/secure_payment.png"/>
+                </t>
+                <t t-else="">
+                    <img class="img-fluid w-50 w-lg-75"
+                         src="/payment_garanti/static/img/ssl_secured.png"/>
+                </t>
             </div>
         </div>
         <div class="d-none" id="webform"></div>
