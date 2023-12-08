@@ -36,17 +36,24 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-        """Inherit to check if sender_pays carrier line added to order lines."""
-        for order in self.filtered(lambda so: so.carrier_payment_type == "sender_pays"):
-            if not order.order_line.filtered(
-                    lambda ol: ol.product_id == order.carrier_id.product_id
+        """Inherit to check if sender_pays carrier line added to order lines.
+        We don't want to break workflow of sale confirmation, so we added
+        a context on confirm button to check if carrier line added to order
+        lines.
+        """
+        if self._context.get("check_order_lines_deci"):
+            for order in self.filtered(
+                lambda so: so.carrier_payment_type == "sender_pays"
             ):
-                raise UserError(
-                    _(
-                        "Carrier line is not added to order lines. "
-                        "Please add carrier line to order lines."
+                if not order.order_line.filtered(
+                    lambda ol: ol.product_id == order.carrier_id.product_id
+                ):
+                    raise UserError(
+                        _(
+                            "Carrier line is not added to order lines. "
+                            "Please add carrier line to order lines."
+                        )
                     )
-                )
         return super(SaleOrder, self).action_confirm()
 
     def _create_delivery_line(self, carrier, price_unit):
