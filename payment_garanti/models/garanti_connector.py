@@ -123,6 +123,12 @@ class GarantiConnector:
         )
         return self.tx.garanti_secure3d_hash
 
+    def _garanti_get_partner_lang(self):
+        if self.tx.partner_id.lang and self.tx.partner_id.lang in ["tr_TR", "tr"]:
+            return "tr"
+        else:
+            return "en"
+
     def _garanti_create_payment_vals(self):
         """Create parameters for Garanti Sanal Pos API.
 
@@ -157,7 +163,7 @@ class GarantiConnector:
             "txninstallmentcount": "",  # Taksit yok. Boş olacak.
             "successurl": self.provider._garanti_get_return_url(),
             "errorurl": self.provider._garanti_get_return_url(),
-            "lang": "tr",
+            "lang": self._garanti_get_partner_lang(),
             "txntimestamp": round(time.time() * 1000),
             "txntimeoutperiod": 60,
             "addcampaigninstallment": "N",
