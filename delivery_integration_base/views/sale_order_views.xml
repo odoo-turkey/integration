@@ -5,6 +5,11 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_confirm']" position="attributes">
+                <attribute name="context">{'check_order_lines_deci': 1}</attribute>
+            </xpath>
+
             <button name="action_confirm" position="before">
                 <button name="action_sale_get_rates_wizard"
                         type="object"

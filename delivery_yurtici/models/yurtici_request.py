@@ -87,7 +87,7 @@ class YurticiRequest:
         }
 
     def _process_reply(self, service, vals=None, send_as_kw=False):
-        """Yurtiçi API returns error petitions as server exceptions wich makes zeep to
+        """Yurtiçi API returns error as server exceptions which makes zeep to
         raise a Fault exception as well. To catch the error info we need to make a
         raw_response request and the extract the error codes from the response."""
         try:
@@ -122,7 +122,7 @@ class YurticiRequest:
                     raise Fault(e)
 
         if response.outFlag != "0":
-            raise ValidationError("%s:\n%s" % (response.outResult, response.shippingOrderDetailVO.errMessage))
+            raise ValidationError("%s:\n%s" % (response.outResult, response.shippingOrderDetailVO[0].errMessage))
 
         return response
 
