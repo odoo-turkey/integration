@@ -37,7 +37,7 @@ class SaleOrder(models.Model):
         country_turkey = self.env.ref("base.tr")
         currency_try = self.env.ref("base.TRY")
         for order in self:
-            if self.partner_id.commercial_partner_id.country_id == country_turkey:
+            if order.partner_id.commercial_partner_id.country_id == country_turkey:
                 amount = order.currency_id._convert(
                     order.amount_total,
                     currency_try,
