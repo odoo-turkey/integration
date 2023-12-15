@@ -1,12 +1,12 @@
 # Payment Moka
-![Moka](./static/description/icon.png)
+![Moka](static/description/icon.png)
 
 Odoo 16 için Moka sanal pos entegrasyonu. Sadece 3D secure ile çalışır.
 https://developer.moka.com/home.php?page=MP-3dli-odeme dokümantasyonu referans alınarak geliştirilmiştir.
 
 
 
-![Payment Form](./static/img/demo.png)
+![Payment Form](static/img/demo.png)
 
 
 ### Kurulum:
