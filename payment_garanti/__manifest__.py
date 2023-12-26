@@ -22,7 +22,7 @@
     ],
     'assets': {
         'web.assets_frontend': [
-            '../../../../v12/addons/payment_garanti/static/src/js/payment_form.js',
+            'payment_garanti/static/src/js/payment_form.js',
         ],
     },
     'application': True,

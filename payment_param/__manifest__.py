@@ -21,7 +21,7 @@
     ],
     "assets": {
         "web.assets_frontend": [
-            "static/src/js/payment_form.js",
+            "payment_param/static/src/js/payment_form.js",
         ],
     },
     "application": True,

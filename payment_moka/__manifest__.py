@@ -20,7 +20,7 @@
     ],
     'assets': {
         'web.assets_frontend': [
-            'static/src/js/payment_form.js',
+            'payment_moka/static/src/js/payment_form.js',
         ],
     },
     'application': True,

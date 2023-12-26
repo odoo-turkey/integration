@@ -1,11 +1,11 @@
 # Payment Garanti
-![Garanti](static/description/icon.png)
+![Garanti](./static/description/icon.png)
 
 Odoo 16 için Garanti sanal pos entegrasyonu. Sadece 3D secure ile çalışır.
 
 
 
-![Payment Form](static/img/demo.png)
+![Payment Form](./static/img/demo.png)
 
 
 ### Kurulum:

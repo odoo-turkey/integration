@@ -11,7 +11,7 @@
                ])]"/>
         <field name="image_128"
                type="base64"
-               file="../static/description/icon.png"/>
+               file="payment_moka/static/description/icon.png"/>
         <field name="code">moka</field>
         <field name="inline_form_view_id" ref="inline_form"/>
     </record>
