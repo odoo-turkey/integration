@@ -60,8 +60,36 @@
                                         </h6>
                                     </label>
                                     <div class="input-group">
-                                        <input type="text" name="cc_expiry" id="cc_expiry" class="form-control"
-                                               maxlength="7" placeholder="Expires (MM / YY)" data-is-required="true"/>
+                                        <select name="cc_expiry_month"
+                                                id="cc_expiry_month"
+                                                t-attf-class="form-control"
+                                                data-is-required="true">
+                                            <option value=""
+                                                    disabled="disabled"
+                                                    selected="selected">Month
+                                            </option>
+                                            <t t-foreach="range(1, 13)"
+                                               t-as="r">
+                                                <option t-att-value="r">
+                                                    <t t-esc="('%s' % r).zfill(2)"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                        <select name="cc_expiry_year"
+                                                id="cc_expiry_year"
+                                                t-attf-class="form-control"
+                                                data-is-required="true">
+                                            <option value=""
+                                                    disabled="disabled"
+                                                    selected="selected">Year
+                                            </option>
+                                            <t t-foreach="range(datetime.date.today().year-1, datetime.date.today().year+13)"
+                                               t-as="r">
+                                                <option t-att-value="r">
+                                                    <t t-esc="r"/>
+                                                </option>
+                                            </t>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
