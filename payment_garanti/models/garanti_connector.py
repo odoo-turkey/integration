@@ -144,7 +144,7 @@ class GarantiConnector:
                 self.card_args.get("card_number")
             ),
             "cardexpiredatemonth": self.card_args.get("card_valid_month"),
-            "cardexpiredateyear": self.card_args.get("card_valid_year"),
+            "cardexpiredateyear": self.card_args.get("card_valid_year").replace("20", ""),
             "cardcvv2": self.card_args.get("card_cvv"),
             "companyname": self.provider._garanti_get_company_name(),
             "apiversion": "12",
