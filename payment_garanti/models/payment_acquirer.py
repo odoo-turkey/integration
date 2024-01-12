@@ -4,7 +4,12 @@ import logging
 from odoo import _, fields, models, api
 from odoo.exceptions import ValidationError
 from .garanti_connector import GarantiConnector
-from odoo.addons.payment_garanti.const import TEST_URL, PROD_URL, CURRENCY_CODES
+from odoo.addons.payment_garanti.const import (
+    TEST_URL,
+    PROD_URL,
+    PROVISION_URL,
+    CURRENCY_CODES,
+)
 
 _logger = logging.getLogger(__name__)
 
@@ -77,6 +82,14 @@ class PaymentAcquirerGaranti(models.Model):
             return PROD_URL
         else:
             return TEST_URL
+
+    def _garanti_get_prov_url(self):
+        """
+        This method is used to get the provision url
+        :return: The provision url
+        """
+        self.ensure_one()
+        return PROVISION_URL
 
     def _garanti_get_mode(self):
         """

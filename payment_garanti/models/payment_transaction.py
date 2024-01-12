@@ -25,6 +25,53 @@ class PaymentTransaction(models.Model):
 
     garanti_xid = fields.Char(string="Garanti XID", readonly=True, copy=False)
 
+    def action_query_transaction(self):
+        """
+        This method is used to query a transaction.
+
+        Firstly, we are checking exist any done transaction with the same reference.
+        If there is any error on the query, we are setting the transaction to cancel.
+        This means that the transaction probably is not created in the bank side.
+
+        :return: True if the transaction is successfully queried and processed, False otherwise.
+        """
+        self.ensure_one()
+        if self.acquirer_id.provider != "garanti":
+            return False
+
+        previous_done_tx = self.search(
+            [
+                ("reference", "=like", self.reference.split("-")[0] + "%"),
+                ("state", "=", "done"),
+                ("partner_id", "=", self.partner_id.id),
+            ]
+        )
+        # If we find any done transaction, just set the current transaction
+        # to done without creating a payment record
+        if previous_done_tx:
+            self._set_transaction_done()
+            return True
+
+        connector = GarantiConnector(
+            acquirer=self.acquirer_id,
+            tx=self,
+            amount=self.amount,
+        )
+        try:
+            res = connector._garanti_query_transaction()
+        except:
+            self._set_transaction_cancel()
+            return False
+
+        # If the transaction is approved in the bank side, we set the transaction to done
+        if res and self.state not in ("done", "cancel"):
+            self._set_transaction_done()
+            self._post_process_after_done()
+            return True
+        else:
+            self._set_transaction_error(_("Payment Error"))
+            return False
+
     def _garanti_form_get_tx_from_data(self, data):
         """Given a data dict coming from garanti, verify it and find the related
         transaction record."""
