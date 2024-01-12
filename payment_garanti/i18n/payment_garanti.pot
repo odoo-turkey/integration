@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-05 07:24+0000\n"
-"PO-Revision-Date: 2024-01-05 07:24+0000\n"
+"POT-Creation-Date: 2024-01-12 09:03+0000\n"
+"PO-Revision-Date: 2024-01-12 09:03+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -136,7 +136,7 @@ msgid "CVV\n"
 msgstr ""
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_acquirer.py:168
+#: code:addons/payment_garanti/models/payment_acquirer.py:181
 #, python-format
 msgid "Card CVV is not valid.\n"
 ""
@@ -148,14 +148,14 @@ msgid "Card Owner"
 msgstr ""
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_acquirer.py:176
+#: code:addons/payment_garanti/models/payment_acquirer.py:189
 #, python-format
 msgid "Card expiration date is not valid.\n"
 ""
 msgstr ""
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_acquirer.py:171
+#: code:addons/payment_garanti/models/payment_acquirer.py:184
 #, python-format
 msgid "Card name is not valid.\n"
 ""
@@ -167,13 +167,13 @@ msgid "Card number"
 msgstr ""
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_acquirer.py:119
+#: code:addons/payment_garanti/models/payment_acquirer.py:132
 #, python-format
 msgid "Card number is not valid."
 msgstr ""
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_acquirer.py:165
+#: code:addons/payment_garanti/models/payment_acquirer.py:178
 #, python-format
 msgid "Card number is not valid.\n"
 ""
@@ -230,6 +230,11 @@ msgid "Garanti XID"
 msgstr ""
 
 #. module: payment_garanti
+#: model_terms:ir.ui.view,arch_db:payment_garanti.payment_transaction_garanti_inherit
+msgid "Garanti:    Query Status"
+msgstr ""
+
+#. module: payment_garanti
 #: code:addons/payment_garanti/controllers/main.py:57
 #: code:addons/payment_garanti/controllers/main.py:61
 #, python-format
@@ -262,52 +267,54 @@ msgid "Payment Acquirer"
 msgstr ""
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_transaction.py:89
+#: code:addons/payment_garanti/models/payment_transaction.py:72
+#: code:addons/payment_garanti/models/payment_transaction.py:136
 #, python-format
 msgid "Payment Error"
 msgstr ""
 
 #. module: payment_garanti
 #: code:addons/payment_garanti/controllers/main.py:91
-#: code:addons/payment_garanti/models/payment_transaction.py:76
-#: code:addons/payment_garanti/models/payment_transaction.py:96
+#: code:addons/payment_garanti/models/payment_transaction.py:123
+#: code:addons/payment_garanti/models/payment_transaction.py:143
 #, python-format
 msgid "Payment Error: "
 msgstr ""
 
 #. module: payment_garanti
 #: code:addons/payment_garanti/models/garanti_connector.py:64
-#: code:addons/payment_garanti/models/garanti_connector.py:346
+#: code:addons/payment_garanti/models/garanti_connector.py:348
 #, python-format
 msgid "Payment Error: %s"
 msgstr ""
 
 #. module: payment_garanti
 #: code:addons/payment_garanti/models/garanti_connector.py:88
+#: code:addons/payment_garanti/models/garanti_connector.py:411
 #, python-format
 msgid "Payment Error: An error occurred. Please try again."
 msgstr ""
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/garanti_connector.py:338
+#: code:addons/payment_garanti/models/garanti_connector.py:340
 #, python-format
 msgid "Payment Error: Error. Please try again."
 msgstr ""
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_transaction.py:52
+#: code:addons/payment_garanti/models/payment_transaction.py:99
 #, python-format
 msgid "Payment Error: No transaction found matching reference %s."
 msgstr ""
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_transaction.py:39
+#: code:addons/payment_garanti/models/payment_transaction.py:86
 #, python-format
 msgid "Payment Error: Received data with missing ref."
 msgstr ""
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/garanti_connector.py:352
+#: code:addons/payment_garanti/models/garanti_connector.py:354
 #, python-format
 msgid "Payment Error: Timeout. Please try again."
 msgstr ""
@@ -354,7 +361,7 @@ msgid "Provision User provided by Garanti Sanal Pos"
 msgstr ""
 
 #. module: payment_garanti
-#: code:addons/payment_garanti/models/payment_transaction.py:34
+#: code:addons/payment_garanti/models/payment_transaction.py:81
 #, python-format
 msgid "Received data with missing transaction code."
 msgstr ""

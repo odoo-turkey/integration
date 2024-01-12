@@ -144,7 +144,9 @@ class GarantiConnector:
                 self.card_args.get("card_number")
             ),
             "cardexpiredatemonth": self.card_args.get("card_valid_month"),
-            "cardexpiredateyear": self.card_args.get("card_valid_year").replace("20", ""),
+            "cardexpiredateyear": self.card_args.get("card_valid_year").replace(
+                "20", ""
+            ),
             "cardcvv2": self.card_args.get("card_cvv"),
             "companyname": self.provider._garanti_get_company_name(),
             "apiversion": "12",
@@ -350,3 +352,68 @@ class GarantiConnector:
                 return message
         except Exception:  # pylint: disable=broad-except
             return _("Payment Error: Timeout. Please try again.")
+
+    def _garanti_create_query_transaction_vals(self):
+        """Create Provision XML for Garanti Sanal Pos API.
+
+        :return: XML string
+        """
+        gvps_request = etree.Element("GVPSRequest")
+
+        mode = etree.SubElement(gvps_request, "Mode")
+        mode.text = self.provider._garanti_get_mode()
+
+        version = etree.SubElement(gvps_request, "Version")
+        version.text = "16"
+
+        channel_code = etree.SubElement(gvps_request, "ChannelCode")
+        channel_code.text = ""
+
+        self._garanti_terminal_node(gvps_request)
+        self._garanti_customer_node(gvps_request)
+        self._garanti_card_node(gvps_request)
+        self._garanti_order_node(gvps_request)
+        self._garanti_transaction_node(gvps_request)
+
+        return etree.tostring(
+            gvps_request, encoding="UTF-8", xml_declaration=True, pretty_print=True
+        )
+
+    def _garanti_query_transaction(self):
+        """Send query transaction to Garanti Sanal Pos API.
+
+        :return: Response
+        """
+        self.notification_data = {
+            "oid": self.reference,
+            "clientid": self.provider.garanti_terminal_id,
+            "txnamount": str(self.amount),
+            "txncurrencycode": self.provider._garanti_get_currency_code(
+                self.currency_id, self.tx
+            ),
+            "terminalprovuserid": self.provider.garanti_prov_user,
+            "terminaluserid": self.provider.garanti_terminal_id,
+            "terminalmerchantid": self.provider.garanti_merchant_id,
+            "txntype": "orderhistoryinq",
+            "txninstallmentcount": "",
+            "customeripaddress": "127.0.0.1",
+            "customeremailaddress": self.tx.partner_email,
+        }
+        xml_data = self._garanti_create_query_transaction_vals()
+        try:
+            resp = requests.post(
+                self.provider._garanti_get_prov_url(),
+                data=xml_data.decode("utf-8"),
+                timeout=10,
+            )
+        except requests.RequestException:
+            raise ValidationError(
+                _("Payment Error: An error occurred. Please try again.")
+            )
+        root = etree.fromstring(resp.content)
+        txn_list = root.findall(".//OrderTxnList")
+        # True if any of the transactions is approved
+        if "00" in [x.find(".//ReturnCode").text for x in txn_list]:
+            return True
+        else:
+            return False

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_transaction_garanti_inherit" model="ir.ui.view">
+        <field name="name">Garanti Transaction Form</field>
+        <field name="model">payment.transaction</field>
+        <field name="inherit_id" ref="payment.transaction_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_query_transaction" string="Garanti:    Query Status" type="object"
+                        class="btn btn-primary"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

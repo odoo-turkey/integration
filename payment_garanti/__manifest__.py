@@ -14,6 +14,7 @@
     "depends": ["sale", "payment"],
     "external_dependencies": {"python": ["lxml", "bs4"]},
     "data": [
+        "views/payment_transaction_views.xml",
         "views/assets.xml",
         "views/payment_garanti_templates.xml",
         "views/payment_views.xml",
