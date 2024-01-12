@@ -240,7 +240,7 @@ msgstr ""
 #. module: payment_garanti
 #: model_terms:ir.ui.view,arch_db:payment_garanti.payment_transaction_garanti_inherit
 msgid "Garanti:    Query Status"
-msgstr "Garanti:    Durumu Güncelle"
+msgstr "Garanti:    Durumu Güncelle1"
 
 #. module: payment_garanti
 #: code:addons/payment_garanti/controllers/main.py:57

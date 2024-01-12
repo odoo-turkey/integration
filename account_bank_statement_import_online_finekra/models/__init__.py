@@ -3,3 +3,4 @@
 
 from . import online_bank_statement_provider_finekra
 from . import account_journal
+from . import account_bank_statement_line
