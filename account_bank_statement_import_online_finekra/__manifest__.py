@@ -8,9 +8,10 @@
     "author": "Yiğit Budak, Odoo Turkey Localization Group",
     "license": "AGPL-3",
     "installable": True,
-    "depends": ["account_bank_statement_import_online"],
+    "depends": ["account_bank_statement_import_online", "sale", "sale_confirm_payment"],
     "data": [
         "view/online_bank_statement_provider.xml",
         "view/account_journal.xml",
+        "view/account_bank_statement_view.xml",
     ],
 }

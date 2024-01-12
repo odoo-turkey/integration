@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="bank_statement_form_finekra">
+        <field name="name">account.bank.statement.form.finekra</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='name']" position="after">
+                <field name="order_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
