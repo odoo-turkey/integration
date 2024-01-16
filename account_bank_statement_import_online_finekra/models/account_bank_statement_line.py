@@ -1,6 +1,7 @@
 # Copyright 2024 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 from odoo import models, api, fields
+from odoo.tools import float_compare
 import re
 
 
@@ -36,29 +37,17 @@ class AccountBankStatementLine(models.Model):
             if len(orders) != 1:
                 return res
 
-            # total_order_sum = sum(orders.mapped("amount_total"))
-            # # Amounts are not equal, maybe false positive match
-            # if not (total_order_sum * 0.99 <= res.amount <= total_order_sum * 1.01):
-            #     return res
-
-            if orders.amount_total != res.amount:
+            if float_compare(orders.amount_total, res.amount, 2) != 0:
                 return res
+
+            commercial_partner = orders.mapped("partner_id.commercial_partner_id")
 
             # We can't create payment for multiple partners
-            if len(orders.mapped("partner_id.commercial_partner_id")) > 1:
+            if len(commercial_partner) > 1:
                 return res
 
-            commercial_partner = orders.mapped("partner_id").commercial_partner_id
-
-            if res.amount < 0:
-                credit = 0
-                debit = abs(res.amount)
-            else:
-                credit = res.amount
-                debit = 0
-
             # Only work on positive amounts
-            if credit < 0:
+            if res.amount < 0:
                 return res
 
             data = [
@@ -68,8 +57,8 @@ class AccountBankStatementLine(models.Model):
                         {
                             "account_id": commercial_partner.property_account_receivable_id.id,
                             "analytic_tag_ids": [[6, None, []]],
-                            "credit": credit,
-                            "debit": debit,
+                            "credit": res.amount,
+                            "debit": 0,
                             "name": res.name,
                         }
                     ],
