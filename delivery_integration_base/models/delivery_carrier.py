@@ -213,7 +213,7 @@ class DeliveryCarrier(models.Model):
         weight = res["weight"] * factor
         volume = res["volume"] * factor
         # save deci in sale order
-        order.sale_deci = res["deci"]
+        order.sale_deci = deci
         total = (order.amount_total or 0.0) - res["total_delivery"]
         total = order.currency_id._convert(
             total,
