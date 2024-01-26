@@ -62,10 +62,8 @@ class SaleOrderLine(models.Model):
             else:
                 line_litre = line_qty * line.product_id.volume
 
-            line.deci = (
-                line_litre * 1000.0
-            ) / deci_type  # save deci in sale order line
-            calculated_deci = max(line_kg, line.deci)
+            calculated_deci = max(line_kg, (line_litre * 1000.0) / deci_type)
+            line.deci = calculated_deci
             deci += calculated_deci
             weight += line_kg
             volume += line_litre
