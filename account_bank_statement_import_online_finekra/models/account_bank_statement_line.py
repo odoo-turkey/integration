@@ -58,6 +58,9 @@ class AccountBankStatementLine(models.Model):
                             "account_id": commercial_partner.property_account_receivable_id.id,
                             "analytic_tag_ids": [[6, None, []]],
                             "credit": res.amount,
+                            "company_id": res.company_id.id,
+                            # we are working with credit, so residual amount is negative
+                            "amount_residual": -res.amount,
                             "debit": 0,
                             "name": res.name,
                         }
