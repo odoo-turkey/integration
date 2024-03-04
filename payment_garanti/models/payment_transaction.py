@@ -48,11 +48,11 @@ class PaymentTransaction(models.Model):
         )
         # If we find any done transaction, just set the current transaction
         # to done without creating a payment record
-        if previous_done_tx:
-            self._set_transaction_done()
-            # Set is_processed to True, otherwise Odoo will try to process the transaction again
-            self.is_processed = True
-            return True
+        # if previous_done_tx:
+        #     self._set_transaction_done()
+        #     # Set is_processed to True, otherwise Odoo will try to process the transaction again
+        #     self.is_processed = True
+        #     return True
 
         connector = GarantiConnector(
             acquirer=self.acquirer_id,

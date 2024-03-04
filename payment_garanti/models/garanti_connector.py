@@ -9,6 +9,10 @@ from odoo.addons.payment_garanti.const import PROVISION_URL
 from odoo import _
 import requests
 import time
+import re
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class GarantiConnector:
@@ -20,6 +24,9 @@ class GarantiConnector:
         self.currency_id = self._get_currency_id()
         self.card_args = card_args
         self.client_ip = client_ip
+        self.timeout = 10
+        self._session = requests.Session()
+        self._debug = self.provider.debug_logging
 
     def __repr__(self):
         return "<GarantiConnector: %s>" % self.tx.reference
@@ -47,6 +54,59 @@ class GarantiConnector:
         :return: Currency id
         """
         return self.tx.sale_order_ids.garanti_payment_currency_id.id
+
+    def _process_http_request(self, response):
+        """Log HTTP request if debugging enabled and return response.
+        :param response: Response
+        :return: Boolean
+        """
+        if not self._debug:
+            return True
+
+        def _anonymize_sensitive_data(data):
+            # Find and Replace credit cart number if exists, keep the last 4 digits
+            card_number = re.search(r"\d{16}", data)
+            if card_number:
+                data = data.replace(
+                    card_number.group(), "****" + card_number.group()[-4:]
+                )
+            return data
+
+        def _serialize_request(request):
+            return _anonymize_sensitive_data(
+                "Request: %s %s\n%s\n\n"
+                % (
+                    request.method,
+                    request.url,
+                    request.body,
+                )
+            )
+
+        def _serialize_response(resp):
+            return _anonymize_sensitive_data(
+                "Response: %s\n%s\n\n" % (resp.status_code, resp.text)
+            )
+
+        self.provider.log_xml(_serialize_request(response.request), "garanti_request")
+        self.provider.log_xml(_serialize_response(response), "garanti_response")
+
+        return True
+
+    def _garanti_requests(self, method, url, *args, **kwargs):
+        """
+        Send the request and return the response
+        """
+        with self._session as http_client:
+            response = http_client.request(
+                method=method,
+                url=url,
+                timeout=self.timeout,
+                *args,
+                **kwargs,
+            )
+            response.raise_for_status()
+            self._process_http_request(response)
+            return response
 
     def _garanti_parse_response_html(self, response):
         """Parse response HTML from Garanti Sanal Pos API.
@@ -79,11 +139,14 @@ class GarantiConnector:
         """
         vals = self._garanti_create_payment_vals()
         try:
-            resp = requests.post(
-                self.provider._garanti_get_api_url(), params=vals, timeout=10
+            resp = self._garanti_requests(
+                "POST",
+                self.provider._garanti_get_api_url(),
+                params=vals,
             )
             return self._garanti_parse_response_html(resp)
-        except requests.RequestException:
+        except Exception as e:
+            _logger.error(e)
             raise ValidationError(
                 _("Payment Error: An error occurred. Please try again.")
             )
@@ -333,10 +396,13 @@ class GarantiConnector:
         self.notification_data = notification_data
         xml_data = self._garanti_create_callback_xml()
         try:
-            resp = requests.post(
-                PROVISION_URL, data=xml_data.decode("utf-8"), timeout=10
+            resp = self._garanti_requests(
+                "POST",
+                self.provider._garanti_get_prov_url(),
+                data=xml_data.decode("utf-8"),
             )
-        except requests.RequestException:
+        except Exception as e:
+            _logger.error(e)
             return _("Payment Error: Error. Please try again.")
 
         try:
@@ -401,12 +467,13 @@ class GarantiConnector:
         }
         xml_data = self._garanti_create_query_transaction_vals()
         try:
-            resp = requests.post(
+            resp = self._garanti_requests(
+                "POST",
                 self.provider._garanti_get_prov_url(),
                 data=xml_data.decode("utf-8"),
-                timeout=10,
             )
-        except requests.RequestException:
+        except Exception as e:
+            _logger.error(e)
             raise ValidationError(
                 _("Payment Error: An error occurred. Please try again.")
             )

@@ -21,6 +21,21 @@
                     <field name="payment_flow"/>
                 </group>
             </xpath>
+
+            <!-- Add debug button -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="toggle_debug" type="object" class="oe_stat_button"
+                        icon="fa-code" groups="base.group_no_one"
+                        attrs="{'invisible': [('provider', 'in', ['transfer', 'manual'])]}">
+                    <field name="debug_logging" widget="boolean_button" options='{"terminology": {
+                                    "string_true": "Debug requests",
+                                    "hover_true": "Disable debug",
+                                    "string_false": "No debug",
+                                    "hover_false": "Enable debug"
+                                }}'/>
+                </button>
+            </xpath>
+
         </field>
     </record>
 
