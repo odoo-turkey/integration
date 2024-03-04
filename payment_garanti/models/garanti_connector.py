@@ -104,8 +104,8 @@ class GarantiConnector:
                 *args,
                 **kwargs,
             )
-            response.raise_for_status()
             self._process_http_request(response)
+            response.raise_for_status()
             return response
 
     def _garanti_parse_response_html(self, response):
