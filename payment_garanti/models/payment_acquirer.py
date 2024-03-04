@@ -1,7 +1,9 @@
 # Copyright 2022 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
-from odoo import _, fields, models, api
+import psycopg2
+
+from odoo import api, fields, models, registry, SUPERUSER_ID, _
 from odoo.exceptions import ValidationError
 from .garanti_connector import GarantiConnector
 from odoo.addons.payment_garanti.const import (
@@ -18,6 +20,9 @@ class PaymentAcquirerGaranti(models.Model):
     _inherit = "payment.acquirer"
 
     provider = fields.Selection(selection_add=[("garanti", "Garanti")])
+    debug_logging = fields.Boolean(
+        "Debug logging", help="Log requests in order to ease debugging"
+    )
 
     garanti_merchant_id = fields.Char(
         string="Merchant ID",
@@ -53,6 +58,37 @@ class PaymentAcquirerGaranti(models.Model):
         required_if_provider="garanti",
         groups="base.group_user",
     )
+
+    def toggle_debug(self):
+        for c in self:
+            c.debug_logging = not c.debug_logging
+
+    def log_xml(self, xml_string, func):
+        self.ensure_one()
+
+        if self.debug_logging:
+            db_name = self._cr.dbname
+
+            # Use a new cursor to avoid rollback that could be caused by an upper method
+            try:
+                db_registry = registry(db_name)
+                with db_registry.cursor() as cr:
+                    env = api.Environment(cr, SUPERUSER_ID, {})
+                    IrLogging = env["ir.logging"]
+                    IrLogging.sudo().create(
+                        {
+                            "name": "payment.acquirer",
+                            "type": "server",
+                            "dbname": db_name,
+                            "level": "DEBUG",
+                            "message": xml_string,
+                            "path": self.provider,
+                            "func": func,
+                            "line": 1,
+                        }
+                    )
+            except psycopg2.Error:
+                pass
 
     @api.model
     def garanti_s2s_form_process(self, data):
