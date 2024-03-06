@@ -14,10 +14,12 @@
     "depends": ["sale", "payment"],
     "external_dependencies": {"python": ["lxml", "bs4"]},
     "data": [
+        "security/ir.model.access.csv",
         "views/payment_transaction_views.xml",
         "views/assets.xml",
         "views/payment_garanti_templates.xml",
         "views/payment_views.xml",
+        "views/payment_provider_error_views.xml",
         "templates/result_page.xml",
         "data/payment_acquirer_data.xml",
     ],
