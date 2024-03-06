@@ -66,12 +66,12 @@ class PaymentTransaction(models.Model):
             return False
 
         # If the transaction is approved in the bank side, we set the transaction to done
-        if res and self.state not in ("done", "cancel"):
+        if res and isinstance(res, bool) and self.state not in ("done", "cancel"):
             self._set_transaction_done()
             self._post_process_after_done()
             return True
         else:
-            self._set_transaction_error(_("Payment Error"))
+            self._set_transaction_error(_("Payment Error: %s") % res)
             return False
 
     def _garanti_form_get_tx_from_data(self, data):
@@ -114,6 +114,8 @@ class PaymentTransaction(models.Model):
         """
         if self.acquirer_id.provider != "garanti":
             return
+
+        self.acquirer_id.log_xml(notification_data, "3ds_return")
 
         self.garanti_xid = notification_data.get("xid")
         md_status = notification_data.get("mdstatus")

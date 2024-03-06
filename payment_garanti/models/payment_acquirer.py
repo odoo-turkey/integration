@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
 import psycopg2
-
+import re
 from odoo import api, fields, models, registry, SUPERUSER_ID, _
 from odoo.exceptions import ValidationError
 from .garanti_connector import GarantiConnector
@@ -87,6 +87,26 @@ class PaymentAcquirerGaranti(models.Model):
                             "line": 1,
                         }
                     )
+                    reason_code = re.findall(
+                        r"<ReasonCode>(\d+)</ReasonCode>", xml_string
+                    )
+                    if reason_code:
+                        error_obj = self.env["payment.provider.error"].sudo()
+                        error_message = re.findall(
+                            r"<ErrorMsg>(.*?)</ErrorMsg>", xml_string
+                        )
+                        if error_message and not error_obj.search_read(
+                            [("error_message", "=", error_message[0])], limit=1
+                        ):
+                            error_record = error_obj.create(
+                                {
+                                    "error_code": reason_code[0],
+                                    "error_message": error_message[0],
+                                }
+                            )
+                            error_record._onchange_error_message()
+
+
             except psycopg2.Error:
                 pass
 
