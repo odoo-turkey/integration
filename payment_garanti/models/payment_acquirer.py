@@ -68,7 +68,6 @@ class PaymentAcquirerGaranti(models.Model):
 
         if self.debug_logging:
             db_name = self._cr.dbname
-
             # Use a new cursor to avoid rollback that could be caused by an upper method
             try:
                 db_registry = registry(db_name)
@@ -81,32 +80,48 @@ class PaymentAcquirerGaranti(models.Model):
                             "type": "server",
                             "dbname": db_name,
                             "level": "DEBUG",
-                            "message": xml_string,
+                            "message": str(xml_string),
                             "path": self.provider,
                             "func": func,
                             "line": 1,
                         }
                     )
-                    reason_code = re.findall(
-                        r"<ReasonCode>(\d+)</ReasonCode>", xml_string
-                    )
-                    if reason_code:
-                        error_obj = self.env["payment.provider.error"].sudo()
-                        error_message = re.findall(
+                    """
+                    Save the error message to the database, so we can handle
+                    the error message better.
+                    """
+                    error_obj = self.env["payment.provider.error"].sudo()
+                    error_code = False
+                    error_message = False
+                    # It means that the request has been made by return endpoint
+                    if isinstance(xml_string, dict):
+                        error_code = xml_string.get("mdstatus", False)
+                        error_message = xml_string.get("mderrormessage", False)
+                    else:
+                        reason_code = re.findall(
+                            r"<ReasonCode>(\d+)</ReasonCode>", xml_string
+                        )
+                        xml_msg = re.findall(
                             r"<ErrorMsg>(.*?)</ErrorMsg>", xml_string
                         )
-                        if error_message and not error_obj.search_read(
-                            [("error_message", "=", error_message[0])], limit=1
-                        ):
-                            error_record = error_obj.create(
-                                {
-                                    "error_code": reason_code[0],
-                                    "error_message": error_message[0],
-                                }
-                            )
-                            error_record._onchange_error_message()
+                        if reason_code and xml_msg:
+                            error_code = reason_code[0]
+                            error_message = xml_msg[0]
 
-
+                    if (
+                        error_code
+                        and error_message
+                        and not error_obj.search_read(
+                            [("error_message", "=", error_message)], limit=1
+                        )
+                    ):
+                        error_record = error_obj.create(
+                            {
+                                "error_code": error_code,
+                                "error_message": error_message,
+                            }
+                        )
+                        error_record._onchange_error_message()
             except psycopg2.Error:
                 pass
 

@@ -71,7 +71,7 @@ class PaymentTransaction(models.Model):
             self._post_process_after_done()
             return True
         else:
-            self._set_transaction_error(_("Payment Error: %s") % res)
+            self._set_transaction_error(res)
             return False
 
     def _garanti_form_get_tx_from_data(self, data):
@@ -113,7 +113,7 @@ class PaymentTransaction(models.Model):
         :raise: ValidationError if inconsistent data were received
         """
         if self.acquirer_id.provider != "garanti":
-            return
+            return self
 
         self.acquirer_id.log_xml(notification_data, "3ds_return")
 
@@ -121,10 +121,7 @@ class PaymentTransaction(models.Model):
         md_status = notification_data.get("mdstatus")
         error_msg = notification_data.get("mderrormessage")
         if md_status != "1":
-            _logger.warning(
-                "Transaction %s is not authorized: %s", self.reference, error_msg
-            )
-            self._set_transaction_error(_("Payment Error: ") + error_msg)
+            self._set_transaction_error(error_msg)
         else:
             connector = GarantiConnector(
                 acquirer=self.acquirer_id,
@@ -137,13 +134,8 @@ class PaymentTransaction(models.Model):
                     self._set_transaction_done()
                     self._post_process_after_done()
                 else:
-                    self._set_transaction_error(_("Payment Error") + res)
+                    self._set_transaction_error(res)
             except Exception as e:
-                _logger.warning(
-                    "Garanti payment callback error: %s, data: %s",
-                    (e, notification_data),
-                    exc_info=True,
-                )
-                self._set_transaction_error(_("Payment Error: ") + e)
+                self._set_transaction_error(_("Payment Error. Please contact us."))
 
         return self  # for the controller

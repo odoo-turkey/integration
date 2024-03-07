@@ -35,7 +35,7 @@ class GarantiController(http.Controller):
         acq = (
             request.env["payment.acquirer"]
             .sudo()
-            .with_context(lang=order_sudo.partner_id.lang or 'tr_TR')
+            .with_context(lang=order_sudo.partner_id.lang or "tr_TR")
             .browse(int(kwargs.get("acquirer_id")))
         )
         # Validate the card data
@@ -87,9 +87,7 @@ class GarantiController(http.Controller):
                 tx_sudo, amount, card_args, client_ip
             )
         except Exception as e:
-            _logger.exception("Garanti: error when sending payment request: %s", str(e))
-            tx_sudo._set_transaction_error(_("Payment Error: ") + e)
-            raise e
+            tx_sudo._set_transaction_error(_("Payment Error. Please contact us."))
         # Save the transaction in the session
         PaymentProcessing.add_payment_transaction(tx_sudo)
         return response_content
@@ -107,12 +105,6 @@ class GarantiController(http.Controller):
         Handle the return from the 3DS authentication.
         notification_data is a dict coming from Garanti.
         """
-        # handle the response
-        # Careful about the log here, it can contain sensitive information
-        # _logger.debug(
-        #     "Garanti 3DS auth return received: return_from_3ds_auth: kwargs=%s",
-        #     pprint.pformat(kwargs),
-        # )
         try:
             tx = (
                 request.env["payment.transaction"]
@@ -121,10 +113,15 @@ class GarantiController(http.Controller):
             )
             if not tx.sale_order_ids:
                 raise ValidationError(_("Transaction not completed"))
-        except:
-            return _(
-                "An error occurred while processing your payment. Please contact us."
-            )
+        except Exception as e:
+            if kwargs.get("orderid"):
+                order = request.env["sale.order"].sudo().search(
+                    [("name", "=", kwargs.get("orderid"))]
+                )
+                if order:
+                    return redirect(order.get_portal_url())
+
+            return _("An error occurred. Please contact the administrator.")
 
         # Redirect the user to the status page
         order = fields.first(tx.sale_order_ids)

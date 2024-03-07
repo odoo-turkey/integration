@@ -146,7 +146,6 @@ class GarantiConnector:
             )
             return self._garanti_parse_response_html(resp)
         except Exception as e:
-            _logger.error(e)
             raise ValidationError(
                 _("Payment Error: An error occurred. Please try again.")
             )
@@ -402,22 +401,18 @@ class GarantiConnector:
                 data=xml_data.decode("utf-8"),
             )
         except Exception as e:
-            _logger.error(e)
-            return _("Payment Error: Error. Please try again.")
+            return _("Payment Error: Please try again.")
 
         try:
             root = etree.fromstring(resp.content)
             reason_code = root.find(".//Transaction/Response/ReasonCode").text
             message = root.find(".//Transaction/Response/Message").text
             if reason_code != "00" or message != "Approved":
-                return (
-                    _("Payment Error: %s")
-                    % root.find(".//Transaction/Response/ErrorMsg").text
-                )
+                return root.find(".//Transaction/Response/ErrorMsg").text
             else:
                 return message
         except Exception:  # pylint: disable=broad-except
-            return _("Payment Error: Timeout. Please try again.")
+            return _("Payment Error: Please try again.")
 
     def _garanti_create_query_transaction_vals(self):
         """Create Provision XML for Garanti Sanal Pos API.
@@ -473,7 +468,6 @@ class GarantiConnector:
                 data=xml_data.decode("utf-8"),
             )
         except Exception as e:
-            _logger.error(e)
             raise ValidationError(
                 _("Payment Error: An error occurred. Please try again.")
             )
