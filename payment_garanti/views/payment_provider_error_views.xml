@@ -20,6 +20,8 @@
                         <group>
                             <field name="error_code"/>
                             <field name="error_message"/>
+                            <field name="sys_error_message"/>
+                            <field name="log_id" />
                             <field name="modified_error_message"/>
                         </group>
                     </sheet>

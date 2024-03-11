@@ -9,6 +9,8 @@ class PaymentProviderError(models.Model):
 
     error_code = fields.Char(string="Error Code", required=True)
     error_message = fields.Text(string="Error Message", required=True)
+    sys_error_message = fields.Text("System Error Message")
+    log_id = fields.Many2one("ir.logging", string="Log")
     modified_error_message = fields.Text("Modified Error Message", translate=True)
 
     @api.onchange("error_message")
