@@ -21,12 +21,12 @@ Odoo 16 için Garanti sanal pos entegrasyonu. Sadece 3D secure ile çalışır.
 -   beautifulsoup4
 
 ### Notlar:
-
-Bu modül henüz geliştirilme aşamasındadır. Odoo 16.0 temel alınarak tasarlanmıştır.
+Modül içerisinde bir hata ayıklama özelliği bulunmaktadır. Hata ayıklamayı aktif ederseniz Garanti tarafından gelen hataları veritabanına saklayabilirsiniz.
+Bu modül henüz geliştirilme aşamasındadır. Odoo 12.0 temel alınarak tasarlanmıştır.
 
 ### Geliştirici:
 
- -  [Yiğit Budak](https://github.com/yibudak)
+ -  [Ahmet Yiğit Budak](https://github.com/yibudak)
 
 
 ### Odoo Türkiye yerelleştirme projemize katkılarınızı bekliyoruz.

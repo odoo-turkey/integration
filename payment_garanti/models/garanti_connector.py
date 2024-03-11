@@ -40,6 +40,13 @@ class GarantiConnector:
         """
         return self.tx.reference.split("-")[0]
 
+    def _get_partner_email(self):
+        """
+        Only first email will be used.
+        :return:
+        """
+        return self.tx.partner_email.split(",")[0]
+
     def _get_amount(self, amount):
         """Get amount in kuruş.
         Note: convert turkish partner's amount to turkish lira always.
@@ -218,7 +225,7 @@ class GarantiConnector:
             "terminalid": self.provider.garanti_terminal_id,
             "terminalmerchantid": self.provider.garanti_merchant_id,
             "orderid": self.reference,
-            "customeremailaddress": self.tx.partner_email,
+            "customeremailaddress": self._get_partner_email(),
             "customeripaddress": self.client_ip,
             "txnamount": str(self.amount),
             "txncurrencycode": self.provider._garanti_get_currency_code(
@@ -458,7 +465,7 @@ class GarantiConnector:
             "txntype": "orderhistoryinq",
             "txninstallmentcount": "",
             "customeripaddress": "127.0.0.1",
-            "customeremailaddress": self.tx.partner_email,
+            "customeremailaddress": self._get_partner_email(),
         }
         xml_data = self._garanti_create_query_transaction_vals()
         try:

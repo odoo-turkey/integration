@@ -25,6 +25,30 @@ class PaymentTransaction(models.Model):
 
     garanti_xid = fields.Char(string="Garanti XID", readonly=True, copy=False)
 
+    @api.multi
+    def _set_transaction_error(self, msg):
+        """
+        This method is used to override default error message with the modified one.
+        :param msg:
+        :return:
+        """
+        res = super(PaymentTransaction, self)._set_transaction_error(msg)
+        error_txs = self.filtered(
+            lambda t: t.acquirer_id.provider == "garanti" and t.state == "error"
+        )
+        if error_txs:
+            error_message = (
+                self.env["payment.provider.error"]
+                .sudo()
+                .search([("error_message", "=", msg)], limit=1)
+            )
+            if error_message and error_message.modified_error_message:
+                for tx in error_txs:
+                    tx.state_message = error_message.with_context(
+                        lang=tx.partner_id.lang or "tr_TR"
+                    ).modified_error_message
+        return res
+
     def action_query_transaction(self):
         """
         This method is used to query a transaction.

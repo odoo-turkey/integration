@@ -74,7 +74,7 @@ class PaymentAcquirerGaranti(models.Model):
                 with db_registry.cursor() as cr:
                     env = api.Environment(cr, SUPERUSER_ID, {})
                     IrLogging = env["ir.logging"]
-                    IrLogging.sudo().create(
+                    created_log = IrLogging.sudo().create(
                         {
                             "name": "payment.acquirer",
                             "type": "server",
@@ -90,9 +90,10 @@ class PaymentAcquirerGaranti(models.Model):
                     Save the error message to the database, so we can handle
                     the error message better.
                     """
-                    error_obj = self.env["payment.provider.error"].sudo()
+                    error_obj = env["payment.provider.error"].sudo()
                     error_code = False
                     error_message = False
+                    sys_error_message = False
                     # It means that the request has been made by return endpoint
                     if isinstance(xml_string, dict):
                         error_code = xml_string.get("mdstatus", False)
@@ -101,12 +102,15 @@ class PaymentAcquirerGaranti(models.Model):
                         reason_code = re.findall(
                             r"<ReasonCode>(\d+)</ReasonCode>", xml_string
                         )
-                        xml_msg = re.findall(
-                            r"<ErrorMsg>(.*?)</ErrorMsg>", xml_string
+                        xml_msg = re.findall(r"<ErrorMsg>(.*?)</ErrorMsg>", xml_string)
+                        sys_error_msg = re.findall(
+                            r"<SysErrMsg>(.*?)</SysErrMsg>", xml_string
                         )
                         if reason_code and xml_msg:
                             error_code = reason_code[0]
                             error_message = xml_msg[0]
+                            if sys_error_msg:
+                                sys_error_message = sys_error_msg[0]
 
                     if (
                         error_code
@@ -118,7 +122,9 @@ class PaymentAcquirerGaranti(models.Model):
                         error_record = error_obj.create(
                             {
                                 "error_code": error_code,
+                                "sys_error_message": sys_error_message,
                                 "error_message": error_message,
+                                "log_id": created_log.id,
                             }
                         )
                         error_record._onchange_error_message()
@@ -135,7 +141,6 @@ class PaymentAcquirerGaranti(models.Model):
             "cc_brand": data.get("cc_brand"),
             "acquirer_id": int(data.get("acquirer_id")),
             "partner_id": int(data.get("partner_id")),
-            "acquirer_ref": "denemedir",  # todo: remove
         }
         payment_method = self.env["payment.token"].sudo().create(values)
         return payment_method
