@@ -59,7 +59,7 @@ class SaleOrder(models.Model):
     def _create_delivery_line(self, carrier, price_unit):
         """Inherit to change delivery line name."""
         res = super(SaleOrder, self)._create_delivery_line(carrier, price_unit)
-        if res and res.name:
+        if res and res.name and res.order_id.carrier_id:
             res.name = res.order_id.carrier_id.product_id.display_name
         # To update discount
         res.with_context({"sale_id": res.order_id.id})._onchange_discount()
