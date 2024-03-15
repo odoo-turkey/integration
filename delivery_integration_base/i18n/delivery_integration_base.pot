@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-22 14:44+0000\n"
-"PO-Revision-Date: 2023-09-22 14:44+0000\n"
+"POT-Creation-Date: 2024-03-15 11:40+0000\n"
+"PO-Revision-Date: 2024-03-15 11:40+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,12 +21,7 @@ msgid "${(object.name or '').replace('/','_')}"
 msgstr ""
 
 #. module: delivery_integration_base
-#: model:mail.template,subject:delivery_integration_base.delivery_mail_template
-msgid "${object.company_id.name|safe} Sevk (Ref ${object.sale_id.client_order_ref or ''} ${object.sale_id.name or '/'})"
-msgstr ""
-
-#. module: delivery_integration_base
-#: code:addons/delivery_integration_base/models/stock_picking.py:99
+#: code:addons/delivery_integration_base/models/stock_picking.py:151
 #, python-format
 msgid "%s etiket"
 msgstr ""
@@ -48,7 +43,12 @@ msgstr ""
 
 #. module: delivery_integration_base
 #: model:mail.template,body_html:delivery_integration_base.delivery_mail_template
-msgid "<p style=\"margin-right: 0px; margin-left: 0px; font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Merhaba,</p><p style=\"margin-right: 0px; margin-left: 0px; font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\"><br><span style=\"font-style: initial; font-variant-ligatures: initial; font-variant-caps: initial; font-weight: initial; text-align: inherit;\">${object.sale_id.client_order_ref or ''}&nbsp;</span>${object.sale_id.name or ''} referans numaralı siparişiniz kargoya verilmiştir.</p><p style=\"margin-right: 0px; margin-left: 0px; font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Teslimat Yöntemi: ${object.carrier_id.display_name or ''}</p><p style=\"margin-right: 0px; margin-left: 0px; font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Takip No:&nbsp;<span style=\"font-style: initial; font-variant-ligatures: initial; font-variant-caps: initial; font-weight: initial; text-align: inherit;\">${object.shipping_number or ''}</span><br></p><p style=\"margin-right: 0px; margin-left: 0px; font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">${'Takip için: %s' % object.carrier_tracking_url if object.carrier_tracking_url else ''}<br></p><p style=\"margin-right: 0px; margin-left: 0px; font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\"><br></p><p style=\"margin-right: 0px; margin-left: 0px; font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Altınkaya Elektronik Cihaz Kutuları</p>"
+msgid "<p></p><p>Hello,</p><p><br><span style=\"font-style: initial; font-variant-ligatures: initial; font-variant-caps: initial; font-weight: initial; text-align: inherit;\">Your order with reference number </span>${object.sale_id.client_order_ref or ''} ${object.sale_id.name or ''} has been shipped.</p><p>Shipping Method: ${object.carrier_id.display_name or ''}</p><p>Tracking Number:&nbsp;<span style=\"font-style: initial; font-variant-ligatures: initial; font-variant-caps: initial; font-weight: initial; text-align: inherit;\">${object.shipping_number or ''}</span><br></p><p>Tracking Link: <a href=\"${object.carrier_tracking_url or ''}\" style=\"color:rgb(77, 119, 143);\">${object.carrier_tracking_url or ''}</a></p><p><br></p><p>ALTINKAYA Enclosure for Electronics</p>\n"
+"% if object.sale_id :\n"
+"<p>You can rate your customer experience via following link.</p><a href=\"${object.sale_id.survey_url}\" style=\"color:rgb(77, 119, 143);background-color:#875A7B; padding:8px 16px 8px 16px; color:#fff; border-radius:5px; font-size:13px\">Rate Your Experience</a>\n"
+"% endif\n"
+"<br>\n"
+"<br>"
 msgstr ""
 
 #. module: delivery_integration_base
@@ -64,14 +64,19 @@ msgid "<span class=\"text-muted\" attrs=\"{'invisible': [('variable', '!=', 'dec
 msgstr ""
 
 #. module: delivery_integration_base
-#: code:addons/delivery_integration_base/models/delivery_carrier.py:167
+#: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_sale_get_rates_wizard
+msgid "<span>Calculated Sale Deci: </span>"
+msgstr ""
+
+#. module: delivery_integration_base
+#: code:addons/delivery_integration_base/models/delivery_carrier.py:174
 #, python-format
 msgid "<span>SMS notification sent to %s</span><br><span>Message:%s</span>"
 msgstr ""
 
 #. module: delivery_integration_base
-#: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_sale_get_rates_wizard
-msgid "<span>Sale Deci: </span>"
+#: model:mail.template,subject:delivery_integration_base.delivery_mail_template
+msgid "ALTINKAYA Shipment Information (Ref ${object.sale_id.client_order_ref or ''} ${object.sale_id.name or '/'})"
 msgstr ""
 
 #. module: delivery_integration_base
@@ -101,6 +106,12 @@ msgid "Cancel"
 msgstr ""
 
 #. module: delivery_integration_base
+#: code:addons/delivery_integration_base/models/sale_order_line.py:38
+#, python-format
+msgid "Cannot calculate Deci, Weight or Volume for product %s missing."
+msgstr ""
+
+#. module: delivery_integration_base
 #: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_carrier_picking_withcarrier_out_form
 msgid "Cargo Label"
 msgstr ""
@@ -112,8 +123,8 @@ msgid "Carrier"
 msgstr ""
 
 #. module: delivery_integration_base
-#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__carrier_currency_id
-#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__carrier_currency_id
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__shipping_currency_id
+#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__shipping_currency_id
 msgid "Carrier Currency"
 msgstr ""
 
@@ -123,10 +134,15 @@ msgid "Carrier Payment Type"
 msgstr ""
 
 #. module: delivery_integration_base
-#: code:addons/delivery_integration_base/models/sale_order.py:72
+#: code:addons/delivery_integration_base/models/sale_order.py:79
 #: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_sale_get_rates_wizard
 #, python-format
 msgid "Carrier Rates"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__carrier_shipping_cost
+msgid "Carrier Shipping Cost"
 msgstr ""
 
 #. module: delivery_integration_base
@@ -135,9 +151,14 @@ msgid "Carrier Total Deci"
 msgstr ""
 
 #. module: delivery_integration_base
-#: code:addons/delivery_integration_base/models/sale_order.py:45
+#: code:addons/delivery_integration_base/models/sale_order.py:52
 #, python-format
 msgid "Carrier line is not added to order lines. Please add carrier line to order lines."
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__carrier_shipping_cost
+msgid "Carrier shipping cost"
 msgstr ""
 
 #. module: delivery_integration_base
@@ -243,11 +264,22 @@ msgid "Delivery regions for price calculation"
 msgstr ""
 
 #. module: delivery_integration_base
+#: model:ir.actions.act_window,name:delivery_integration_base.action_stock_picking_dispatched_deliveries
+#: model:ir.ui.menu,name:delivery_integration_base.stock_picking_dispatched_deliveries_menu
+msgid "Dispatched Deliveries"
+msgstr ""
+
+#. module: delivery_integration_base
 #: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier_lines__display_name
 #: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_region__display_name
 #: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_send_batch_email__display_name
 #: model:ir.model.fields,field_description:delivery_integration_base.field_sale_get_rates_wizard__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__picking_total_deci
+msgid "Dynamic Total Deci, calculated based on the move lines."
 msgstr ""
 
 #. module: delivery_integration_base
@@ -338,19 +370,19 @@ msgid "Main Price"
 msgstr ""
 
 #. module: delivery_integration_base
-#: code:addons/delivery_integration_base/models/delivery_carrier.py:114
+#: code:addons/delivery_integration_base/models/delivery_carrier.py:117
 #, python-format
 msgid "No Reference Sequence defined for this carrier"
 msgstr ""
 
 #. module: delivery_integration_base
-#: code:addons/delivery_integration_base/models/stock_picking.py:84
+#: code:addons/delivery_integration_base/models/stock_picking.py:136
 #, python-format
 msgid "No default printer defined for the carrier %s"
 msgstr ""
 
 #. module: delivery_integration_base
-#: code:addons/delivery_integration_base/models/delivery_carrier.py:266
+#: code:addons/delivery_integration_base/models/delivery_carrier.py:273
 #, python-format
 msgid "No price rule matching this order; delivery cost cannot be computed."
 msgstr ""
@@ -372,6 +404,7 @@ msgstr ""
 
 #. module: delivery_integration_base
 #: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier__payment_type
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__delivery_payment_type
 msgid "Payment Type"
 msgstr ""
 
@@ -380,6 +413,11 @@ msgstr ""
 #: model:ir.cron,cron_name:delivery_integration_base.ir_cron_delivery_update_pickings_state
 #: model:ir.cron,name:delivery_integration_base.ir_cron_delivery_update_pickings_state
 msgid "Picking Delivery State Update"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__picking_total_deci
+msgid "Picking Total Deci"
 msgstr ""
 
 #. module: delivery_integration_base
@@ -449,7 +487,6 @@ msgstr ""
 #. module: delivery_integration_base
 #: model:ir.model.fields,field_description:delivery_integration_base.field_sale_get_rates_wizard__sale_deci
 #: model:ir.model.fields,field_description:delivery_integration_base.field_sale_order__sale_deci
-#: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_sale_get_rates_wizard
 msgid "Sale Deci"
 msgstr ""
 
@@ -463,6 +500,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_integration_base.field_delivery_carrier_lines__order_id
 #: model:ir.model.fields,field_description:delivery_integration_base.field_sale_get_rates_wizard__sale_id
 msgid "Sale Order"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__sale_shipping_cost
+msgid "Sale Shipping Cost"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__sale_shipping_cost
+msgid "Sale shipping cost no VAT"
 msgstr ""
 
 #. module: delivery_integration_base
@@ -517,11 +564,6 @@ msgid "Shipments Total Measured Exit Deci weight"
 msgstr ""
 
 #. module: delivery_integration_base
-#: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__carrier_shipping_cost
-msgid "Shipping Cost"
-msgstr ""
-
-#. module: delivery_integration_base
 #: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__shipping_number
 msgid "Shipping Number"
 msgstr ""
@@ -540,11 +582,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_integration_base.field_stock_picking__carrier_shipping_vat
 #: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__carrier_shipping_vat
 msgid "Shipping VAT"
-msgstr ""
-
-#. module: delivery_integration_base
-#: model:ir.model.fields,help:delivery_integration_base.field_stock_picking__carrier_shipping_cost
-msgid "Shipping cost"
 msgstr ""
 
 #. module: delivery_integration_base
@@ -585,6 +622,11 @@ msgstr ""
 #. module: delivery_integration_base
 #: model:ir.model,name:delivery_integration_base.model_stock_picking
 msgid "Transfer"
+msgstr ""
+
+#. module: delivery_integration_base
+#: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_stock_picking_dispatched_deliveries_tree
+msgid "True"
 msgstr ""
 
 #. module: delivery_integration_base
@@ -634,3 +676,4 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:delivery_integration_base.view_sale_get_rates_wizard
 msgid "or"
 msgstr ""
+

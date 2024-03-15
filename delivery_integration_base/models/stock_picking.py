@@ -13,39 +13,91 @@ class StockPicking(models.Model):
     carrier_total_deci = fields.Float(
         "Carrier Total Deci", help="Carrier total reception Deci"
     )
+    picking_total_deci = fields.Float(
+        "Picking Total Deci",
+        compute="_compute_picking_total_deci",
+        help="Dynamic Total Deci, calculated based on the move lines.",
+    )
     picking_total_weight = fields.Float(
         "Picking Total Weight", help="Shipments Total Measured Exit Deci weight"
     )
     carrier_received_by = fields.Char("Received By", help="Received by")
     shipping_number = fields.Char("Shipping Number", help="Shipping Tracking Number")
     mail_sent = fields.Boolean("Mail Sent To Customer", default=False, copy=False)
+    delivery_payment_type = fields.Selection(related="carrier_id.payment_type", readonly=True)
 
     # Accounting fields
+    sale_shipping_cost = fields.Monetary(
+        "Sale Shipping Cost",
+        help="Sale shipping cost no VAT",
+        compute="_compute_sale_shipping_cost",
+        currency_field="shipping_currency_id",
+    )
     carrier_shipping_cost = fields.Monetary(
-        "Shipping Cost",
-        help="Shipping cost",
+        "Carrier Shipping Cost",
+        help="Carrier shipping cost",
         default=0.0,
-        currency_field="carrier_currency_id",
+        currency_field="shipping_currency_id",
     )
     carrier_shipping_vat = fields.Monetary(
         "Shipping VAT",
         help="Shipping VAT",
         default=0.0,
-        currency_field="carrier_currency_id",
+        currency_field="shipping_currency_id",
     )
     carrier_shipping_total = fields.Monetary(
         "Shipping Total",
         help="Shipping total",
         default=0.0,
-        currency_field="carrier_currency_id",
+        currency_field="shipping_currency_id",
     )
-    carrier_currency_id = fields.Many2one(
+    shipping_currency_id = fields.Many2one(
         "res.currency",
         "Carrier Currency",
         help="Carrier Currency",
-        related="carrier_id.currency_id",
-        readonly=True,
+        compute="_compute_shipping_currency_id",
     )
+
+    def _compute_shipping_currency_id(self):
+        """
+        Compute the shipping currency based on the priorities
+        :return:
+        """
+        for picking in self:
+            picking.shipping_currency_id = (
+                picking.sale_id.currency_id
+                or picking.carrier_id.currency_id
+                or picking.company_id.currency_id
+            )
+
+    def _compute_picking_total_deci(self):
+        """
+        Compute the picking total deci based on the move lines
+        :return:
+        """
+        for picking in self:
+            picking.picking_total_deci = sum(
+                picking.mapped("move_lines.sale_line_id.deci")
+            )
+
+    def _compute_sale_shipping_cost(self):
+        """
+        Compute the shipping cost based on active move lines
+        :return:
+        """
+        for picking in self:
+            total_cost = 0.0
+            sale_move_lines = picking.move_lines.filtered("sale_line_id")
+            for move in sale_move_lines:
+                sale_id = move.sale_line_id.order_id
+                deliver_cost = sum(
+                    sale_id.order_line.filtered("is_delivery").mapped("price_total")
+                )
+                sale_deci = sale_id.sale_deci
+                if deliver_cost and sale_deci:
+                    # compute weighted average
+                    total_cost += (deliver_cost / sale_deci) * move.sale_line_id.deci
+            picking.sale_shipping_cost = total_cost
 
     def _tracking_status_notification(self):
         if (
