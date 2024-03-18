@@ -71,7 +71,7 @@ class GarantiController(http.Controller):
                     "acquirer_reference": order_sudo.name,
                     "partner_id": order_sudo.partner_id.id,
                     "sale_order_ids": [(4, order_sudo.id, False)],
-                    "currency_id": order_sudo.currency_id.id,
+                    "currency_id": order_sudo.garanti_payment_currency_id.id,
                     "date": datetime.now(),
                     "state": "draft",
                 }
