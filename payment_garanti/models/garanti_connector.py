@@ -32,6 +32,9 @@ class GarantiConnector:
         """
         return self.tx.reference.split("-")[0]
 
+    def _get_email(self):
+        return self.tx.partner_email.split(",")[0]
+
     def _garanti_parse_response_html(self, response):
         """Parse response HTML from Garanti Sanal Pos API.
 
@@ -41,11 +44,7 @@ class GarantiConnector:
         soup = BeautifulSoup(response.text, "html.parser")
         error_msg = soup.find("input", {"name": "mderrormessage"})
         if error_msg:
-            if error_msg["value"] == "Not Authenticated":
-                raise ValidationError(
-                    _("Payment failed." " Garanti: Card is not authenticated.")
-                )
-            raise ValidationError(_("Garanti Sanal Pos Error: %s") % error_msg["value"])
+            raise ValidationError(error_msg["value"])
 
         form = soup.find("form", {"id": "webform0"})
 
@@ -68,7 +67,7 @@ class GarantiConnector:
             )
             return self._garanti_parse_response_html(resp)
         except requests.RequestException:
-            raise ValidationError(_("Garanti: An error occurred. Please try again."))
+            raise ValidationError(_("Payment Error. Please contact us."))
 
     def _garanti_compute_security_data(self):
         return (
@@ -137,7 +136,7 @@ class GarantiConnector:
             "terminalid": self.provider.garanti_terminal_id,
             "terminalmerchantid": self.provider.garanti_merchant_id,
             "orderid": self.reference,
-            "customeremailaddress": self.tx.partner_email,
+            "customeremailaddress": self._get_email(),
             "customeripaddress": self.client_ip,
             "txnamount": str(self.amount),
             "txncurrencycode": self.provider._garanti_get_currency_code(self.currency),
@@ -316,18 +315,15 @@ class GarantiConnector:
                 PROVISION_URL, data=xml_data.decode("utf-8"), timeout=10
             )
         except requests.RequestException:
-            raise ValidationError(_("Garanti: Error. Please try again."))
+            raise ValidationError(_("Payment Error. Please contact us."))
 
         try:
             root = etree.fromstring(resp.content)
             reason_code = root.find(".//Transaction/Response/ReasonCode").text
             message = root.find(".//Transaction/Response/Message").text
             if reason_code != "00" or message != "Approved":
-                return (
-                    _("Payment Error: %s")
-                    % root.find(".//Transaction/Response/ErrorMsg").text
-                )
+                return root.find(".//Transaction/Response/ErrorMsg").text
             else:
                 return message
         except Exception:  # pylint: disable=broad-except
-            raise ValidationError(_("Garanti: Timeout. Please try again."))
+            raise ValidationError(_("Payment Error. Please contact us."))

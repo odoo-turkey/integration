@@ -23,6 +23,11 @@ class PaymentTransaction(models.Model):
 
     garanti_xid = fields.Char(string="Garanti XID", readonly=True, copy=False)
 
+    def _set_error(self, state_message):
+        # Todo: finish this method
+        res = super()._set_error(state_message)
+        return res
+
     # === BUSINESS METHODS ===#
 
     def _get_specific_processing_values(self, processing_values):
@@ -69,7 +74,7 @@ class PaymentTransaction(models.Model):
                 self.reference,
                 error_msg,
             )
-            self._set_error(_("Payment failed: %s" % error_msg))
+            self._set_error(error_msg)
         else:
             connector = GarantiConnector(
                 self.provider_id,
@@ -82,14 +87,14 @@ class PaymentTransaction(models.Model):
                 if res == "Approved":
                     self._set_done()
                 else:
-                    self._set_error(_("Payment failed. %s" % res))
+                    self._set_error(res)
             except Exception as e:
                 _logger.warning(
                     "Garanti payment callback error: %s, data: %s",
                     (e, notification_data),
                     exc_info=True,
                 )
-                self._set_error(_("Payment failed. %s" % res))
+                self._set_error(res)
 
     def _get_tx_from_notification_data(self, provider_code, notification_data):
         """Override of payment to find the transaction based on Garanti data.

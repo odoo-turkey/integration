@@ -21,8 +21,6 @@ msgid ""
 "<option value=\"\" disabled=\"disabled\" selected=\"selected\">Month\n"
 "                                        </option>"
 msgstr ""
-"<option value=\"\" disabled=\"disabled\" selected=\"selected\">Ay\n"
-"                                        </option>"
 
 #. module: payment_garanti
 #: model_terms:ir.ui.view,arch_db:payment_garanti.inline_form
@@ -30,8 +28,6 @@ msgid ""
 "<option value=\"\" disabled=\"disabled\" selected=\"selected\">Year\n"
 "                                        </option>"
 msgstr ""
-"<option value=\"\" disabled=\"disabled\" selected=\"selected\">Yıl\n"
-"                                        </option>"
 
 #. module: payment_garanti
 #: model:ir.model.fields,field_description:payment_garanti.field_payment_provider__always_pay_with_try
@@ -41,7 +37,7 @@ msgstr ""
 #. module: payment_garanti
 #: model:payment.provider,display_as:payment_garanti.payment_provider_garanti
 msgid "Bank or Credit Card"
-msgstr "Banka veya Kredi Kartı"
+msgstr ""
 
 #. module: payment_garanti
 #: model_terms:ir.ui.view,arch_db:payment_garanti.inline_form
@@ -60,12 +56,12 @@ msgstr ""
 #. module: payment_garanti
 #: model_terms:ir.ui.view,arch_db:payment_garanti.inline_form
 msgid "Card Owner"
-msgstr "Kart Sahibi"
+msgstr ""
 
 #. module: payment_garanti
 #: model_terms:ir.ui.view,arch_db:payment_garanti.inline_form
 msgid "Card Owner Name"
-msgstr "Kart Sahibi Adı"
+msgstr ""
 
 #. module: payment_garanti
 #. odoo-python
@@ -84,7 +80,7 @@ msgstr ""
 #. module: payment_garanti
 #: model_terms:ir.ui.view,arch_db:payment_garanti.inline_form
 msgid "Card number"
-msgstr "Kart Numarası"
+msgstr ""
 
 #. module: payment_garanti
 #. odoo-python
@@ -108,7 +104,7 @@ msgstr ""
 #. module: payment_garanti
 #: model:ir.model.fields,field_description:payment_garanti.field_payment_provider__code
 msgid "Code"
-msgstr "Kod"
+msgstr ""
 
 #. module: payment_garanti
 #: model:ir.model.fields,field_description:payment_garanti.field_payment_provider_error__create_uid
@@ -138,7 +134,7 @@ msgstr ""
 #. module: payment_garanti
 #: model_terms:ir.ui.view,arch_db:payment_garanti.inline_form
 msgid "Expiration Date"
-msgstr "Geçerlilik Tarihi"
+msgstr ""
 
 #. module: payment_garanti
 #: model:payment.provider,name:payment_garanti.payment_provider_garanti
@@ -224,7 +220,7 @@ msgstr ""
 #. module: payment_garanti
 #: model:ir.model,name:payment_garanti.model_payment_provider
 msgid "Payment Provider"
-msgstr "Ödeme Sağlayıcı"
+msgstr ""
 
 #. module: payment_garanti
 #: model:ir.actions.act_window,name:payment_garanti.action_payment_provider_error
@@ -236,7 +232,7 @@ msgstr ""
 #. module: payment_garanti
 #: model:ir.model,name:payment_garanti.model_payment_transaction
 msgid "Payment Transaction"
-msgstr "Ödeme İşlemi"
+msgstr ""
 
 #. module: payment_garanti
 #: model:ir.model.fields,field_description:payment_garanti.field_payment_provider__garanti_prov_password
@@ -277,7 +273,7 @@ msgstr ""
 #: code:addons/payment_garanti/static/src/js/payment_form.js:0
 #, python-format
 msgid "Server Error"
-msgstr "Sunucu Hatası"
+msgstr ""
 
 #. module: payment_garanti
 #: model:ir.model.fields,field_description:payment_garanti.field_payment_provider__garanti_store_key
@@ -312,19 +308,19 @@ msgstr ""
 #. module: payment_garanti
 #: model:ir.model.fields,help:payment_garanti.field_payment_provider__code
 msgid "The technical code of this payment provider."
-msgstr "Bu ödeme sağlayıcının teknik adı"
+msgstr ""
 
 #. module: payment_garanti
 #: model_terms:ir.ui.view,arch_db:payment_garanti.inline_form
 msgid "Three digit CV code on the back of your card"
-msgstr "Kartınızın arkasındaki üç haneli CV kodu"
+msgstr ""
 
 #. module: payment_garanti
 #. odoo-javascript
 #: code:addons/payment_garanti/static/src/js/payment_form.js:0
 #, python-format
 msgid "We are not able to process your payment."
-msgstr "Şu anda ödemenizi işleyemiyoruz."
+msgstr ""
 
 #. module: payment_garanti
 #: model_terms:ir.ui.view,arch_db:payment_garanti.inline_form
