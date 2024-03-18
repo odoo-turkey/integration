@@ -62,7 +62,7 @@
                                                 disabled="disabled"
                                                 selected="selected">Year
                                         </option>
-                                        <t t-foreach="range(datetime.date.today().year-1, datetime.date.today().year+13)"
+                                        <t t-foreach="range(datetime.date.today().year, datetime.date.today().year+13)"
                                            t-as="r">
                                             <option t-att-value="r">
                                                 <t t-esc="r"/>

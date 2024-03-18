@@ -3,7 +3,7 @@
 import logging
 import pprint
 from odoo import _, http
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 from odoo.http import request
 from odoo.addons.payment import utils as payment_utils
 
@@ -11,15 +11,21 @@ _logger = logging.getLogger(__name__)
 
 
 class GarantiController(http.Controller):
-    _webhook_url = '/payment/garanti/payments'
-    _return_url = '/payment/garanti/return'
+    _webhook_url = "/payment/garanti/payments"
+    _return_url = "/payment/garanti/return"
 
-    @http.route(_webhook_url, type='json', auth='public')
+    @http.route(_webhook_url, type="json", auth="public")
     def garanti_payments(
-            self, provider_id, reference, amount, currency_id, partner_id,
-            access_token, card_args
+        self,
+        provider_id,
+        reference,
+        amount,
+        currency_id,
+        partner_id,
+        access_token,
+        card_args,
     ):
-        """ Make a payment request and handle the notification data.
+        """Make a payment request and handle the notification data.
 
         :param int provider_id: The provider handling the transaction, as a `payment.provider` id
         :param str reference: The reference of the transaction
@@ -36,42 +42,52 @@ class GarantiController(http.Controller):
         # from validating transactions by paying less than agreed upon.
 
         # Prepare the payment request to Garanti
-        provider_sudo = request.env['payment.provider'].sudo().browse(
-            provider_id).exists()
+        provider_sudo = (
+            request.env["payment.provider"].sudo().browse(provider_id).exists()
+        )
 
         card_error = provider_sudo._garanti_validate_card_args(card_args)
         if card_error:
-            raise ValidationError(card_error)
+            raise UserError(card_error)
 
-        tx_sudo = request.env['payment.transaction'].sudo().search(
-            [('reference', '=', reference)])
+        tx_sudo = (
+            request.env["payment.transaction"]
+            .sudo()
+            .search([("reference", "=", reference)])
+        )
 
-        client_ip = request.httprequest.environ.get('REMOTE_ADDR')
+        client_ip = request.httprequest.environ.get("REMOTE_ADDR")
 
-        response_content = provider_sudo._garanti_make_payment_request(tx_sudo,
-                                                                       amount,
-                                                                       currency_id,
-                                                                       card_args,
-                                                                       client_ip)
+        response_content = provider_sudo._garanti_make_payment_request(
+            tx_sudo, amount, currency_id, card_args, client_ip
+        )
         return response_content
 
-    @http.route(_return_url, type='http', auth='public',
-                csrf=False, save_session=False, methods=['POST'])
+    @http.route(
+        _return_url,
+        type="http",
+        auth="public",
+        csrf=False,
+        save_session=False,
+        methods=["POST"],
+    )
     def garanti_return_from_3ds_auth(self, **kwargs):
         """
         Handle the return from the 3DS authentication.
         notification_data is a dict coming from Garanti.
         """
-        tx_sudo = request.env[
-            'payment.transaction'].sudo()._handle_notification_data(
-            'garanti', kwargs
+        tx_sudo = (
+            request.env["payment.transaction"]
+            .sudo()
+            ._handle_notification_data("garanti", kwargs)
         )
 
         _logger.info(
             "handling redirection from Garanti for transaction with"
             " reference %s with data:\n%s",
-            tx_sudo.reference, pprint.pformat(kwargs)
+            tx_sudo.reference,
+            pprint.pformat(kwargs),
         )
 
         # Redirect the user to the status page
-        return request.redirect('/payment/status')
+        return request.redirect("/payment/status")
