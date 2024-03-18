@@ -36,6 +36,6 @@
 
     <menuitem id="stock_picking_dispatched_deliveries_menu"
               action="action_stock_picking_dispatched_deliveries"
-              parent="stock.menu_stock_root" sequence="1"/>
+              parent="stock.menu_stock_warehouse_mgmt" sequence="0"/>
     
 </odoo>
