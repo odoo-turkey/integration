@@ -8,12 +8,12 @@ from lxml import etree
 from datetime import datetime
 
 ARAS_OPERATION_CODES = {
-    0: ("Kargo İşlem Görmemiş", "shipping_recorded_in_carrier"),
-    1: ("Kargo Teslimattadır", "in_transit"),
-    2: ("Kargo işlem görmüş, faturası henüz düzenlenmemiş", "in_transit"),
-    3: ("Kargo Çıkışı Engellendi", "canceled_shipment"),
-    4: ("Kargo daha önceden iptal edilmiştir.", "canceled_shipment"),
-    5: ("Kargo Teslim edilmiştir.", "customer_delivered"),
+    1: ("Çıkış Şubesinde", "in_transit"),
+    2: ("Yolda", "in_transit"),
+    3: ("Teslimat Şubesinde", "in_transit"),
+    4: ("Teslimatta", "in_transit"),
+    5: ("Parçalı Teslimat", "customer_delivered"),
+    6: ("Teslim Edildi", "customer_delivered"),
 }
 
 
@@ -24,6 +24,12 @@ class DeliveryCarrier(models.Model):
 
     aras_username = fields.Char(string="Username", help="Aras Username")
     aras_password = fields.Char(string="Password", help="Aras Password")
+    aras_query_username = fields.Char(
+        string="Query Username", help="Aras Query Username"
+    )
+    aras_query_password = fields.Char(
+        string="Query Password", help="Aras Query Password"
+    )
     aras_customer_code = fields.Char(string="Customer Code", help="Aras Customer Code")
 
     def _get_aras_credentials(self):
@@ -33,6 +39,8 @@ class DeliveryCarrier(models.Model):
             "prod": self.prod_environment,
             "username": self.aras_username,
             "password": self.aras_password,
+            "query_username": self.aras_query_username,
+            "query_password": self.aras_query_password,
             "customer_code": self.aras_customer_code,
         }
         return credentials
@@ -99,7 +107,9 @@ class DeliveryCarrier(models.Model):
             {
                 "InvoiceNumber": picking.name,
                 "IntegrationCode": mok_code,
-                "ReceiverName": picking.partner_id.display_name[:100], # Aras Kargo has a 100 characters limit for receiver name
+                "ReceiverName": picking.partner_id.display_name[
+                    :100
+                ],  # Aras Kargo has a 100 characters limit for receiver name
                 "ReceiverAddress": self._aras_address(picking.partner_id),
                 "ReceiverPhone1": self._aras_phone_number(
                     picking.partner_id, priority="mobile"
@@ -200,16 +210,21 @@ class DeliveryCarrier(models.Model):
                 raise e
             finally:
                 self._aras_log_request(aras_request)
-            # picking.write({"carrier_tracking_ref": False,
-            #                "tracking_state": False,
-            #                "tracking_state_history": _('Cancelled')})
+                #todo: cancel'a bak
+            # picking.write(
+            #     {
+            #         "carrier_tracking_ref": False,
+            #         "tracking_state": False,
+            #         "tracking_state_history": _("Cancelled"),
+            #     }
+            # )
         return True
 
-    def yurtici_get_tracking_link(self, picking):
+    def aras_get_tracking_link(self, picking):
         """Provide tracking link for the customer"""
         return (
-            f"https://www.yurticikargo.com/tr/online-servisler/"
-            f"gonderi-sorgula?code={picking.shipping_number}"
+            "https://kargotakip.araskargo.com.tr/mainpage.aspx?code=%s"
+            % picking.carrier_tracking_ref
         )
 
     def aras_tracking_state_update(self, picking):
@@ -224,64 +239,63 @@ class DeliveryCarrier(models.Model):
         except Exception as e:
             raise e
         finally:
-            self._yurtici_log_request(yurtici_request)
-
-        if response.errCode:
-            return False
+            self._aras_log_request(aras_request)
 
         vals = {
-            "tracking_state": response.operationMessage,
-            "delivery_state": YURTICI_OPERATION_CODES[response.operationCode][1],
+            "tracking_state": response["DURUMU"] + " - " + response["DURUM_EN"],
+            "delivery_state": ARAS_OPERATION_CODES[int(response["DURUM_KODU"])][1],
         }
 
-        if response.operationCode != 0 and response.shippingDeliveryItemDetailVO:
-            vals.update(self._yurtici_update_picking_fields(response))
+        # Todo: Make it like Yurtiçi Kargo
+        vals.update(self._aras_update_picking_fields(response))
 
         picking.write(vals)
         return True
 
-    def _yurtici_update_picking_fields(self, response):
+    def _aras_update_picking_fields(self, response):
         vals = {
-            "shipping_number": response.shippingDeliveryItemDetailVO.docId,
+            "shipping_number": response["KARGO_TAKIP_NO"],
+            "carrier_shipping_cost": float(response["TUTAR"]),
+            "carrier_total_deci": float(response["HACIMSEL_AGIRLIK"]),
         }
-
-        if len(response.shippingDeliveryItemDetailVO.invDocCargoVOArray) > 0:
-            text = ""
-            for line in response.shippingDeliveryItemDetailVO.invDocCargoVOArray:
-                text += "[%s] [%s] %s\n" % (
-                    line.eventDate,
-                    line.unitName,
-                    line.eventName,
-                )
-            vals.update({"tracking_state_history": text})
-
-        if response.shippingDeliveryItemDetailVO:
-            vals.update(
-                {
-                    "carrier_total_deci": float(
-                        response.shippingDeliveryItemDetailVO.totalDesiKg
-                    ),
-                    "carrier_shipping_cost": float(
-                        response.shippingDeliveryItemDetailVO.totalPrice
-                    ),
-                    "carrier_shipping_vat": float(
-                        response.shippingDeliveryItemDetailVO.totalVat
-                    ),
-                    "carrier_shipping_total": float(
-                        response.shippingDeliveryItemDetailVO.totalAmount
-                    ),
-                }
-            )
-
-        if response.operationCode == 5:  # Delivered
-            vals.update(
-                {
-                    "carrier_received_by": response.shippingDeliveryItemDetailVO.receiverInfo,
-                    "date_delivered": datetime.strptime(
-                        response.shippingDeliveryItemDetailVO.deliveryDate, "%Y%m%d"
-                    ),
-                }
-            )
+        # Todo: add other fields.
+        # if len(response.shippingDeliveryItemDetailVO.invDocCargoVOArray) > 0:
+        #     text = ""
+        #     for line in response.shippingDeliveryItemDetailVO.invDocCargoVOArray:
+        #         text += "[%s] [%s] %s\n" % (
+        #             line.eventDate,
+        #             line.unitName,
+        #             line.eventName,
+        #         )
+        #     vals.update({"tracking_state_history": text})
+        #
+        # if response.shippingDeliveryItemDetailVO:
+        #     vals.update(
+        #         {
+        #             "carrier_total_deci": float(
+        #                 response.shippingDeliveryItemDetailVO.totalDesiKg
+        #             ),
+        #             "carrier_shipping_cost": float(
+        #                 response.shippingDeliveryItemDetailVO.totalPrice
+        #             ),
+        #             "carrier_shipping_vat": float(
+        #                 response.shippingDeliveryItemDetailVO.totalVat
+        #             ),
+        #             "carrier_shipping_total": float(
+        #                 response.shippingDeliveryItemDetailVO.totalAmount
+        #             ),
+        #         }
+        #     )
+        #
+        # if response.operationCode == 5:  # Delivered
+        #     vals.update(
+        #         {
+        #             "carrier_received_by": response.shippingDeliveryItemDetailVO.receiverInfo,
+        #             "date_delivered": datetime.strptime(
+        #                 response.shippingDeliveryItemDetailVO.deliveryDate, "%Y%m%d"
+        #             ),
+        #         }
+        #     )
 
         return vals
 

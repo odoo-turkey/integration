@@ -12,10 +12,16 @@
                     attrs="{'invisible': [('delivery_type', '!=', 'aras')]}">
                     <group>
                         <group string="Connection">
+                            <!-- SetOrder -->
                             <field
                                 name="aras_username"
                                 attrs="{'required': [('delivery_type', '=', 'aras')]}"/>
                             <field name="aras_password" />
+                            <!-- Query -->
+                             <field
+                                name="aras_query_username"
+                                attrs="{'required': [('delivery_type', '=', 'aras')]}"/>
+                            <field name="aras_query_password" />
                             <field name="aras_customer_code" />
                         </group>
                         <group string="Logistics">
