@@ -70,13 +70,13 @@ class DeliveryCarrier(models.Model):
                 )
             )
 
-    def _prepare_aras_piece_details(self, picking):
+    def _prepare_aras_piece_details(self, picking, mok_code):
         """It's required to write down product barcodes for Piece Detail"""
         self.ensure_one()
         vals = [
             {
                 "PieceDetail": {
-                    "BarcodeNumber": picking.name,
+                    "BarcodeNumber": mok_code,
                     "VolumetricWeight": max(picking.picking_total_weight, 1),
                     "Weight": picking.weight,
                 }
@@ -94,10 +94,11 @@ class DeliveryCarrier(models.Model):
         # address options, incoterms and so. There are lots of thing to take into
         # account to acomplish a properly formed request.
         vals = {}
+        mok_code = self._get_ref_number()
         vals.update(
             {
                 "InvoiceNumber": picking.name,
-                "IntegrationCode": self._get_ref_number(),
+                "IntegrationCode": mok_code,
                 "ReceiverName": picking.partner_id.display_name[:100], # Aras Kargo has a 100 characters limit for receiver name
                 "ReceiverAddress": self._aras_address(picking.partner_id),
                 "ReceiverPhone1": self._aras_phone_number(
@@ -114,7 +115,7 @@ class DeliveryCarrier(models.Model):
                 "PieceCount": 1,  # Todo: implement piece count
             }
         )
-        piece_details = self._prepare_aras_piece_details(picking)
+        piece_details = self._prepare_aras_piece_details(picking, mok_code)
         # vals.update({"PieceDetails": piece_details, "PieceCount": len(piece_details)})
         vals.update({"PieceDetails": piece_details})
         return vals
