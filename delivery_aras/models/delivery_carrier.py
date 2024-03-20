@@ -73,21 +73,12 @@ class DeliveryCarrier(models.Model):
     def _prepare_aras_piece_details(self, picking):
         """It's required to write down product barcodes for Piece Detail"""
         self.ensure_one()
-        # vals = []
-        # for line in picking.move_lines:
-        #     vals.append(
-        #         {
-        #             "PieceDetail": {
-        #                 "BarcodeNumber": line.product_id.barcode or "0000000000000",
-        #             }
-        #         }
-        #     )
         vals = [
             {
                 "PieceDetail": {
                     "BarcodeNumber": picking.name,
-                    "VolumetricWeight": 1,
-                    "Weight": 1,
+                    "VolumetricWeight": max(picking.picking_total_weight, 1),
+                    "Weight": picking.weight,
                 }
             }
         ]
@@ -107,7 +98,7 @@ class DeliveryCarrier(models.Model):
             {
                 "InvoiceNumber": picking.name,
                 "IntegrationCode": self._get_ref_number(),
-                "ReceiverName": picking.partner_id.display_name,
+                "ReceiverName": picking.partner_id.display_name[:100], # Aras Kargo has a 100 characters limit for receiver name
                 "ReceiverAddress": self._aras_address(picking.partner_id),
                 "ReceiverPhone1": self._aras_phone_number(
                     picking.partner_id, priority="mobile"
@@ -293,19 +284,19 @@ class DeliveryCarrier(models.Model):
 
         return vals
 
-    def yurtici_carrier_get_label(self, picking):
+    def aras_carrier_get_label(self, picking):
         """
-        Yurtiçi Kargo doesn't provide label for shipments.
+        Aras Kargo doesn't provide label for shipments.
         They are not implemented common label on their systems.
         """
         raise NotImplementedError(
-            _("Yurtiçi API doesn't provide methods to print label.")
+            _("Aras Kargo API doesn't provide methods to print label.")
         )
 
-    def yurtici_rate_shipment(self, order):
+    def aras_rate_shipment(self, order):
         """There's no public API so use rules for calculation."""
         return self.base_on_rule_rate_shipment(order)
 
-    def yurtici_get_rate(self, order):
-        """Get delivery price for Yurtiçi"""
+    def aras_get_rate(self, order):
+        """Get delivery price for Aras"""
         return self.base_on_rule_get_rate(order)
