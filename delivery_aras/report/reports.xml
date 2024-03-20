@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<data>
+		<report id="aras_carrier_label"
+            model="delivery.carrier"
+            string="Aras Carrier Label"
+            name="delivery_aras.aras_carrier_label"
+            file="delivery_aras.aras_carrier_label"
+        />
+
+</data>
+</odoo>
