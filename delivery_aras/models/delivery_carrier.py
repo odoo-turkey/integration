@@ -125,11 +125,10 @@ class DeliveryCarrier(models.Model):
                 ),  # 1 = Sender, 2 = Receiver pays
                 "IsWorldWide": 0,
                 "VolumetricWeight": max(picking.picking_total_weight, 1),
-                "PieceCount": max(picking.carrier_package_count, 1),
+                # "PieceCount": max(picking.carrier_package_count, 1),
             }
         )
-        piece_details = self._prepare_aras_piece_details(picking)
-        vals.update({"PieceDetails": piece_details})
+        # piece_details = self._prepare_aras_piece_details(picking)
         # vals.update({"PieceDetails": piece_details})
         return vals
 
