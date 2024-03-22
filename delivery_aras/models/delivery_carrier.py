@@ -78,19 +78,20 @@ class DeliveryCarrier(models.Model):
                 )
             )
 
-    def _prepare_aras_piece_details(self, picking, mok_code):
+    def _prepare_aras_piece_details(self, picking):
         """It's required to write down product barcodes for Piece Detail"""
         self.ensure_one()
-        vals = [
-            {
-                "PieceDetail": {
-                    "BarcodeNumber": mok_code,
-                    "VolumetricWeight": max(picking.picking_total_weight, 1),
-                    "Weight": picking.weight,
+        piece_details = []
+        for _ in range(max(picking.carrier_package_count, 1)):
+            piece_details.append(
+                {
+                    # This is a bit tricky, we need a unique barcode for
+                    # each package, so we can use the same method as we use
+                    # for the integration code.
+                    "BarcodeNumber": self._get_ref_number(),
                 }
-            }
-        ]
-        return vals
+            )
+        return {"PieceDetail": piece_details}
 
     def _prepare_aras_shipping(self, picking):
         """Convert picking values for Aras Kargo api
@@ -102,11 +103,10 @@ class DeliveryCarrier(models.Model):
         # address options, incoterms and so. There are lots of thing to take into
         # account to acomplish a properly formed request.
         vals = {}
-        mok_code = self._get_ref_number()
         vals.update(
             {
                 "InvoiceNumber": picking.name,
-                "IntegrationCode": mok_code,
+                "IntegrationCode": self._get_ref_number(),
                 "ReceiverName": picking.partner_id.display_name[
                     :100
                 ],  # Aras Kargo has a 100 characters limit for receiver name
@@ -120,14 +120,17 @@ class DeliveryCarrier(models.Model):
                 "ReceiverCityName": picking.partner_id.state_id.name,
                 "ReceiverTownName": picking.partner_id.district_id.name,
                 "TradingWaybillNumber": picking.name,
-                "PayorTypeCode": 1,  # 1 = Sender, 2 = Receiver
+                "PayorTypeCode": (
+                    1 if self.payment_type == "sender_pays" else 2
+                ),  # 1 = Sender, 2 = Receiver pays
                 "IsWorldWide": 0,
-                "PieceCount": 1,  # Todo: implement piece count
+                "VolumetricWeight": max(picking.picking_total_weight, 1),
+                "PieceCount": max(picking.carrier_package_count, 1),
             }
         )
-        piece_details = self._prepare_aras_piece_details(picking, mok_code)
-        # vals.update({"PieceDetails": piece_details, "PieceCount": len(piece_details)})
+        piece_details = self._prepare_aras_piece_details(picking)
         vals.update({"PieceDetails": piece_details})
+        # vals.update({"PieceDetails": piece_details})
         return vals
 
     def aras_send_shipping(self, pickings):
@@ -210,21 +213,13 @@ class DeliveryCarrier(models.Model):
                 raise e
             finally:
                 self._aras_log_request(aras_request)
-                #todo: cancel'a bak
-            # picking.write(
-            #     {
-            #         "carrier_tracking_ref": False,
-            #         "tracking_state": False,
-            #         "tracking_state_history": _("Cancelled"),
-            #     }
-            # )
         return True
 
     def aras_get_tracking_link(self, picking):
         """Provide tracking link for the customer"""
         return (
             "https://kargotakip.araskargo.com.tr/mainpage.aspx?code=%s"
-            % picking.carrier_tracking_ref
+            % picking.shipping_number
         )
 
     def aras_tracking_state_update(self, picking):
@@ -241,63 +236,45 @@ class DeliveryCarrier(models.Model):
         finally:
             self._aras_log_request(aras_request)
 
+        if not response:
+            return False
+
         vals = {
             "tracking_state": response["DURUMU"] + " - " + response["DURUM_EN"],
             "delivery_state": ARAS_OPERATION_CODES[int(response["DURUM_KODU"])][1],
-        }
-
-        # Todo: Make it like Yurtiçi Kargo
-        vals.update(self._aras_update_picking_fields(response))
-
-        picking.write(vals)
-        return True
-
-    def _aras_update_picking_fields(self, response):
-        vals = {
             "shipping_number": response["KARGO_TAKIP_NO"],
             "carrier_shipping_cost": float(response["TUTAR"]),
             "carrier_total_deci": float(response["HACIMSEL_AGIRLIK"]),
         }
-        # Todo: add other fields.
-        # if len(response.shippingDeliveryItemDetailVO.invDocCargoVOArray) > 0:
-        #     text = ""
-        #     for line in response.shippingDeliveryItemDetailVO.invDocCargoVOArray:
-        #         text += "[%s] [%s] %s\n" % (
-        #             line.eventDate,
-        #             line.unitName,
-        #             line.eventName,
-        #         )
-        #     vals.update({"tracking_state_history": text})
-        #
-        # if response.shippingDeliveryItemDetailVO:
-        #     vals.update(
-        #         {
-        #             "carrier_total_deci": float(
-        #                 response.shippingDeliveryItemDetailVO.totalDesiKg
-        #             ),
-        #             "carrier_shipping_cost": float(
-        #                 response.shippingDeliveryItemDetailVO.totalPrice
-        #             ),
-        #             "carrier_shipping_vat": float(
-        #                 response.shippingDeliveryItemDetailVO.totalVat
-        #             ),
-        #             "carrier_shipping_total": float(
-        #                 response.shippingDeliveryItemDetailVO.totalAmount
-        #             ),
-        #         }
-        #     )
-        #
-        # if response.operationCode == 5:  # Delivered
-        #     vals.update(
-        #         {
-        #             "carrier_received_by": response.shippingDeliveryItemDetailVO.receiverInfo,
-        #             "date_delivered": datetime.strptime(
-        #                 response.shippingDeliveryItemDetailVO.deliveryDate, "%Y%m%d"
-        #             ),
-        #         }
-        #     )
 
+        if picking.tracking_state != vals["tracking_state"]:
+            vals.update(self._aras_update_tracking_history(picking, response, vals))
+
+        if vals["delivery_state"] == "customer_delivered":
+            vals.update(self._aras_delivered(response))
+
+        picking.write(vals)
+        return True
+
+    def _aras_update_tracking_history(self, picking, response, vals):
+        """Update tracking history"""
+        self.ensure_one()
+        new_state = "%s - %s" % (response["ISLEM_TARIHI"], vals["tracking_state"])
+        if not picking.tracking_state_history:
+            vals["tracking_state_history"] = new_state
+        else:
+            vals["tracking_state_history"] = (
+                picking.tracking_state_history + "\n" + new_state
+            )
         return vals
+
+    def _aras_delivered(self, response):
+        """Update delivered fields"""
+        self.ensure_one()
+        return {
+            "date_delivered": datetime.fromisoformat(response["ISLEM_TARIHI"]),
+            "carrier_received_by": response.get("TESLIM_ALAN", ""),
+        }
 
     def aras_carrier_get_label(self, picking):
         """
