@@ -149,4 +149,8 @@ class ArasRequest:
         response = self._query_process_reply(
             self.query_client.service.GetQueryJSON, vals
         )
-        return response["QueryResult"]["Cargo"]
+        query_result = response["QueryResult"]
+        if isinstance(query_result, dict):
+            return query_result.get("Cargo")
+        else:
+            return False

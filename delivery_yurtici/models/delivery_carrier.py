@@ -177,9 +177,6 @@ class DeliveryCarrier(models.Model):
                 raise e
             finally:
                 self._yurtici_log_request(yurtici_request)
-            # picking.write({"carrier_tracking_ref": False,
-            #                "tracking_state": False,
-            #                "tracking_state_history": _('Cancelled')})
         return True
 
     def yurtici_get_tracking_link(self, picking):

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <template id="aras_carrier_label">
+        <template id="delivery_aras.aras_carrier_label">
             <t t-foreach="docs" t-as="o">
                 <t t-translation="off">
                     <t t-esc="zpl_raw"/>
